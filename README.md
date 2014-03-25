@@ -18,7 +18,7 @@ https://help.github.com/articles/set-up-git
 https://help.github.com/articles/generating-ssh-keys
 
 To fetch the repository to start developing
-git clone git@github.com:kallekrantz/RobotGame.git
+git clone git@github.com:Magrit/miniature-ninja-agile-awesomeness.git
 
 In order to start your own branch for development.
 git checkout -b <feature to work on>
