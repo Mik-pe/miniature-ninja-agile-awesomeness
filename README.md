@@ -21,7 +21,9 @@ To fetch the repository to start developing
 git clone git@github.com:Magrit/miniature-ninja-agile-awesomeness.git
 
 In order to start your own branch for development.
+```
 git checkout -b <feature to work on>
+```
 
 Or fork through Githubs interface.
 
@@ -32,23 +34,29 @@ Master should at all time be runnable, which means that all code reviews should 
 How to
 
 The general workflow for code reviewing is the following.
-
+```
 git pull origin master
 git checkout <branch to work on>
+```
 <--All work is done-->
+```
 git commit -m "<Commit message>"
 git merge master
+```
 
 After all that is done, apply for the Pull Request through Githubs interface, tag relevant people you want to review.
 
 When the request has been granted, either you or the reviewer should be able to automatically merge the request through Githubs interface, if not, follow the following workflow.
-
+```
 git pull --all
 git checkout master
 git merge <branch to to merge>
+```
 <-- Fix the merge conflict -->
+```
 git commit -m "fixed merge conflict"
 git push origin master
+```
 
 Special considerations
 =================================
