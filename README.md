@@ -11,8 +11,9 @@ How to contribute
 
 This project uses git, and is currently hosted on Github at https://github.com/Magrit/miniature-ninja-agile-awesomeness
 Although a goal would be to have a perfect git history, multiple of the projects participants are not familiar with the complications of git. Something that can/will result in horrible git commits and amends.
-How to
 
+How to
+=================================
 If you do not have git setup properly, please follow the following guides
 https://help.github.com/articles/set-up-git
 https://help.github.com/articles/generating-ssh-keys
@@ -31,8 +32,9 @@ Code Reviews
 =================================
 Either ask to become a contributer, or send of a Pull Request. This is best done through the Github interface via your own branch/fork. Code reviews should be applied as Pull Requests through Github. This means that all features should be it's own branch which then will be merged into Master.
 Master should at all time be runnable, which means that all code reviews should be run before being merged into master.
-How to
 
+How to
+=================================
 The general workflow for code reviewing is the following.
 ```
 git pull origin master
