@@ -17,6 +17,7 @@ How to
 If you do not have git setup properly, please follow the following guides
 
 https://help.github.com/articles/set-up-git
+
 https://help.github.com/articles/generating-ssh-keys
 
 To fetch the repository to start developing
@@ -36,7 +37,7 @@ Code Reviews
 Either ask to become a contributer, or send of a Pull Request. This is best done through the Github interface via your own branch/fork. Code reviews should be applied as Pull Requests through Github. This means that all features should be it's own branch which then will be merged into Master.
 Master should at all time be runnable, which means that all code reviews should be run before being merged into master.
 
-How to
+How to for branches
 =================================
 The general workflow for code reviewing is the following.
 ```
