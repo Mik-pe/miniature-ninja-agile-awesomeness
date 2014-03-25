@@ -15,11 +15,14 @@ Although a goal would be to have a perfect git history, multiple of the projects
 How to
 =================================
 If you do not have git setup properly, please follow the following guides
+
 https://help.github.com/articles/set-up-git
 https://help.github.com/articles/generating-ssh-keys
 
 To fetch the repository to start developing
+```
 git clone git@github.com:Magrit/miniature-ninja-agile-awesomeness.git
+```
 
 In order to start your own branch for development.
 ```
