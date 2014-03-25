@@ -1,7 +1,7 @@
 miniature-ninja-agile-awesomeness
+=================================
 
-
-Simply the best agile programme for time reporting ever built
+Simply the best agile programme for time reporting ever built. This is a project made by students at Linköpings University.
 
 THE FOLLOWING IS COPYPASTED:
 
