@@ -40,11 +40,11 @@ private List<TimeBlock> submissionList;
 		for(int i=this.submissionList.size(); i>0 ;i--)
 		{
 			if(this.submissionList.get(i).getDate() == d){
-				return this.submissionList.get(i).getTime();
+				return this.submissionList.get(i).getTimeAsString();
 			}
 		}
 		
-		return "0h";
+		return "-";
 	}
 	/**
 	 * 
