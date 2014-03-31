@@ -1,8 +1,14 @@
 package com.example.tson;
 
+//IMPORT OUR OWN CLASSES
+import tson_utilities.*;
+
+//IMPORT ANDROID
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+
+//IMPORT OTHER
 
 public class HomeActivity extends Activity {
 
