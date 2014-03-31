@@ -11,10 +11,12 @@ import android.view.Menu;
 
 //IMPORT OTHER
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity 
+{
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) 
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
     }
