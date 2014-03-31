@@ -1,6 +1,6 @@
 package tson_utilities;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -17,14 +17,13 @@ private List<TimeBlock> submissionList;
 
 /**
  * 
+ * @param d - date
  * @param h - hours
  * @param m - minutes
- * @param d - date
  */
-	public void addTime(int h, int m, Date d)
+	public void addTime(Calendar d, int h, int m)
 	{
-		TimeBlock t = new TimeBlock();
-		t.setTimeBlock(h, m, d);
+		TimeBlock t = new TimeBlock(d, h, m);
 		submissionList.add(t);
 	}
 	
@@ -34,7 +33,7 @@ private List<TimeBlock> submissionList;
 	 * @return - returns string of amount of hours of that 
 	 * date and project
 	 */
-	public String getTimeByDate(Date d)
+	public String getTimeByDate(Calendar d)
 	{
 		
 		for(int i=this.submissionList.size(); i>0 ;i--)
