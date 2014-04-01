@@ -60,6 +60,7 @@ public class HomeActivity extends Activity
      */
     public void openCreateProjectActivity(View view)
     {
+    	
     	Intent intent = new Intent(this, CreateProjectActivity.class);
     	startActivity(intent);
     	
