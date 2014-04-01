@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">TSon</string>
+    <string name="app_name">Home</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_create_project">CreateProjectActivity</string>
     <string name= "create_project_button"> Create Project</string>
+    <string name="project">Your Projects</string>
+    <string name="today">Today</string>
+
 
 </resources>

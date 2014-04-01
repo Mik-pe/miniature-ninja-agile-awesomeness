@@ -40,17 +40,6 @@ public class HomeActivity extends Activity
     	startActivity(intent);
     	
     }
-    
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        switch (item.getItemId()) {
-            case R.id.create_project_button:
-            	
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+   
     
 }
