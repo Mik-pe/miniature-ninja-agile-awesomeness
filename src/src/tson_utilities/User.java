@@ -1,5 +1,6 @@
 package tson_utilities;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class User 
@@ -41,5 +42,18 @@ public class User
 	 public String getEmail()
 	 {
 		 return email;
+	 }
+	 
+	 public static void main(String[] args)
+	 {
+		 User testUser = new User("hej@hej.se", "Kalle Karlsson", "2092");
+		 Project testProject = new Project("Awesome");
+		 testUser.addProject(testProject);
+		 testProject.addTime(Calendar.getInstance(), 2, 30);
+		 
+		 for(int i = 0; i < testUser.getProjects().size(); ++i)
+		 {
+			 System.out.println(testUser.getProjects().get(i).getTimeByDate(Calendar.getInstance()));
+		 }
 	 }
 }
