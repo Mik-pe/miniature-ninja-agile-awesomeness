@@ -60,9 +60,7 @@ public class CreateProjectActivity extends Activity {
     	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //set flag on intent to clear history stack of all activities
     	
     	startActivity(intent);
-    	finish(); //finish this activity, remove from history
-    	
-    	
+    	finish(); //finish this activity, remove from history	
     	
 	}
 
