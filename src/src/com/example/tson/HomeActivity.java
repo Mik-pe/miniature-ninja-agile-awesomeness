@@ -73,7 +73,6 @@ public class HomeActivity extends Activity
     {    	
     	Intent intent = new Intent(this, CreateProjectActivity.class);
     	startActivity(intent);
-    	finish();
     	
     }
     
