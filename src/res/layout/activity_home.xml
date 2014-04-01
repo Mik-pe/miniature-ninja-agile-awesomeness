@@ -22,13 +22,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp" />
 
-    <Button
-        android:id="@+id/button1"
+      <Button
+        android:id="@+id/create_project_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/analogClock1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="84dp"
-        android:text="Create Project" />
+        android:onClick="openCreateProjectActivity" 
+        android:text="@string/create_project_button" />
 
 </RelativeLayout>
