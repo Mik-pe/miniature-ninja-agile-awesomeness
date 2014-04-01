@@ -8,6 +8,7 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
+
 import java.util.Locale;
 
 import tson.sqlite.helper.DatabaseHelper;
@@ -37,6 +38,7 @@ import android.widget.TimePicker;
 
 public class HomeActivity extends Activity 
 {
+
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	int whattha = 0;
@@ -51,7 +53,6 @@ public class HomeActivity extends Activity
 	
 	List<Project> projectList;
 	
-
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -60,6 +61,7 @@ public class HomeActivity extends Activity
         
         Calendar c = Calendar.getInstance();
         db = new DatabaseHelper(getApplicationContext());
+        db.getAllProjects();
         db.getAllTimeBlocks();
         db.logTimeblocks();
         projectList = db.getAllProjects();

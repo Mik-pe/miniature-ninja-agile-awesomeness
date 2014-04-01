@@ -11,17 +11,12 @@
     <string name="report_time">Report Time</string>
     <string name="add_text">Add Project</string>
     <string name="create_text">Create</string>
-<<<<<<< HEAD
-	<string name="add_hint_text">Enter your project name</string>
-	<string name="edit_text">Edit</string>
-
-=======
     <string name="add_hint_text">Enter your project name</string>
     <string name="edit_text">Edit</string>
     <string name="title_activity_sub_list">SubListActivity</string>
     <string name="title_activity_adapter">Adapter</string>
     <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
->>>>>>> 2903e8805bd49d74e97909ebe450b76580d35778
+
 
 </resources>

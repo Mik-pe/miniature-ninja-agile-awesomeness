@@ -1,10 +1,5 @@
 package tson_utilities;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 2903e8805bd49d74e97909ebe450b76580d35778
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.ArrayList;
