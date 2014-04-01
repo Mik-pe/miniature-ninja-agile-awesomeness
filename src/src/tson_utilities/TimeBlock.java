@@ -8,9 +8,9 @@ public class TimeBlock
 	private int hours;
 	private int minutes;
 	
-	public TimeBlock(Calendar theDate, int theHours, int theMinutes)
+	public TimeBlock(int year, int month, int day, int theHours, int theMinutes)
 	{
-		setTimeBlock(theDate, theHours, theMinutes);
+		setTimeBlock(year, month, day, theHours, theMinutes);
 	}
 	/**
 	 * 
@@ -18,9 +18,12 @@ public class TimeBlock
 	 * @param theHours - hours
 	 * @param theMinutes - minutes
 	 */
-	public void setTimeBlock(Calendar theDate, int theHours, int theMinutes)
+	public void setTimeBlock(int year, int month, int day, int theHours, int theMinutes)
 	{
-		date = theDate;
+		date = Calendar.getInstance();
+		date.set(Calendar.YEAR, year);
+		date.set(Calendar.MONTH, month);
+		date.set(Calendar.DAY_OF_MONTH, day);
 		hours = theHours;
 		minutes = theMinutes;
 	}
@@ -72,7 +75,7 @@ public class TimeBlock
 	 */
 	public String getTimeAsString()
 	{
-		return hours+"h"+minutes+"m";
+		return hours+" h : "+minutes+" m";
 	}
 	/**
 	 * 
@@ -81,6 +84,20 @@ public class TimeBlock
 	public Calendar getDate()
 	{
 		return date;
+	}
+	
+	public boolean isDate(int year, int month, int day)
+	{
+		if(this.date.get(Calendar.YEAR)==year && this.date.get(Calendar.MONTH) == month && this.date.get(Calendar.DAY_OF_MONTH)==day)
+			return true;
+		
+		return false;
+	}
+	
+	public String getDateAsString()
+	{
+		return date.toString();
+		//return date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)+ "-" + date.get(Calendar.YEAR); 
 	}
 	
 }

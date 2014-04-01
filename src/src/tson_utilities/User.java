@@ -1,5 +1,7 @@
 package tson_utilities;
 
+import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * User-class for person using the application
@@ -11,7 +13,7 @@ public class User
 	 private String email = "";
 	 private String name = ""; 
 	 private String id = "";
-	 private List<Project> projectList = null;
+	 private List<Project> projectList = new ArrayList<Project>();
 	 
 	 /**
 	  * Constructor for a User, information to be fetched from Google account in the future
@@ -24,6 +26,16 @@ public class User
 		 this.email = email;
 		 this.name = name;
 		 this.id = id;
+		
+		 Project p1 = new Project("SafariResa");
+		 Project p2 = new Project("IndienResa");
+		 Project p3 = new Project("Resa till USA 'MURRICA");
+		 
+		 this.addProject(p1);
+		 this.addProject(p2);
+		 this.addProject(p3);
+		
+		 
 	 }
 	 
 	 /**
@@ -78,5 +90,18 @@ public class User
 	 public String getEmail()
 	 {
 		 return email;
+	 }
+	 
+	 public static void main(String[] args)
+	 {
+		 User testUser = new User("hej@hej.se", "Kalle Karlsson", "2092");
+		 Project testProject = new Project("Awesome");
+		 testUser.addProject(testProject);
+		 testProject.addTime(2013, 02, 01, 10, 12);
+		 
+		 for(int i = 0; i < testUser.getProjects().size(); ++i)
+		 {
+			 System.out.println(testUser.getProjects().get(i).getTimeByDate(Calendar.getInstance()));
+		 }
 	 }
 }
