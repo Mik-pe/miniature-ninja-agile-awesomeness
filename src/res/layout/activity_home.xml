@@ -83,21 +83,20 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_weight="200"
+            android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
+            android:onClick="openCreateProjectActivity"
             android:text="@string/create_project_button"
-            android:textSize="32sp" 
-            android:onClick="openCreateProjectActivity"/>
+            android:textSize="32sp" />
 
         <Button
             android:id="@+id/Button01"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_weight="200"
+            android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
             android:text="Report Time"
             android:textSize="32sp" />
