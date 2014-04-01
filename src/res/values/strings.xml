@@ -4,5 +4,6 @@
     <string name="app_name">TSon</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="project_name">PROJECTNAME</string>
 
 </resources>
