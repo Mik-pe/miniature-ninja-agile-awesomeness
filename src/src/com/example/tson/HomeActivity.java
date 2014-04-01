@@ -31,8 +31,9 @@ public class HomeActivity extends Activity
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+		return false;
         // Handle presses on the action bar items
-        switch (item.getItemId()) {
+    /*    switch (item.getItemId()) {
             case R.id.:
                 openSearch();
                 return true;
@@ -41,7 +42,7 @@ public class HomeActivity extends Activity
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
     }
     
 }
