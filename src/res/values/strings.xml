@@ -8,8 +8,10 @@
     <string name= "create_project_button"> Create Project</string>
     <string name="project">Your Projects</string>
     <string name="today">Today</string>
+    <string name ="report_time">Report Time</string>
     <string name="add_text">Add Project</string>
     <string name="create_text">Create</string>
 	<string name="add_hint_text">Enter your project name</string>
+
 
 </resources>

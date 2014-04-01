@@ -39,7 +39,7 @@ public class User
 	 }
 	 
 	 /**
-	  * Adds an exicsting project to user's project list
+	  * Adds an existing project to user's project list
 	  * @param p - Name of project
 	  */
 	 public void addProject(Project p)

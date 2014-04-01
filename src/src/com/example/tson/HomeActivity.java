@@ -3,6 +3,7 @@ package com.example.tson;
 //IMPORT OUR OWN CLASSES
 import java.util.Calendar;
 import java.util.Locale;
+
 import tson_utilities.*;
 //IMPORT ANDROID
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.MenuItem;
@@ -29,13 +31,13 @@ public class HomeActivity extends Activity
         User user = new User("sdf@sdf.com", "Bosse", "b1337");
         setContentView(R.layout.activity_home);
         user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
-        final RelativeLayout rl=(RelativeLayout) findViewById(R.id.rl);
+        final LinearLayout rl=(LinearLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
         
        /* for(int i=0; i<user.getProjects().size();i++)
         {
             tv[i]=new TextView(this);   
-            RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams
+            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams
                     ((int)LayoutParams.WRAP_CONTENT,(int)LayoutParams.WRAP_CONTENT);
             params.leftMargin=50;
                 params.topMargin=i*50;
