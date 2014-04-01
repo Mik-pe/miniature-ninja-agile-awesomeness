@@ -1,5 +1,6 @@
 package tson_utilities;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -7,13 +8,13 @@ import java.util.List;
  * Project class is used as an object for each project created
  * by the user. User can add time, get time and get the name
  * of the project.
- * @author mikpe201
+ * @author Mike
  *
  */
 public class Project {
 	
 	private String name;
-	private List<TimeBlock> submissionList;
+	private List<TimeBlock> submissionList = new ArrayList<TimeBlock>();
 	
 	/**
 	 * Constructor for Project Class, submissions are added
@@ -31,14 +32,12 @@ public class Project {
 	 * @param h - hours
 	 * @param m - minutes
 	 */
-	public void addTime(Calendar d, int h, int m)
+	public void addTime(int year, int month, int day, int h, int m)
 	{
 		
-		TimeBlock t = new TimeBlock(d, h, m);
+		TimeBlock t = new TimeBlock(year, month, day, h, m);
 		if(!submissionList.contains(t))
-		{
-			submissionList.add(t);
-		}
+				submissionList.add(t);
 	}
 	
 	/**
@@ -47,18 +46,18 @@ public class Project {
 	 * @return  the string of amount of hours of that 
 	 * date and project
 	 */
-	public String getTimeByDate(Calendar d)
+	public String getTimeByDate(Calendar cal)
 	{
-		
-		for(int i=this.submissionList.size(); i>0 ;i--)
-		{
-			if(this.submissionList.get(i).getDate() == d)
+		if(!this.submissionList.isEmpty())			
+			for(int i=this.submissionList.size()-1; i>=0 ;i--)
 			{
-				return this.submissionList.get(i).getTimeAsString();
+				
+				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
+					return this.submissionList.get(i).getTimeAsString();
+				
 			}
-		}
 		
-		return "-";
+		return " -- h : -- m";
 	}
 	
 	/**

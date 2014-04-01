@@ -5,5 +5,15 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
+    
+    
+    <Button
+        android:id="@+id/create_project_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/analogClock1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="84dp"
+        android:text="@string/create_project_button" />
 
 </menu>
