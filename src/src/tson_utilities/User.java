@@ -1,5 +1,6 @@
 package tson_utilities;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Sofie & John
  *
  */
-public class User 
+public class User
 {
 	 private String email = "";
 	 private String name = ""; 
