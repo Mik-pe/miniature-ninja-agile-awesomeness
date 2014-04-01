@@ -90,7 +90,7 @@
             android:textSize="32sp" />
 
         <Button
-            android:id="@+id/Button01"
+            android:id="@+id/report_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="0dp"
@@ -98,7 +98,7 @@
             android:layout_marginRight="40dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
-            android:text="Report Time"
+            android:text="@string/report_time"
             android:textSize="32sp" />
 
     </LinearLayout>
