@@ -32,7 +32,7 @@ public class HomeActivity extends Activity
         final RelativeLayout rl=(RelativeLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
         
-        for(int i=0; i<user.getProjects().size();i++)
+       /* for(int i=0; i<user.getProjects().size();i++)
         {
             tv[i]=new TextView(this);   
             RelativeLayout.LayoutParams params=new RelativeLayout.LayoutParams
@@ -44,7 +44,7 @@ public class HomeActivity extends Activity
             tv[i].setPadding(20, 50, 20, 50);
             tv[i].setLayoutParams(params);
             rl.addView(tv[i]);
-        }
+        }*/
     }
 
 
