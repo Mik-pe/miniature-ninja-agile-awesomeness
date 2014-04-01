@@ -2,8 +2,10 @@ package com.example.tson;
 
 //IMPORT OUR OWN CLASSES
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
+import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.*;
 //IMPORT ANDROID
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.view.View;
 
 public class HomeActivity extends Activity 
 {
+	//Database Helper
+	DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -47,6 +51,37 @@ public class HomeActivity extends Activity
             tv[i].setLayoutParams(params);
             rl.addView(tv[i]);
         }*/
+        
+        //DB TEST
+        
+        db = new DatabaseHelper(getApplicationContext());
+        
+        Project p1 = new Project("Tester project");
+        Log.d("Project Count", "Project Count BEFORE INITILIZATION: " + db.getAllProjects().size());
+        
+        long p1_id = db.createProject(p1);
+        
+        
+        Log.d("Project Count", "Project Count: " + db.getAllProjects().size());
+        
+        // get all projects
+        Log.d("Get projects", "get all projects");
+        List<Project> projs = db.getAllProjects();
+        for(Project proj: projs){
+        	Log.d("PROJECT", proj.getName());
+        }
+        
+        //delete project
+        Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
+        //db.deleteProject(p1_id);
+        
+        Log.d("Project Count", "Project Count after delete: " + db.getAllProjects().size());
+        
+        db.closeDB();
+        
+        
+        
+        
     }
 
 
