@@ -4,15 +4,17 @@ package com.example.tson;
 import java.util.Calendar;
 import java.util.Locale;
 import tson_utilities.*;
-
 //IMPORT ANDROID
 import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.view.MenuItem;
+import android.view.View;
 
 //IMPORT OTHER
 
@@ -52,5 +54,16 @@ public class HomeActivity extends Activity
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
+    /**
+     * Opens the Create Project View when the "Create Project" button is clicked
+     * @param view - View for Create Project Screen
+     */
+    public void openCreateProjectActivity(View view)
+    {
+    	Intent intent = new Intent(this, CreateProjectActivity.class);
+    	startActivity(intent);
+    	
+    }
+   
     
 }
