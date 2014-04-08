@@ -1,5 +1,9 @@
 package com.example.tson;
 
+import com.example.tson.HomeActivity;
+import tson.sqlite.helper.DatabaseHelper;
+import tson_utilities.Project;
+import tson_utilities.User;
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -16,6 +20,8 @@ import android.os.Build;
 
 public class CreateProjectActivity extends Activity {
 	
+	public HomeActivity homeActivity = new HomeActivity();
+	DatabaseHelper db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +58,15 @@ public class CreateProjectActivity extends Activity {
 	{
 		EditText projectNameEditText = (EditText) findViewById(R.id.project_name_editText);
 		String projectName = projectNameEditText.getText().toString();
+		
+		db = new DatabaseHelper(getApplicationContext());
+    
+        Project p1 = new Project(projectName);
+        
+		homeActivity.user.addProject(p1);
+		db.createProject(p1);
+		
+		db.close();
 		HomeActivity.user.createProject(projectName);
 		
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();
@@ -61,6 +76,7 @@ public class CreateProjectActivity extends Activity {
     	
     	startActivity(intent);
     	finish(); //finish this activity, remove from history	
+    	
     	
 	}
 

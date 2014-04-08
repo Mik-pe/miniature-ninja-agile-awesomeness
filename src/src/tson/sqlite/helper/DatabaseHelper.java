@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Calendar;
 import tson_utilities.Project;
 
+
 import tson_utilities.TimeBlock;
 
 import android.content.ContentValues;
@@ -27,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 6;
 	
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";

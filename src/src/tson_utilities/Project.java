@@ -3,6 +3,8 @@ package tson_utilities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import tson.sqlite.helper.DatabaseHelper;
+import com.example.tson.HomeActivity;
 
 /**
  * Project class is used as an object for each project created
@@ -36,8 +38,12 @@ public class Project {
 	{
 		
 		TimeBlock t = new TimeBlock(year, month, day, h, m);
-		if(!submissionList.contains(t))
-				submissionList.add(t);
+		
+		if(!submissionList.contains(t)){
+			submissionList.add(t);
+			HomeActivity.db.createTimeBlock(t, this);
+		}
+				
 	}
 	
 	/**

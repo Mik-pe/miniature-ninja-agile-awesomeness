@@ -8,11 +8,11 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
-
 import java.util.Locale;
 
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.*;
+
 //IMPORT ANDROID
 import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
@@ -44,12 +44,11 @@ public class HomeActivity extends Activity
 	String[] hourmin;
 	View currentPage;
 	ListView projectListView;
+	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 
 	//Database Helper
-	DatabaseHelper db;
-
+	public static DatabaseHelper db;
 	
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 	List<Project> projectList = user.getProjects();
 	
 	
@@ -59,18 +58,18 @@ public class HomeActivity extends Activity
         super.onCreate(savedInstanceState);
         Calendar c = Calendar.getInstance();
         
+        db = new DatabaseHelper(getApplicationContext());
+        projectList = db.getAllProjects();
+        for (int i = 0; i < projectList.size(); i++)
+        user.addProject(projectList.get(i));
+        
         setContentView(R.layout.activity_home);
-        user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
         final LinearLayout rl=(LinearLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
 
         projectListView = (ListView) findViewById(R.id.projectListView);
         
-        
-
-        
         ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
-        
         projectListView.setAdapter(projectAdapter);
         
         //DB TEST
@@ -79,40 +78,9 @@ public class HomeActivity extends Activity
         
         db = new DatabaseHelper(getApplicationContext());
         
-        Project p1 = new Project("Tester project");
-        Log.d("Project Count", "Project Count BEFORE INITILIZATION: " + db.getAllProjects().size());
-        Project p2 = new Project("Another project");
-        Project p3 = new Project("Third project");
-        long p1_id = db.createProject(p1);
-        long p2_id = db.createProject(p2);
         
-        
-        Log.d("Project Count", "Project Count: " + db.getAllProjects().size());
-        
-        // get all projects
-        Log.d("Get projects", "get all projects");
-        List<Project> projs = db.getAllProjects();
-      /*  for(Project proj: projs){
-        	Log.d("PROJECT", proj.getName());
-        }
-        */
 
-        // create time block
-        TimeBlock t1 = new TimeBlock(1,2,3,4,5);
-        TimeBlock t2 = new TimeBlock(1,2,3,4,5);
-        long t1_id = db.createTimeBlock(t1,p1);
-        long t2_id = db.createTimeBlock(t2,p3);
-        Log.d("TimeBlock", t1_id + "");
-        Log.d("ALL TIMEBLOCKS", "All time blocks" + db.getTimeBlocksByProject(p3).size());
-        
-        //delete project
-        Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
-        //db.deleteProject(p1_id);
-        
-        Log.d("Project Count", "Project Count after delete: " + db.getAllProjects().size());
-        
-        db.closeDB();
-
+        //db.closeDB();
 
         
     }
@@ -123,6 +91,8 @@ public class HomeActivity extends Activity
    		//calculates what page and position we are at
    		holder = projectListView.getPositionForView(v);
    		currentPage = (View) v.getParent();
+   		
+   		//Log.d("hejsan", user.getProjects().get(0).toString());
        	
        	//Calculate what hour and minute that we are at when we click
        	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
