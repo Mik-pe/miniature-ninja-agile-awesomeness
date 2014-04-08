@@ -10,13 +10,12 @@
 
     <application
         android:allowBackup="true"
+        android:fontFamily="sans-serif-thin"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:fontFamily="sans-serif-thin" >
-        
-        
-    	<!-- Home Screen Activity -->
+        android:theme="@style/AppTheme" >
+
+        <!-- Home Screen Activity -->
         <activity
             android:name="com.example.tson.HomeActivity"
             android:label="@string/app_name" >
@@ -26,13 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <!-- Create Project Activity -->
         <activity
             android:name="com.example.tson.CreateProjectActivity"
             android:label="@string/create_project_button" >
         </activity>
-        
     </application>
 
 </manifest>
