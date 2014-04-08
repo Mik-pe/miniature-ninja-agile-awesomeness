@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
+
+import android.util.Log;
+import tson.sqlite.helper.DatabaseHelper;
 /**
  * User-class for person using the application
  * @author Sofie & John
@@ -15,6 +18,7 @@ public class User
 	 private String name = ""; 
 	 private String id = "";
 	 private List<Project> projectList = new ArrayList<Project>();
+	 DatabaseHelper db;
 	 
 	 /**
 	  * Constructor for a User, information to be fetched from Google account in the future
@@ -27,16 +31,6 @@ public class User
 		 this.email = email;
 		 this.name = name;
 		 this.id = id;
-		
-		 Project p1 = new Project("SafariResa");
-		 Project p2 = new Project("IndienResa");
-		 Project p3 = new Project("Resa till USA 'MURRICA");
-		 
-		 this.addProject(p1);
-		 this.addProject(p2);
-		 this.addProject(p3);
-		
-		 
 	 }
 	 
 	 /**
@@ -46,7 +40,9 @@ public class User
 	 public void addProject(Project p)
 	 {
 		 if(!projectList.contains(p))
+		 {
 			 projectList.add(p);
+		 }
 	 }
 	 
 	 /**
@@ -65,7 +61,7 @@ public class User
 	  * @return
 	  */
 	 public List<Project> getProjects()
-	 {
+	 {	
 		 return projectList;
 	 }
 	 /**
