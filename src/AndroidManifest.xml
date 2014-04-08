@@ -31,6 +31,14 @@
             android:name="com.example.tson.CreateProjectActivity"
             android:label="@string/create_project_button" >
         </activity>
+
+        
+        <!-- submission activity -->
+        <activity
+            android:name="com.example.tson.SubListActivity"
+            android:label="@string/title_activity_sub_list" >
+        </activity>
+
     </application>
 
 </manifest>

@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import android.R.array;
 import android.app.Activity;
@@ -71,16 +72,20 @@ public class HomeActivity extends Activity
 
     //Creating the dialog for the specific time
    	public void showTimeDialog(View v)
-       {
+    {
    		//calculates what page and position we are at
    		holder = projectListView.getPositionForView(v);
    		currentPage = (View) v.getParent();
        	
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
-       	hourmin[1] = hourmin[1].replaceAll("m", "");
-       	hourmin[1] = hourmin[1].replaceAll(" ", "");
-       	if(hourmin[1].equals("--")) {
+   		if((user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())) != null){
+	       	hourmin = (user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())).getTimeAsString().split(" h : ");
+	       	hourmin[1] = hourmin[1].replaceAll("m", "");
+	       	hourmin[1] = hourmin[1].replaceAll(" ", "");
+   		}
+   		else
+   		{
+
        		hourmin[0] = "0";
        		hourmin[1] = "0";
        	}
@@ -89,7 +94,7 @@ public class HomeActivity extends Activity
        	
        	//Calls the onCreateDialog
        	showDialog(holder);
-       }
+    }
    	
    	//Creates the Dialog with the right time from which click
        protected Dialog onCreateDialog(int id)
@@ -98,9 +103,11 @@ public class HomeActivity extends Activity
        }
        
        //When u click Done in the dialog it will save it in the user and print the time out
-       private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
+    private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() 
+    {
    		@Override
-   		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+   		public void onTimeSet(TimePicker view, int hourOfDay, int minute) 
+   		{
    			hour=hourOfDay;
    			min=minute;
    			Calendar c = Calendar.getInstance();
@@ -148,7 +155,8 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+    		if((currentProject.getTimeByDate(Calendar.getInstance())) != null)
+    			projectTime.setText((currentProject.getTimeByDate(Calendar.getInstance())).getTimeAsString());
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		

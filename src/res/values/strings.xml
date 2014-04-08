@@ -13,5 +13,9 @@
     <string name="create_text">Create</string>
     <string name="add_hint_text">Enter your project name</string>
     <string name="edit_text">Edit</string>
+<<<<<<< HEAD
+=======
+    <string name="title_activity_sub_list">SubListActivity</string>
+>>>>>>> 95a009635a2c619dc3eb2cbf99113aedb50187db
 
 </resources>
