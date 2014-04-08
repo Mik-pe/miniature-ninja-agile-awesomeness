@@ -33,4 +33,14 @@
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <TextView
+            android:id="@+id/weekText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
     </RelativeLayout>
