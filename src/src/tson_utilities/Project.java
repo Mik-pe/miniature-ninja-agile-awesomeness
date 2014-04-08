@@ -46,18 +46,18 @@ public class Project {
 	 * @return  the string of amount of hours of that 
 	 * date and project
 	 */
-	public String getTimeByDate(Calendar cal)
+	public TimeBlock getTimeByDate(Calendar cal)
 	{
 		if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
 			{
 				
 				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
-					return this.submissionList.get(i).getTimeAsString();
+					return this.submissionList.get(i);
 				
 			}
 		
-		return " -- h : -- m";
+		return null;
 	}
 	
 	/**

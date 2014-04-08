@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import android.R.array;
 import android.app.Activity;
@@ -77,7 +78,7 @@ public class HomeActivity extends Activity
    		currentPage = (View) v.getParent();
        	
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
+       	hourmin = (user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())).getTimeAsString().split(" h : ");
        	hourmin[1] = hourmin[1].replaceAll("m", "");
        	hourmin[1] = hourmin[1].replaceAll(" ", "");
        	if(hourmin[1].equals("--")) {
@@ -148,7 +149,7 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+    		projectTime.setText((currentProject.getTimeByDate(Calendar.getInstance())).getTimeAsString());
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		
