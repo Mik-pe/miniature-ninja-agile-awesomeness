@@ -8,11 +8,11 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
-
 import java.util.Locale;
 
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.*;
+
 //IMPORT ANDROID
 import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
@@ -66,22 +66,16 @@ public class HomeActivity extends Activity
 
         projectListView = (ListView) findViewById(R.id.projectListView);
         
-        
-
-        
         ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
-        
         projectListView.setAdapter(projectAdapter);
         
         //DB TEST
-        
         db = new DatabaseHelper(getApplicationContext());
         
         Project p1 = new Project("Tester project");
         Log.d("Project Count", "Project Count BEFORE INITILIZATION: " + db.getAllProjects().size());
         
         long p1_id = db.createProject(p1);
-        
         
         Log.d("Project Count", "Project Count: " + db.getAllProjects().size());
         
