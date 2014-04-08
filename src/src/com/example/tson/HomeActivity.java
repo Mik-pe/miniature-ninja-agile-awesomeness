@@ -78,10 +78,13 @@ public class HomeActivity extends Activity
    		currentPage = (View) v.getParent();
        	
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = (user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())).getTimeAsString().split(" h : ");
-       	hourmin[1] = hourmin[1].replaceAll("m", "");
-       	hourmin[1] = hourmin[1].replaceAll(" ", "");
-       	if(hourmin[1].equals("--")) {
+   		if((user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())) != null){
+	       	hourmin = (user.getProjects().get(holder).getTimeByDate(Calendar.getInstance())).getTimeAsString().split(" h : ");
+	       	hourmin[1] = hourmin[1].replaceAll("m", "");
+	       	hourmin[1] = hourmin[1].replaceAll(" ", "");
+   		}
+   		else
+   		{
        		hourmin[0] = "0";
        		hourmin[1] = "0";
        	}
@@ -149,7 +152,8 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText((currentProject.getTimeByDate(Calendar.getInstance())).getTimeAsString());
+    		if((currentProject.getTimeByDate(Calendar.getInstance())) != null)
+    			projectTime.setText((currentProject.getTimeByDate(Calendar.getInstance())).getTimeAsString());
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		

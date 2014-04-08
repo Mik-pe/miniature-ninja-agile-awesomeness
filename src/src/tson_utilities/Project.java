@@ -43,8 +43,7 @@ public class Project {
 	/**
 	 * Getter of string
 	 * @param d  date the time should correspond to
-	 * @return  the string of amount of hours of that 
-	 * date and project
+	 * @return  the TimeBlock of that date OR null if no TimeBlock exists.
 	 */
 	public TimeBlock getTimeByDate(Calendar cal)
 	{
@@ -86,8 +85,7 @@ public class Project {
 			}
 		//Reference based t should work..?
 		 * This function can be used when editing time in HomeActivity, so that the values are saved.
-		t.setMinutes(m);
-		t.setHours(h);
+		t.setDuration(h, m);
 	}
 	*/
 
