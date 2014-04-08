@@ -97,7 +97,7 @@ public class HomeActivity extends Activity
         TimeBlock t1 = new TimeBlock(1,2,3,4,5);
         long t1_id = db.createTimeBlock(t1,p1);
         
-        
+        Log.d("Project sadasd", msg)
         
         //delete project
         Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
