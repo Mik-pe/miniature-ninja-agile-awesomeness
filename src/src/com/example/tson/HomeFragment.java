@@ -11,6 +11,7 @@ import tson_utilities.User;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.TimePickerDialog;
+import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
 	private View listView;
 	Button createProjectButton;
 	TextView projectTimeTextViewVar;
+	ArrayAdapter<Project> projectAdapter;
 	
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 	List<Project> projectList = user.getProjects();
@@ -67,7 +69,7 @@ public class HomeFragment extends Fragment {
        
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
         
-        ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
+        projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
         
@@ -90,8 +92,6 @@ public class HomeFragment extends Fragment {
 		
 		//calculates what page and position we are at
 		holder = projectListView.getPositionForView(v);
-		Log.d("Tjens", "Hej");
-		currentPage = (View) v.getParent();
     	
     	//Calculate what hour and minute that we are at when we click
     	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
@@ -105,14 +105,10 @@ public class HomeFragment extends Fragment {
     	newMin = Integer.parseInt(hourmin[1]);
     	
     	//Calls the onCreateDialog
-    	getActivity().showDialog(holder);
+    	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
     }
 	
 	//Creates the Dialog with the right time from which click
-    protected Dialog onCreateDialog(int id)
-    {
-    	return new TimePickerDialog(getActivity(), timeSetListener, newHour, newMin, true);	
-    }
     
     //When u click Done in the dialog it will save it in the user and print the time out
     private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
@@ -123,9 +119,8 @@ public class HomeFragment extends Fragment {
 			Calendar c = Calendar.getInstance();
 			
 			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
-			
-			TextView et=(TextView) currentPage.findViewById(R.id.projectTimeTextView);
-			et.setText(hour+ " h : "+min + " m");
+		
+			projectAdapter.notifyDataSetChanged();
 		}
 	};
     
@@ -169,17 +164,15 @@ public class HomeFragment extends Fragment {
 				
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Log.d("Hej", "hsshd");
 					showTimeDialog(v);
-					Log.d("Hej", "ddddd");
+					
 				}
-			});
-    		
-    		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
+			});		
     		
     		return view;
     	}
     }
+    
+    
     
 }
