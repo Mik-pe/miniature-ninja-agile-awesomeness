@@ -1,9 +1,16 @@
+/**
+ * @author Pär Eriksson
+ * A database helper class that takes care of all interaction with the SQLite database
+ */
 package tson.sqlite.helper;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,6 +41,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//PROJECTS Table
 	private static final String KEY_PROJECT_NAME = "project_name";
 	
+	//TIME BLOCKS TABLE
+	private static final String KEY_TIME_BLOCK_PROJECT_ID = "project_id";
+	private static final String KEY_TIME_BLOCK_DATE = "date";
+	private static final String KEY_TIME_BLOCK_MINUTES = "minutes";
+	
 	
 	// Table Create Statements
 	// Project table create statement
@@ -41,6 +53,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_NAME
 			+ " TEXT" + ")";
 	
+	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
+			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER,"  + KEY_TIME_BLOCK_MINUTES
+			+ " INTEGER" + ")";
 	
 	
 	
@@ -63,6 +78,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//Create new tables
 		onCreate(db);
 	}
+	
+	
+	//========================================================
+	// PROJECT ===============================================
+	//========================================================
 	/**
 	 * Creating a project
 	 * @param project - the projec object
@@ -108,7 +128,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		return p;
 	}
-	
+	/**
+	 * Select all projects
+	 * @return List<Project> 
+	 */
 	public List<Project> getAllProjects()
 	{
 		List<Project> projects = new ArrayList<Project>();
@@ -132,12 +155,46 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return projects;
 	}
 	
+	public long getProjectId(String project_name){
+		SQLiteDatabase db = this.getReadableDatabase();
+		String selectQuery = "SELECT "+ KEY_ID + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + project_name;
+		Log.e(LOG, selectQuery);
+		Cursor c = db.rawQuery(selectQuery, null);
+		Log.e(LOG, c.toString());
+		if(c != null)
+			c.moveToFirst();
+		return c.getLong(0);
+	}
+	
 	public void deleteProject(long project_id)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_PROJECT, KEY_ID + " = ?",
 				new String[] {String.valueOf(project_id) });
 	}
+	
+	
+	//========================================================
+	// TIME BLOCK ============================================
+	//========================================================
+	
+	public long createTimeBlock(TimeBlock timeblock, Project project)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
+		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
+		
+		//insert row
+		long timeblock_id = db.insert(TABLE_TIME_BLOCK, null, values);
+		
+	
+		return timeblock_id;
+		
+	}
+	
+	
 	
 	//Close database
 	public void closeDB()
