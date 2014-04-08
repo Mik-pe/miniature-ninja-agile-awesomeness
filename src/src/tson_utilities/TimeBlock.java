@@ -75,6 +75,9 @@ public class TimeBlock
 	 */
 	public String getTimeAsString()
 	{
+		if(hours == 0 && minutes == 0)
+			return " -- h : -- m";
+		else
 		return hours+" h : "+minutes+" m";
 	}
 	/**
