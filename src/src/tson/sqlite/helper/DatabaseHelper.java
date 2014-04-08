@@ -23,7 +23,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";
 	
-	
 	//Table Names
 	private static final String TABLE_PROJECT = "projects";
 	private static final String TABLE_TIME_BLOCK = "time_blocks";

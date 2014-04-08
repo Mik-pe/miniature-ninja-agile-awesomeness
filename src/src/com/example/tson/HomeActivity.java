@@ -4,16 +4,21 @@ package com.example.tson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
+<<<<<<< HEAD
 
+=======
+>>>>>>> merge branch with master
 import java.util.Locale;
 
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.*;
+<<<<<<< HEAD
 
+=======
+>>>>>>> merge branch with master
 //IMPORT ANDROID
 import android.os.Bundle;
 import android.app.ActionBar.LayoutParams;
@@ -47,6 +52,8 @@ public class HomeActivity extends Activity
 	View currentPage;
 	ListView projectListView;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	//Database Helper
+
 
 	//Database Helper
 	public static DatabaseHelper db;
@@ -92,6 +99,7 @@ public class HomeActivity extends Activity
         projectListView.setAdapter(projectAdapter);
         projectAdapter.notifyDataSetChanged();
         super.onCreate(savedInstanceState);
+
     }
 
     //Creating the dialog for the specific time
