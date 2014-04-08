@@ -152,11 +152,13 @@ public class HomeActivity extends Activity
     		Project currentProject = projectList.get(position);
     		
     		TextView projectName = (TextView) view.findViewById(R.id.projectNameTextView);
+    		
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
     		if((currentProject.getTimeByDate(Calendar.getInstance())) != null)
     			projectTime.setText((currentProject.getTimeByDate(Calendar.getInstance())).getTimeAsString());
+    		
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		

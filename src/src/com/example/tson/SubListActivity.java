@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import android.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class SubListActivity extends Activity {
@@ -51,9 +53,6 @@ public class SubListActivity extends Activity {
 	
 	private class SubmissionListAdapter extends ArrayAdapter<Calendar>
     {
-    	
-		
-		
 		
 		public SubmissionListAdapter()
     	{
@@ -69,12 +68,28 @@ public class SubListActivity extends Activity {
     		Calendar currentDate = calList.get(position);
     		
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
+    		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
+    		Button editButton = (Button) view.findViewById(R.id.editDayButton);	
+    		
+    		if(position == 0 || currentDate.get(Calendar.DAY_OF_WEEK)==7)
+    		{
+    			TextView weekText = (TextView) view.findViewById(R.id.weekText);
+    			weekText.setText(currentDate.get(Calendar.DAY_OF_MONTH)+"/"+(currentDate.get(Calendar.MONTH)+1));
+    			
+    			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
+    			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+    			params.addRule(RelativeLayout.BELOW, R.id.weekText);
+    			
+    			RelativeLayout.LayoutParams paramsButton =  (RelativeLayout.LayoutParams)editButton.getLayoutParams();
+    			paramsButton.addRule(RelativeLayout.BELOW, R.id.weekText);
+    		}
+    		
+    		
     		submissionDate.setText(currentDate.get(Calendar.DAY_OF_MONTH)+"/"+(currentDate.get(Calendar.MONTH)+1));
     		
-    		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
+    		
     		projectTime.setText(HomeActivity.user.getTimeByDate(currentDate)/60 + ":" + +HomeActivity.user.getTimeByDate(currentDate)%60);
     		
-    		Button editButton = (Button) view.findViewById(R.id.editDayButton);		
     		
     		return view;
     	}
