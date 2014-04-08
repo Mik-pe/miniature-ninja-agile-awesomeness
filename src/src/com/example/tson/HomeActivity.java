@@ -88,6 +88,13 @@ public class HomeActivity extends Activity
         	Log.d("PROJECT", proj.getName());
         }
         
+        // create time block
+        TimeBlock t1 = new TimeBlock(1,2,3,4,5);
+        long t1_id = db.createTimeBlock(t1,p1);
+        
+        
+        
+        
         //delete project
         Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
         //db.deleteProject(p1_id);
