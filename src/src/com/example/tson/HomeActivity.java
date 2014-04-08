@@ -4,15 +4,22 @@ package com.example.tson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
+import java.util.Locale;
+
+import tson.sqlite.helper.DatabaseHelper;
+import tson_utilities.*;
+//IMPORT ANDROID
+import android.os.Bundle;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +41,8 @@ public class HomeActivity extends Activity
 	String[] hourmin;
 	View currentPage;
 	ListView projectListView;
+	//Database Helper
+	DatabaseHelper db;
 
 	
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
@@ -54,18 +63,39 @@ public class HomeActivity extends Activity
         projectListView = (ListView) findViewById(R.id.projectListView);
         
         
-        List<String> projectStrings = new ArrayList<String>();
-        
-        for(int i = 0; i < projectList.size(); i++)
-        {
-        	projectStrings.add(projectList.get(i).getName());
-        }
-        
-        //ArrayAdapter<String> arrayAdapter = new Project<String>(this, android.R.layout.simple_list_item_1, projectStrings);
+
         
         ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
+        
+        //DB TEST
+        
+        db = new DatabaseHelper(getApplicationContext());
+        
+        Project p1 = new Project("Tester project");
+        Log.d("Project Count", "Project Count BEFORE INITILIZATION: " + db.getAllProjects().size());
+        
+        long p1_id = db.createProject(p1);
+        
+        
+        Log.d("Project Count", "Project Count: " + db.getAllProjects().size());
+        
+        // get all projects
+        Log.d("Get projects", "get all projects");
+        List<Project> projs = db.getAllProjects();
+        for(Project proj: projs){
+        	Log.d("PROJECT", proj.getName());
+        }
+        
+        //delete project
+        Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
+        //db.deleteProject(p1_id);
+        
+        Log.d("Project Count", "Project Count after delete: " + db.getAllProjects().size());
+        
+        db.closeDB();
+
         
     }
 
