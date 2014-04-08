@@ -14,6 +14,8 @@
     <string name="add_hint_text">Enter your project name</string>
     <string name="edit_text">Edit</string>
     <string name="title_activity_sub_list">SubListActivity</string>
-
+    <string name="title_activity_adapter">Adapter</string>
+    <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
+    <string name="title_activity_submission_fragment">SubmissionFragment</string>
 
 </resources>

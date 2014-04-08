@@ -32,13 +32,23 @@
             android:label="@string/create_project_button" >
         </activity>
 
-        
         <!-- submission activity -->
         <activity
-            android:name="com.example.tson.SubListActivity"
+            android:name="com.example.tson.SubmissionListFragment"
             android:label="@string/title_activity_sub_list" >
         </activity>
-
+        <activity
+            android:name="com.example.tson.Adapter"
+            android:label="@string/title_activity_adapter" >
+        </activity>
+        <activity
+            android:name="com.example.tson.SubmissionCalFragment"
+            android:label="@string/title_activity_submission_cal_fragment" >
+        </activity>
+        <activity
+            android:name="com.example.tson.SubmissionFragment"
+            android:label="@string/title_activity_submission_fragment" >
+        </activity>
     </application>
 
 </manifest>
