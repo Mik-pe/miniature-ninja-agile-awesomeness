@@ -8,7 +8,7 @@ package tson.sqlite.helper;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Calendar;
 import tson_utilities.Project;
 
 import tson_utilities.TimeBlock;
@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 4;
 	
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";
@@ -46,7 +46,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//TIME BLOCKS TABLE
 	private static final String KEY_TIME_BLOCK_PROJECT_ID = "project_id";
-	private static final String KEY_TIME_BLOCK_DATE = "date";
+	private static final String KEY_TIME_BLOCK_YEAR = "year";
+	private static final String KEY_TIME_BLOCK_MONTH = "month";
+	private static final String KEY_TIME_BLOCK_DAY = "day";
 	private static final String KEY_TIME_BLOCK_MINUTES = "minutes";
 	
 
@@ -59,8 +61,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 
 	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
-			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER,"  + KEY_TIME_BLOCK_MINUTES
-			+ " INTEGER" + ")";
+			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
+			+ KEY_TIME_BLOCK_MONTH + " INTEGER," + KEY_TIME_BLOCK_DAY + " INTEGER," + KEY_TIME_BLOCK_MINUTES + " INTEGER"  +")";
 
 	
 	
@@ -72,13 +74,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		Log.d("hejhejhejhejhe", CREATE_TABLE_PROJECT);
 		db.execSQL(CREATE_TABLE_PROJECT);
+		
+		db.execSQL(CREATE_TABLE_TIME_BLOCK);
 		//IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
+		
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME_BLOCK);
 		// IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	
 		//Create new tables
@@ -165,8 +173,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	public long getProjectId(String project_name){
 		SQLiteDatabase db = this.getReadableDatabase();
-		String selectQuery = "SELECT "+ KEY_ID + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + project_name;
-		Log.e(LOG, selectQuery);
+		String selectQuery = "SELECT "+ "*" + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + "'" + project_name + "'";
+		//Log.e("TEEEEEEEEEEEEHKADKJHFJLAD", selectQuery);
 		Cursor c = db.rawQuery(selectQuery, null);
 		Log.e(LOG, c.toString());
 		if(c != null)
@@ -189,19 +197,83 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public long createTimeBlock(TimeBlock timeblock, Project project)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
+		Calendar d = timeblock.getDate();
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
+		values.put(KEY_TIME_BLOCK_YEAR, d.YEAR);
+		values.put(KEY_TIME_BLOCK_MONTH, d.MONTH);
+		values.put(KEY_TIME_BLOCK_DAY, d.DAY_OF_MONTH);
+		
 		
 		//insert row
 		long timeblock_id = db.insert(TABLE_TIME_BLOCK, null, values);
-		
+	
 	
 		return timeblock_id;
 		
 	}
-
+	
+	public List<TimeBlock> getAllTimeBlocks()
+	{
+		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
+		String selectQuery = "SELECT * FROM " + TABLE_TIME_BLOCK;
+		
+		//Log.e(LOG, selectQuery);
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		
+		//Loop through all rows in the table and add to the list
+		if(c != null)
+			if(c.moveToFirst())
+			{
+				do
+				{
+					int year = c.getColumnIndex(KEY_TIME_BLOCK_YEAR);
+					int month = c.getColumnIndex(KEY_TIME_BLOCK_MONTH);
+					int day = c.getColumnIndex(KEY_TIME_BLOCK_DAY);
+					int minutes = c.getColumnIndex(KEY_TIME_BLOCK_MINUTES);
+					int hours = (int)minutes/60;
+					minutes = minutes-hours*60;
+					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
+					timeblocks.add(t);
+				}while (c.moveToNext());
+			}
+			return timeblocks;
+	}
+	
+	public List<TimeBlock> getTimeBlocksByProject(Project p)
+	{
+		long pid = getProjectId(p.getName());
+		String selectQuery = "SELECT * FROM " + TABLE_TIME_BLOCK + " WHERE "+ KEY_TIME_BLOCK_PROJECT_ID + " = " + pid;
+		Log.e(LOG, selectQuery);
+		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
+		
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		if(c != null)
+			if(c.moveToFirst())
+			{
+				do
+				{
+					int year = c.getColumnIndex(KEY_TIME_BLOCK_YEAR);
+					int month = c.getColumnIndex(KEY_TIME_BLOCK_MONTH);
+					int day = c.getColumnIndex(KEY_TIME_BLOCK_DAY);
+					int minutes = c.getColumnIndex(KEY_TIME_BLOCK_MINUTES);
+					int hours = (int)minutes/60;
+					minutes = minutes-hours*60;
+					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
+					timeblocks.add(t);
+				}while (c.moveToNext());
+			}
+			return timeblocks;
+	}
+	
+	
+	
+	
+	
 	//Close database
 	public void closeDB()
 	{

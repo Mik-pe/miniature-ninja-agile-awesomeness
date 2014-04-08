@@ -75,12 +75,16 @@ public class HomeActivity extends Activity
         
         //DB TEST
         
+        
+        
         db = new DatabaseHelper(getApplicationContext());
         
         Project p1 = new Project("Tester project");
         Log.d("Project Count", "Project Count BEFORE INITILIZATION: " + db.getAllProjects().size());
-        
+        Project p2 = new Project("Another project");
+        Project p3 = new Project("Third project");
         long p1_id = db.createProject(p1);
+        long p2_id = db.createProject(p2);
         
         
         Log.d("Project Count", "Project Count: " + db.getAllProjects().size());
@@ -88,16 +92,18 @@ public class HomeActivity extends Activity
         // get all projects
         Log.d("Get projects", "get all projects");
         List<Project> projs = db.getAllProjects();
-        for(Project proj: projs){
+      /*  for(Project proj: projs){
         	Log.d("PROJECT", proj.getName());
         }
-        
+        */
 
         // create time block
         TimeBlock t1 = new TimeBlock(1,2,3,4,5);
+        TimeBlock t2 = new TimeBlock(1,2,3,4,5);
         long t1_id = db.createTimeBlock(t1,p1);
-        
-        Log.d("Project sadasd", msg)
+        long t2_id = db.createTimeBlock(t2,p3);
+        Log.d("TimeBlock", t1_id + "");
+        Log.d("ALL TIMEBLOCKS", "All time blocks" + db.getTimeBlocksByProject(p3).size());
         
         //delete project
         Log.d("Project Count", "Project Count before delete: " + db.getAllProjects().size());
