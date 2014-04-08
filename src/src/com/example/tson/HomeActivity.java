@@ -4,9 +4,11 @@ package com.example.tson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
+
 import java.util.Locale;
 
 import tson.sqlite.helper.DatabaseHelper;
@@ -35,12 +37,14 @@ import android.widget.TimePicker;
 
 public class HomeActivity extends Activity 
 {
+
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
 	String[] hourmin;
 	View currentPage;
 	ListView projectListView;
+
 	//Database Helper
 	DatabaseHelper db;
 
@@ -88,10 +92,10 @@ public class HomeActivity extends Activity
         	Log.d("PROJECT", proj.getName());
         }
         
+
         // create time block
         TimeBlock t1 = new TimeBlock(1,2,3,4,5);
         long t1_id = db.createTimeBlock(t1,p1);
-        
         
         
         
@@ -102,6 +106,7 @@ public class HomeActivity extends Activity
         Log.d("Project Count", "Project Count after delete: " + db.getAllProjects().size());
         
         db.closeDB();
+
 
         
     }
