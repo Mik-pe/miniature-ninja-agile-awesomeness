@@ -52,7 +52,7 @@ public class CreateProjectActivity extends Activity {
 	{
 		EditText projectNameEditText = (EditText) findViewById(R.id.project_name_editText);
 		String projectName = projectNameEditText.getText().toString();
-		HomeActivity.user.createProject(projectName);
+		HomeFragment.user.createProject(projectName);
 		
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();
 		
