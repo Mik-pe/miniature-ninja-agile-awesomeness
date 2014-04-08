@@ -70,9 +70,24 @@ public class Project {
 	}
 	
 	/*TODO
-	public void editTime(int h, int m, Date d)
+	public void editTime(Calendar cal,int h, int m)
 	{
 	 Adds time to a certain date...
+	 //TODO? - Make function to call, like getTimeBlockByDate(Calendar cal)? 
+	 
+	 TimeBlock t;
+	 if(!this.submissionList.isEmpty())			
+			for(int i=this.submissionList.size()-1; i>=0 ;i--)
+			{
+				
+				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
+					t = this.submissionList.get(i);
+				
+			}
+		//Reference based t should work..?
+		 * This function can be used when editing time in HomeActivity, so that the values are saved.
+		t.setMinutes(m);
+		t.setHours(h);
 	}
 	*/
 

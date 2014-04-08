@@ -12,6 +12,7 @@
     <string name="add_text">Add Project</string>
     <string name="create_text">Create</string>
 	<string name="add_hint_text">Enter your project name</string>
+	<string name="edit_text">Edit</string>
 
 
 </resources>

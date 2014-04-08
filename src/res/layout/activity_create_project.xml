@@ -58,7 +58,8 @@
             android:layout_marginRight="40dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/create_text"
-            android:textSize="32sp" />
+            android:textSize="32sp"
+            android:onClick = "createProject" />
         
     </LinearLayout>
 
