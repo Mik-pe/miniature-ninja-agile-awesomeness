@@ -28,7 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 9;
+	private static final int DATABASE_VERSION = 17;
+
 	
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";
@@ -75,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.d("hejhejhejhejhe", CREATE_TABLE_PROJECT);
 		db.execSQL(CREATE_TABLE_PROJECT);
 		
 		db.execSQL(CREATE_TABLE_TIME_BLOCK);
@@ -84,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+		Log.d("UPGRADE DATABASE", "!!!!");
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
 		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME_BLOCK);
@@ -203,16 +203,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
-		Log.d("DB CHECKKKKKKKKKKKKKK", "" + timeblock.getTimeInMinutes());
-		values.put(KEY_TIME_BLOCK_YEAR, d.YEAR);
-		values.put(KEY_TIME_BLOCK_MONTH, d.MONTH);
-		values.put(KEY_TIME_BLOCK_DAY, d.DAY_OF_MONTH);
+		Log.d("DB CHECKKKKKKKKKKKKKK", "" + timeblock.getTimeInMinutes() + " on project " + project.getName() + "with id" + getProjectId(project.getName()));
+		values.put(KEY_TIME_BLOCK_YEAR, d.get(Calendar.YEAR));
+		values.put(KEY_TIME_BLOCK_MONTH, d.get(Calendar.MONTH));
+		values.put(KEY_TIME_BLOCK_DAY, d.get(Calendar.DAY_OF_MONTH));
 		
 		
 		//insert row
 		long timeblock_id = db.insert(TABLE_TIME_BLOCK, null, values);
 	
-	
+		logTimeblocks();
 		return timeblock_id;
 		
 	}
@@ -232,11 +232,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			{
 				do
 				{
-					int year = c.getColumnIndex(KEY_TIME_BLOCK_YEAR);
-					int month = c.getColumnIndex(KEY_TIME_BLOCK_MONTH);
-					int day = c.getColumnIndex(KEY_TIME_BLOCK_DAY);
-					int minutes = c.getColumnIndex(KEY_TIME_BLOCK_MINUTES);
-					Log.d("Get all timeblocks",   " " + minutes);
+					int year = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_YEAR));
+					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
+					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
+					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
+					Log.d("Get all timeblocks",   " " + c.getColumnIndex(KEY_TIME_BLOCK_PROJECT_ID));
 					int hours = (int)minutes/60;
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
@@ -260,24 +260,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			{
 				do
 				{
-					int year = c.getColumnIndex(KEY_TIME_BLOCK_YEAR);
-					int month = c.getColumnIndex(KEY_TIME_BLOCK_MONTH);
-					int day = c.getColumnIndex(KEY_TIME_BLOCK_DAY);
-					int minutes = c.getColumnIndex(KEY_TIME_BLOCK_MINUTES);
-					Log.d("TIMEBLOCK CHECKKK",   " " + minutes);
+					int year = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_YEAR));
+					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
+					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
+					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
+					Log.d("TIMEBLOCK CHEK",   " " + day + " on project " + p.getName());
 					int hours = minutes/60;
 					
 					minutes = minutes-hours*60;
-					
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}
+			Log.d("DB RETURN", "Submission list init");
 			return timeblocks;
 	}
 	
 	
-	
+	public void logTimeblocks()
+	{	
+		getAllTimeBlocks();
+	}
 	
 	
 	//Close database

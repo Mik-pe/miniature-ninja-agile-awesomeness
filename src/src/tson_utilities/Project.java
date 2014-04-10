@@ -42,10 +42,10 @@ public class Project {
 		
 		TimeBlock t = new TimeBlock(year, month, day, h, m);
 		
-		if(!submissionList.contains(t)){
+		//if(!submissionList.contains(t)){
 			submissionList.add(t);
 			HomeActivity.db.createTimeBlock(t, this);
-		}
+		//}
 		//else
 			//editTime();
 				
@@ -53,7 +53,7 @@ public class Project {
 	
 	public void setSubmissionList(List<TimeBlock> list)
 	{
-		this.submissionList = list;
+		this.submissionList.addAll(list);
 	}
 	/**
 	 * Getter of string
@@ -63,16 +63,17 @@ public class Project {
 	 */
 	public TimeBlock getTimeByDate(Calendar cal)
 	{
-		if(!this.submissionList.isEmpty())			
-			for(int i=this.submissionList.size()-1; i>=0 ;i--)
+		
+		if(!submissionList.isEmpty())		
+			Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
+			for(int i=submissionList.size()-1; i>=0 ;i--)
 			{
-				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))){
-					Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
-					return this.submissionList.get(i);	
+				if(submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))){
+					return submissionList.get(i);	
 				}
 			}
 		Log.d("NO TIME BLOCK FOUND", "<-----------");
-		return new TimeBlock();
+		return null;
 	}
 	
 	/**
@@ -84,6 +85,10 @@ public class Project {
 		return name;
 	}
 	
+	public List<TimeBlock> getSubmissionList()
+	{
+		return this.submissionList;
+	}
 
 	
 	/*TODO
