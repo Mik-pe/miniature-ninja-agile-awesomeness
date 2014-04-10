@@ -109,12 +109,7 @@ public class HomeActivity extends Activity
 		Log.d("navMenu", Integer.toString(navDrawerItems.size()));
 		
 		
-		// Recycle the typed array
-		//navMenuIcons.recycle();
-		
-		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
-		
-		
+		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());		
 		
 		// setting the nav drawer list adapter
 		adapter = new NavDrawerListAdapter(getApplicationContext(),
@@ -123,9 +118,7 @@ public class HomeActivity extends Activity
 
 		// enabling action bar app icon and behaving it as toggle button
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		
+		getActionBar().setHomeButtonEnabled(true);		
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, //nav menu toggle icon
