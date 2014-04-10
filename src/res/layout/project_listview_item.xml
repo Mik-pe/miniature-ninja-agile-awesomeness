@@ -20,7 +20,6 @@
             android:layout_alignBottom="@+id/editTimeButton"
             android:layout_toLeftOf="@+id/editTimeButton"
             android:clickable="true"
-            android:onClick="showTimeDialog"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 

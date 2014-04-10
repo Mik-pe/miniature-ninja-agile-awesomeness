@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.tson.HomeActivity;
 
+
 /**
  * Project class is used as an object for each project created
  * by the user. User can add time, get time and get the name
@@ -49,6 +50,7 @@ public class Project {
 		//else
 			//editTime();
 				
+
 	}
 	
 	public void setSubmissionList(List<TimeBlock> list)
@@ -67,9 +69,11 @@ public class Project {
 			Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
 			for(int i=submissionList.size()-1; i>=0 ;i--)
 			{
-				if(submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))){
-					return submissionList.get(i);	
-				}
+				Log.d("SubList: ", ""+name);
+				
+				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
+					return this.submissionList.get(i);
+				
 			}
 		Log.d("NO TIME BLOCK FOUND", "<-----------");
 		return null;
@@ -103,17 +107,7 @@ public class Project {
 					t = this.submissionList.get(i);
 				
 			}
-<<<<<<< HEAD
-		//Reference based t should work..?
-		 * This function can be used when editing time in HomeActivity, so that the values are saved.
-<<<<<<< HEAD
-=======
->>>>>>> eb7cae5303a06749a9a565d410bad4f8f5f8199e
-		t.setMinutes(m);
-		t.setHours(h);
-=======
 		t.setDuration(h, m);
->>>>>>> 2903e8805bd49d74e97909ebe450b76580d35778
 	}
 	*/
 
