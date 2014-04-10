@@ -14,10 +14,12 @@ public class SubmissionFragment extends Fragment {
     TabAdapter TabAdapter;
 	ActionBar actionBar;
 
+	public SubmissionFragment(){}
+	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
         View submission = inflater.inflate(R.layout.submission_fragment, container, false);
         
         
@@ -29,7 +31,7 @@ public class SubmissionFragment extends Fragment {
                     @Override
                     public void onPageSelected(int position) {
                        
-                    	actionBar = getActivity().getActionBar();
+                    	//actionBar = getActivity().getActionBar();
                     	actionBar.setSelectedNavigationItem(position);                    }
                 });
         Tab.setAdapter(TabAdapter);
@@ -59,13 +61,14 @@ public class SubmissionFragment extends Fragment {
 				
 			}};
 			//Add New Tab
-			actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));
-			actionBar.addTab(actionBar.newTab().setText("Calendar").setTabListener(tabListener));
+			if(actionBar.getTabCount() <2)
+			{
+				actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));
+				actionBar.addTab(actionBar.newTab().setText("Calendar").setTabListener(tabListener));
+			}
 			
-			 return submission;
-    }
-
-
-   
+			return submission;
+    }   
+    
     
 }

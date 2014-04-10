@@ -69,7 +69,7 @@ public class SubmissionListFragment extends Fragment {
     	public View getView(int position, View view, ViewGroup parent)
     	{
     		if(view == null)
-    			view = getActivity().getLayoutInflater().inflate(R.layout.project_listview_item, parent, false);
+    			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
     		
     		Calendar currentDate = calList.get(position);
     		

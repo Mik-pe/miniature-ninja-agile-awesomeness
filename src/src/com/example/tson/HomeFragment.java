@@ -9,7 +9,7 @@ import tson_utilities.User;
 
 
 import android.app.Dialog;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
@@ -26,12 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment 
+{
 	
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
-	String[] hourmin;
+	String[] hourmin = {"0", "0"};
 	View currentPage;
 	ListView projectListView;
 	private View rootView;
@@ -71,17 +72,7 @@ public class HomeFragment extends Fragment {
         
         projectAdapter = new ProjectListAdapter();
         
-        projectListView.setAdapter(projectAdapter);
-        
-        /*projectTimeTextViewVar = (TextView) listView.findViewById(R.id.projectTimeTextView);
-        projectTimeTextViewVar.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				showTimeDialog(v);
-			}
-		});*/
- 
+        projectListView.setAdapter(projectAdapter); 
          
         return rootView;
     }
@@ -94,13 +85,18 @@ public class HomeFragment extends Fragment {
 		holder = projectListView.getPositionForView(v);
     	
     	//Calculate what hour and minute that we are at when we click
-    	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
-    	hourmin[1] = hourmin[1].replaceAll("m", "");
-    	hourmin[1] = hourmin[1].replaceAll(" ", "");
-    	if(hourmin[1].equals("--")) {
-    		hourmin[0] = "0";
+		if(user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()) != null)
+		{
+			hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsString().split(" h : ");	    	
+			hourmin[1] = hourmin[1].replaceAll("m", "");
+	    	hourmin[1] = hourmin[1].replaceAll(" ", "");
+		}
+		else
+		{
+			hourmin[0] = "0";
     		hourmin[1] = "0";
-    	}
+		}
+		
     	newHour = Integer.parseInt(hourmin[0]);
     	newMin = Integer.parseInt(hourmin[1]);
     	
@@ -159,20 +155,24 @@ public class HomeFragment extends Fragment {
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+    		
+    		if(currentProject.getTimeByDate(Calendar.getInstance()) != null)
+    		{
+    			projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsString());
+    		}  
+    		else
+    		{
+    			projectTime.setText("-- h : -- m");
+    		}
     		projectTime.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					showTimeDialog(v);
-					
+					showTimeDialog(v);					
 				}
 			});		
     		
     		return view;
     	}
-    }
-    
-    
-    
+    }   
 }
