@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tson.HomeActivity;
+
 import android.util.Log;
 import tson.sqlite.helper.DatabaseHelper;
 /**
@@ -19,6 +21,7 @@ public class User
 	 private String id = "";
 	 private List<Project> projectList = new ArrayList<Project>();
 	 DatabaseHelper db;
+	 public HomeActivity homeActivity = new HomeActivity();
 	 
 	 /**
 	  * Constructor for a User, information to be fetched from Google account in the future
@@ -89,16 +92,5 @@ public class User
 		 return email;
 	 }
 	 
-	 public static void main(String[] args)
-	 {
-		 User testUser = new User("hej@hej.se", "Kalle Karlsson", "2092");
-		 Project testProject = new Project("Awesome");
-		 testUser.addProject(testProject);
-		 testProject.addTime(2013, 02, 01, 10, 12);
-		 
-		 for(int i = 0; i < testUser.getProjects().size(); ++i)
-		 {
-			 System.out.println(testUser.getProjects().get(i).getTimeByDate(Calendar.getInstance()));
-		 }
-	 }
+	
 }
