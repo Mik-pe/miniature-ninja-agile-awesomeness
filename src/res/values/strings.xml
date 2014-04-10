@@ -18,7 +18,6 @@
     <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
 
-
 	<!-- Menu items -->
 	<string-array name="nav_drawer_items">
 	    <item >Home</item>

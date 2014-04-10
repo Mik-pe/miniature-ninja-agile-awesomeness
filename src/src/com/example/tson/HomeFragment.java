@@ -9,7 +9,8 @@ import tson_utilities.User;
 
 
 import android.app.Dialog;
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Intent;
@@ -26,12 +27,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-public class HomeFragment extends Fragment {
+
+public class HomeFragment extends Fragment 
+{
 	
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
-	String[] hourmin;
+
+	int[] hourmin = {0,0};
 	View currentPage;
 	ListView projectListView;
 	private View rootView;
@@ -40,7 +44,8 @@ public class HomeFragment extends Fragment {
 	TextView projectTimeTextViewVar;
 	ArrayAdapter<Project> projectAdapter;
 	
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+
+	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
 	
 	public HomeFragment(){}
@@ -65,23 +70,12 @@ public class HomeFragment extends Fragment {
 			}
 		});
         
-        user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
        
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
         
         projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
-        
-        /*projectTimeTextViewVar = (TextView) listView.findViewById(R.id.projectTimeTextView);
-        projectTimeTextViewVar.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				showTimeDialog(v);
-			}
-		});*/
- 
          
         return rootView;
     }
@@ -94,15 +88,15 @@ public class HomeFragment extends Fragment {
 		holder = projectListView.getPositionForView(v);
     	
     	//Calculate what hour and minute that we are at when we click
-    	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
-    	hourmin[1] = hourmin[1].replaceAll("m", "");
-    	hourmin[1] = hourmin[1].replaceAll(" ", "");
-    	if(hourmin[1].equals("--")) {
-    		hourmin[0] = "0";
-    		hourmin[1] = "0";
-    	}
-    	newHour = Integer.parseInt(hourmin[0]);
-    	newMin = Integer.parseInt(hourmin[1]);
+		try 
+		{
+			hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();	    	
+	    	newHour = hourmin[0];
+	    	newMin = hourmin[1];
+		}catch (Exception name) 
+		{
+			Log.d("ERROR", name + "");
+		}
     	
     	//Visar dialogrutan med timepicker
     	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
@@ -118,8 +112,9 @@ public class HomeFragment extends Fragment {
 			min=minute;
 			Calendar c = Calendar.getInstance();
 			
-			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
-		
+			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
+   			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
+
 			projectAdapter.notifyDataSetChanged();
 		}
 	};
@@ -159,20 +154,24 @@ public class HomeFragment extends Fragment {
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+
+    		try{
+    			int[] time = currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+    			projectTime.setText(time[0] + " h : "+ time[1] + " m");
+    		}catch (Exception name) {
+    			Log.d("ERROR", name + "");
+    		}
+    		
     		projectTime.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					showTimeDialog(v);
-					
+
+					showTimeDialog(v);					
 				}
 			});		
     		
     		return view;
     	}
-    }
-    
-    
-    
+    }    
 }

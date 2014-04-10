@@ -9,6 +9,7 @@ import com.example.tson.HomeActivity;
 
 import android.util.Log;
 import tson.sqlite.helper.DatabaseHelper;
+
 /**
  * User-class for person using the application
  * @author Sofie & John
@@ -96,32 +97,15 @@ public class User
 	 {
 		 int totalTime = 0;
 		 TimeBlock t;
+		 
 		 for(int i=0; i< projectList.size(); i++)
 		 {
+			 
 			 t = projectList.get(i).getTimeByDate(cal);
 			 if(t != null){
 				 totalTime += t.getTimeInMinutes();
 			 }
 		 }
 		 return totalTime;
-	 }
-	 
-	 public static void main(String[] args)
-	 {
-		 User testUser = new User("hej@hej.se", "Kalle Karlsson", "2092");
-		 Project testProject = new Project("Awesome");
-		 testUser.addProject(testProject);
-		 testProject.addTime(2014, 3, 5, 10, 12);
-		 Calendar today = Calendar.getInstance();
-		 int bossesTid = 0;
-		 
-		 Calendar temp = (Calendar) today.clone();
-		 for(int i =0;i<8;i++)
-		 {
-			 temp.add(Calendar.DAY_OF_YEAR, -1);
-			 bossesTid = testUser.getTimeByDate(temp);
-			 System.out.println("Datum" + temp.get(Calendar.DAY_OF_MONTH) + "Tid: " + bossesTid/60 +":"+bossesTid%60);
-			 
-		 }
 	 }
 }

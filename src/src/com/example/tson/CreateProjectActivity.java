@@ -67,7 +67,6 @@ public class CreateProjectActivity extends Activity {
 		
 		HomeActivity.user.createProject(projectName);
 
-		
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();
 		
 		Intent intent = new Intent(this, HomeActivity.class);
