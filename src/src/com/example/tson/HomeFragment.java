@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
     	newHour = Integer.parseInt(hourmin[0]);
     	newMin = Integer.parseInt(hourmin[1]);
     	
-    	//Calls the onCreateDialog
+    	//Visar dialogrutan med timepicker
     	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
     }
 	
