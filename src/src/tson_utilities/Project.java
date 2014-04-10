@@ -3,7 +3,10 @@ package tson_utilities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import tson.sqlite.helper.DatabaseHelper;
+import android.util.Log;
+
 import com.example.tson.HomeActivity;
 
 /**
@@ -46,24 +49,27 @@ public class Project {
 				
 	}
 	
+	public void setSubmissionList(List<TimeBlock> list)
+	{
+		this.submissionList = list;
+	}
 	/**
 	 * Getter of string
 	 * @param d  date the time should correspond to
 	 * @return  the string of amount of hours of that 
 	 * date and project
 	 */
-	public String getTimeByDate(Calendar cal)
+	public TimeBlock getTimeByDate(Calendar cal)
 	{
 		if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
 			{
-				
-				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
-					return this.submissionList.get(i).getTimeAsString();
-				
+				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))){
+					Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
+					return this.submissionList.get(i);	
+				}
 			}
-		
-		return " -- h : -- m";
+		return new TimeBlock();
 	}
 	
 	/**

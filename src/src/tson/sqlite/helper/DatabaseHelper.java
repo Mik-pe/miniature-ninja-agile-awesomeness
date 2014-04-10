@@ -28,7 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 	
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";
@@ -203,6 +203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
+		Log.d("DB CHECKKKKKKKKKKKKKK", "" + timeblock.getTimeInMinutes());
 		values.put(KEY_TIME_BLOCK_YEAR, d.YEAR);
 		values.put(KEY_TIME_BLOCK_MONTH, d.MONTH);
 		values.put(KEY_TIME_BLOCK_DAY, d.DAY_OF_MONTH);
@@ -264,6 +265,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int minutes = c.getColumnIndex(KEY_TIME_BLOCK_MINUTES);
 					int hours = (int)minutes/60;
 					minutes = minutes-hours*60;
+					Log.d("TIMEBLOCK CHECKKK", hours + "");
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
 					timeblocks.add(t);
 				}while (c.moveToNext());

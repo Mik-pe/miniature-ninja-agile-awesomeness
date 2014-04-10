@@ -41,7 +41,7 @@ public class HomeActivity extends Activity
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
-	String[] hourmin;
+	int[] hourmin;
 	View currentPage;
 	ListView projectListView;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
@@ -61,8 +61,13 @@ public class HomeActivity extends Activity
         db = new DatabaseHelper(getApplicationContext());
         projectList = db.getAllProjects();
         for (int i = 0; i < projectList.size(); i++)
+        {
         user.addProject(projectList.get(i));
+       	user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));
+        }
         
+         
+
         setContentView(R.layout.activity_home);
         final LinearLayout rl=(LinearLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
@@ -71,18 +76,6 @@ public class HomeActivity extends Activity
         
         ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
         projectListView.setAdapter(projectAdapter);
-        
-        //DB TEST
-        
-        
-        
-        db = new DatabaseHelper(getApplicationContext());
-        
-        
-
-        //db.closeDB();
-
-        
     }
 
     //Creating the dialog for the specific time
@@ -91,25 +84,17 @@ public class HomeActivity extends Activity
    		//calculates what page and position we are at
    		holder = projectListView.getPositionForView(v);
    		currentPage = (View) v.getParent();
-   		
-   		//Log.d("hejsan", user.getProjects().get(0).toString());
        	
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
-       	hourmin[1] = hourmin[1].replaceAll("m", "");
-       	hourmin[1] = hourmin[1].replaceAll(" ", "");
-       	if(hourmin[1].equals("--")) {
-       		hourmin[0] = "0";
-       		hourmin[1] = "0";
-       	}
-       	newHour = Integer.parseInt(hourmin[0]);
-       	newMin = Integer.parseInt(hourmin[1]);
+       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+       	newHour = hourmin[0];
+       	newMin = hourmin[1];
        	
        	//Calls the onCreateDialog
        	showDialog(holder);
        }
    	
-   	//Creates the Dialog with the right time from which click
+   	   //Creates the Dialog with the right time from which click
        protected Dialog onCreateDialog(int id)
        {
        	return new TimePickerDialog(this, timeSetListener, newHour, newMin, true);	
@@ -123,7 +108,8 @@ public class HomeActivity extends Activity
    			min=minute;
    			Calendar c = Calendar.getInstance();
    			
-   			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
+   			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
+   			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
    			
    			TextView et=(TextView) currentPage.findViewById(R.id.projectTimeTextView);
    			et.setText(hour+ " h : "+min + " m");
@@ -166,7 +152,13 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+    		Log.d("hej", "" + currentProject.getTimeByDate(Calendar.getInstance()));
+    		try{
+    			int[] time = currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+    			projectTime.setText(time[0] + " h : "+ time[1] + " m");
+    		}catch (Exception name) {
+    			Log.d("ERROR", name + "");
+    		}
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		
