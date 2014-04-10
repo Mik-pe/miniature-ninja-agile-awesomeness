@@ -39,6 +39,7 @@ public class HomeActivity extends Activity
 {
 	int hour,min, newHour, newMin;
 	int holder = 0;
+	int whattha = 0;
 	static final int TIME_DIALOG_ID=0;
 	int[] hourmin;
 	View currentPage;
@@ -83,12 +84,19 @@ public class HomeActivity extends Activity
    		holder = projectListView.getPositionForView(v);
    		currentPage = (View) v.getParent();
        	
+   		
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+       	try {
+   		hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();
        	newHour = hourmin[0];
        	newMin = hourmin[1];
+       	}catch (Exception name) {
+			Log.d("ERROR", name + "");
+		}
+		
        	
        	//Calls the onCreateDialog
+       	whattha = 0;
        	showDialog(holder);
        }
    	
@@ -102,15 +110,18 @@ public class HomeActivity extends Activity
        private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
    		@Override
    		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+   			if(whattha == 0)
+   			{
    			hour=hourOfDay;
    			min=minute;
    			Calendar c = Calendar.getInstance();
-   			
    			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
    			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
    			
    			TextView et=(TextView) currentPage.findViewById(R.id.projectTimeTextView);
    			et.setText(hour+ " h : "+min + " m");
+   			}
+   			whattha++;
    		}
    	};
     

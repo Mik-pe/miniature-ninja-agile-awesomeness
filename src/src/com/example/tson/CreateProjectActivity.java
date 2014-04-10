@@ -59,14 +59,13 @@ public class CreateProjectActivity extends Activity {
 		EditText projectNameEditText = (EditText) findViewById(R.id.project_name_editText);
 		String projectName = projectNameEditText.getText().toString();
 		
-		db = new DatabaseHelper(getApplicationContext());
+		
     
         Project p1 = new Project(projectName);
         
 		homeActivity.user.addProject(p1);
 		db.createProject(p1);
 		
-		db.close();
 		HomeActivity.user.createProject(projectName);
 		
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();

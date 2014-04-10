@@ -72,7 +72,7 @@ public class Project {
 				}
 			}
 		Log.d("NO TIME BLOCK FOUND", "<-----------");
-		return new TimeBlock();
+		return null;
 	}
 	
 	/**
