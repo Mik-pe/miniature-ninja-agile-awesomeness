@@ -8,10 +8,16 @@ public class TimeBlock
 	private int hours;
 	private int minutes;
 	
+	public TimeBlock()
+	{
+		setTimeBlock(date.YEAR,date.MONTH,date.DAY_OF_MONTH,0,0);
+	}
+	
 	public TimeBlock(int year, int month, int day, int theHours, int theMinutes)
 	{
 		setTimeBlock(year, month, day, theHours, theMinutes);
 	}
+
 	/**
 	 * 
 	 * @param theDate - Java Calendar type
@@ -69,6 +75,14 @@ public class TimeBlock
 	{
 		return hours*60 + minutes;
 	}
+	
+	public int[] getTimeAsArray()
+	{
+		int[] t = {this.hours, this.minutes}; 
+		return t;
+	}
+	
+	
 	/**
 	 * 
 	 * @return time of TimeBlock as String

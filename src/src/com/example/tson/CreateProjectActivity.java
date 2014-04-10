@@ -21,7 +21,7 @@ import android.os.Build;
 public class CreateProjectActivity extends Activity {
 	
 	public HomeActivity homeActivity = new HomeActivity();
-	DatabaseHelper db;
+	DatabaseHelper db = homeActivity.db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
