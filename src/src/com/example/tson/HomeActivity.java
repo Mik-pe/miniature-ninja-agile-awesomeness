@@ -37,7 +37,6 @@ import android.widget.TimePicker;
 
 public class HomeActivity extends Activity 
 {
-
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
@@ -49,25 +48,34 @@ public class HomeActivity extends Activity
 	//Database Helper
 	public static DatabaseHelper db;
 	
-	List<Project> projectList = user.getProjects();
+	List<Project> projectList;
 	
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
         Calendar c = Calendar.getInstance();
-        
         db = new DatabaseHelper(getApplicationContext());
+        db.getAllTimeBlocks();
         projectList = db.getAllProjects();
         for (int i = 0; i < projectList.size(); i++)
         {
-        user.addProject(projectList.get(i));
-       	user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));
+        	
+	        user.addProject(projectList.get(i));
+	       	user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));
+	       	
+	        List<TimeBlock> temp = db.getTimeBlocksByProject(user.getProjects().get(i));
+	        Log.d("Listing all tprojects", projectList.get(i).getName() + "");
+	        for (TimeBlock time : temp) {
+	            Log.d("Listing all times for a project", time.getTimeAsString());
+	        }
+       
         }
         
-         
-
+        
+        
         setContentView(R.layout.activity_home);
         final LinearLayout rl=(LinearLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
@@ -152,7 +160,7 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		Log.d("hej", "" + currentProject.getTimeByDate(Calendar.getInstance()));
+    		
     		try{
     			int[] time = currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsArray();
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tson.HomeActivity;
+
 import android.util.Log;
 import tson.sqlite.helper.DatabaseHelper;
 /**
@@ -19,6 +21,7 @@ public class User
 	 private String id = "";
 	 private List<Project> projectList = new ArrayList<Project>();
 	 DatabaseHelper db;
+	 public HomeActivity homeActivity = new HomeActivity();
 	 
 	 /**
 	  * Constructor for a User, information to be fetched from Google account in the future
@@ -88,5 +91,5 @@ public class User
 	 {
 		 return email;
 	 }
-	 
+
 }

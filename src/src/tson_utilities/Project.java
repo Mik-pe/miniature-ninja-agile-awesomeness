@@ -46,6 +46,8 @@ public class Project {
 			submissionList.add(t);
 			HomeActivity.db.createTimeBlock(t, this);
 		}
+		//else
+			//editTime();
 				
 	}
 	
@@ -69,6 +71,7 @@ public class Project {
 					return this.submissionList.get(i);	
 				}
 			}
+		Log.d("NO TIME BLOCK FOUND", "<-----------");
 		return new TimeBlock();
 	}
 	
@@ -81,13 +84,11 @@ public class Project {
 		return name;
 	}
 	
+
 	
 	/*TODO
 	public void editTime(Calendar cal,int h, int m)
 	{
-	 Adds time to a certain date...
-	 //TODO? - Make function to call, like getTimeBlockByDate(Calendar cal)? 
-	 
 	 TimeBlock t;
 	 if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
@@ -97,8 +98,6 @@ public class Project {
 					t = this.submissionList.get(i);
 				
 			}
-		//Reference based t should work..?
-		 * This function can be used when editing time in HomeActivity, so that the values are saved.
 		t.setMinutes(m);
 		t.setHours(h);
 	}
