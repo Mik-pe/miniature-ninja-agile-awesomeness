@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import android.util.Log;
+
+
 /**
  * Project class is used as an object for each project created
  * by the user. User can add time, get time and get the name
@@ -36,7 +39,7 @@ public class Project {
 	{
 		
 		TimeBlock t = new TimeBlock(year, month, day, h, m);
-		if(!submissionList.contains(t))
+		//if(!submissionList.contains(t))
 				submissionList.add(t);
 	}
 	
@@ -50,6 +53,7 @@ public class Project {
 		if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
 			{
+				Log.d("SubList: ", ""+name);
 				
 				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
 					return this.submissionList.get(i);

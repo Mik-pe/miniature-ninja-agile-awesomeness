@@ -24,7 +24,6 @@ public class SubmissionFragment extends Fragment {
     	super.onCreate(savedInstanceState);
         View submission = inflater.inflate(R.layout.submission_fragment, container, false);
         
-        HomeActivity.user.getProjects().get(0).addTime(Calendar.YEAR, Calendar.MONTH, Calendar.DAY_OF_MONTH, 1, 30);
         
         TabAdapter = new TabAdapter(getFragmentManager());
         
