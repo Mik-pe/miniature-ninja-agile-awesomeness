@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment
 	TextView projectTimeTextViewVar;
 	ArrayAdapter<Project> projectAdapter;
 	
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
 	
 	public HomeFragment(){}
@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment
 			}
 		});
         
-        user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
+        //HomeActivity.user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
        
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
         

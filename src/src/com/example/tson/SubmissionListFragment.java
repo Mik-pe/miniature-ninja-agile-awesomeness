@@ -2,13 +2,16 @@ package com.example.tson;
 
 
 import java.util.ArrayList;
+
 import com.learn2crack.tab.*;
+
 import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
 import android.R.layout;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,15 +35,15 @@ public class SubmissionListFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		View subListView = inflater.inflate(R.layout.submission_list, container, false);;
-		((TextView)subListView.findViewById(R.id.textView)).setText("List");
+		View subListView = inflater.inflate(R.layout.submission_list, container, false);
 		
 		submissionListView = (ListView) subListView.findViewById(R.id.submittedDaysListView);
 		
 		for(int i=0;i<8;i++)
 		{
+			
+			calList.add((Calendar) today.clone());
 			today.add(Calendar.DAY_OF_YEAR, -1);
-			calList.add(today);
 		}
 		ArrayAdapter<Calendar> subAdapter = new SubmissionListAdapter();
 		submissionListView.setAdapter(subAdapter);
@@ -71,6 +74,7 @@ public class SubmissionListFragment extends Fragment {
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
     		
+    		view.setBackgroundColor(Color.GREEN);
     		Calendar currentDate = calList.get(position);
     		
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
@@ -80,7 +84,7 @@ public class SubmissionListFragment extends Fragment {
     		if(position == 0 || currentDate.get(Calendar.DAY_OF_WEEK)==7)
     		{
     			TextView weekText = (TextView) view.findViewById(R.id.weekText);
-    			weekText.setText(currentDate.get(Calendar.DAY_OF_MONTH)+"/"+(currentDate.get(Calendar.MONTH)+1));
+    			weekText.setText("Week: "+currentDate.get(Calendar.WEEK_OF_YEAR));
     			
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
@@ -94,8 +98,12 @@ public class SubmissionListFragment extends Fragment {
     		submissionDate.setText(currentDate.get(Calendar.DAY_OF_MONTH)+"/"+(currentDate.get(Calendar.MONTH)+1));
     		
     		
-    		projectTime.setText(HomeActivity.user.getTimeByDate(currentDate)/60 + ":" + +HomeActivity.user.getTimeByDate(currentDate)%60);
+    		projectTime.setText(HomeActivity.user.getTimeByDate(currentDate)/60 + ":" +HomeActivity.user.getTimeByDate(currentDate)%60);
     		
+    		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
+    		if(HomeActivity.user.getTimeByDate(currentDate)==0){
+    			view.setBackgroundColor(Color.RED);
+    		}
     		
     		return view;
     	}

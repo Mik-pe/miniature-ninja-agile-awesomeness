@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.List;
+
+import android.util.Log;
 /**
  * User-class for person using the application
  * @author Sofie & John
@@ -99,8 +101,10 @@ public class User
 	 {
 		 int totalTime = 0;
 		 TimeBlock t;
+		 
 		 for(int i=0; i< projectList.size(); i++)
 		 {
+			 Log.d("NUMBER: ", "jhiy" );
 			 t = projectList.get(i).getTimeByDate(cal);
 			 if(t != null){
 				 totalTime += t.getTimeInMinutes();
