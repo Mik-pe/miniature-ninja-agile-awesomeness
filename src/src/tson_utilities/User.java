@@ -1,5 +1,10 @@
 package tson_utilities;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2903e8805bd49d74e97909ebe450b76580d35778
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.ArrayList;
@@ -93,16 +98,36 @@ public class User
 		 return email;
 	 }
 	 
+	 public int getTimeByDate(Calendar cal)
+	 {
+		 int totalTime = 0;
+		 TimeBlock t;
+		 for(int i=0; i< projectList.size(); i++)
+		 {
+			 t = projectList.get(i).getTimeByDate(cal);
+			 if(t != null){
+				 totalTime += t.getTimeInMinutes();
+			 }
+		 }
+		 return totalTime;
+	 }
+	 
 	 public static void main(String[] args)
 	 {
 		 User testUser = new User("hej@hej.se", "Kalle Karlsson", "2092");
 		 Project testProject = new Project("Awesome");
 		 testUser.addProject(testProject);
-		 testProject.addTime(2013, 02, 01, 10, 12);
+		 testProject.addTime(2014, 3, 5, 10, 12);
+		 Calendar today = Calendar.getInstance();
+		 int bossesTid = 0;
 		 
-		 for(int i = 0; i < testUser.getProjects().size(); ++i)
+		 Calendar temp = (Calendar) today.clone();
+		 for(int i =0;i<8;i++)
 		 {
-			 System.out.println(testUser.getProjects().get(i).getTimeByDate(Calendar.getInstance()));
+			 temp.add(Calendar.DAY_OF_YEAR, -1);
+			 bossesTid = testUser.getTimeByDate(temp);
+			 System.out.println("Datum" + temp.get(Calendar.DAY_OF_MONTH) + "Tid: " + bossesTid/60 +":"+bossesTid%60);
+			 
 		 }
 	 }
 }

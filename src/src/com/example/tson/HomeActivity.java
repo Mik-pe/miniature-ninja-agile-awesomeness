@@ -8,11 +8,20 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.User;
 import android.R.array;
+import java.util.Locale;
+
+import tson.sqlite.helper.DatabaseHelper;
+import tson_utilities.*;
+
+//IMPORT ANDROID
+import android.os.Bundle;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,43 +39,57 @@ public class HomeActivity extends Activity
 {
 	int hour,min, newHour, newMin;
 	int holder = 0;
+	int whattha = 0;
 	static final int TIME_DIALOG_ID=0;
-	String[] hourmin;
+	int[] hourmin = {0, 0};
 	View currentPage;
 	ListView projectListView;
-
-	
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
-	List<Project> projectList = user.getProjects();
+
+	//Database Helper
+	public static DatabaseHelper db;
 	
+	List<Project> projectList;
+	
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
     {
-        super.onCreate(savedInstanceState);
+    	
+        
         Calendar c = Calendar.getInstance();
+        db = new DatabaseHelper(getApplicationContext());
+        db.getAllTimeBlocks();
+        db.logTimeblocks();
+        projectList = db.getAllProjects();
+        for (int i = 0; i < projectList.size(); i++)
+        {
+        	
+	        user.addProject(projectList.get(i));
+
+	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));
+	       	
+	        List<TimeBlock> temp = db.getTimeBlocksByProject(user.getProjects().get(i));
+	        Log.d("Listing all tprojects", projectList.get(i).getName() + "");
+	        for (TimeBlock time : temp) {
+	            Log.d("Listing all times for a project", time.getTimeAsString());
+	        }
+       
+        }
+        
+        
         
         setContentView(R.layout.activity_home);
-        user.getProjects().get(0).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), 1, 30);
         final LinearLayout rl=(LinearLayout) findViewById(R.id.rl);
         final TextView[] tv=new TextView[10];
 
         projectListView = (ListView) findViewById(R.id.projectListView);
         
-        
-        List<String> projectStrings = new ArrayList<String>();
-        
-        for(int i = 0; i < projectList.size(); i++)
-        {
-        	projectStrings.add(projectList.get(i).getName());
-        }
-        
-        //ArrayAdapter<String> arrayAdapter = new Project<String>(this, android.R.layout.simple_list_item_1, projectStrings);
-        
         ArrayAdapter<Project> projectAdapter = new ProjectListAdapter();
-        
         projectListView.setAdapter(projectAdapter);
-        
+        projectAdapter.notifyDataSetChanged();
+        super.onCreate(savedInstanceState);
     }
 
     //Creating the dialog for the specific time
@@ -76,22 +99,23 @@ public class HomeActivity extends Activity
    		holder = projectListView.getPositionForView(v);
    		currentPage = (View) v.getParent();
        	
+   		
        	//Calculate what hour and minute that we are at when we click
-       	hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).split(" h : ");
-       	hourmin[1] = hourmin[1].replaceAll("m", "");
-       	hourmin[1] = hourmin[1].replaceAll(" ", "");
-       	if(hourmin[1].equals("--")) {
-       		hourmin[0] = "0";
-       		hourmin[1] = "0";
-       	}
-       	newHour = Integer.parseInt(hourmin[0]);
-       	newMin = Integer.parseInt(hourmin[1]);
+       	try {
+   		hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+       	newHour = hourmin[0];
+       	newMin = hourmin[1];
+       	}catch (Exception name) {
+			Log.d("ERROR", name + "");
+		}
+		
        	
        	//Calls the onCreateDialog
+       	whattha = 0;
        	showDialog(holder);
        }
    	
-   	//Creates the Dialog with the right time from which click
+   	   //Creates the Dialog with the right time from which click
        protected Dialog onCreateDialog(int id)
        {
        	return new TimePickerDialog(this, timeSetListener, newHour, newMin, true);	
@@ -101,14 +125,18 @@ public class HomeActivity extends Activity
        private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
    		@Override
    		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+   			if(whattha == 0)
+   			{
    			hour=hourOfDay;
    			min=minute;
    			Calendar c = Calendar.getInstance();
-   			
-   			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
+   			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
+   			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
    			
    			TextView et=(TextView) currentPage.findViewById(R.id.projectTimeTextView);
    			et.setText(hour+ " h : "+min + " m");
+   			}
+   			whattha++;
    		}
    	};
     
@@ -148,7 +176,13 @@ public class HomeActivity extends Activity
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
-    		projectTime.setText(currentProject.getTimeByDate(Calendar.getInstance()));
+    		
+    		try{
+    			int[] time = currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+    			projectTime.setText(time[0] + " h : "+ time[1] + " m");
+    		}catch (Exception name) {
+    			Log.d("ERROR", name + "");
+    		}
     		
     		Button editButton = (Button) view.findViewById(R.id.editTimeButton);		
     		
