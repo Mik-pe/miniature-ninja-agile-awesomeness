@@ -2,16 +2,24 @@ package tson_utilities;
 
 import java.util.Calendar;
 
+import android.util.Log;
+
 public class TimeBlock 
 {
 	private Calendar date;
 	private int hours;
 	private int minutes;
 	
+	public TimeBlock()
+	{
+		setTimeBlock(date.YEAR,date.MONTH,date.DAY_OF_MONTH,0,0);
+	}
+	
 	public TimeBlock(int year, int month, int day, int theHours, int theMinutes)
 	{
 		setTimeBlock(year, month, day, theHours, theMinutes);
 	}
+
 	/**
 	 * 
 	 * @param theDate - Java Calendar type
@@ -67,8 +75,16 @@ public class TimeBlock
 	 */
 	public int getTimeInMinutes()
 	{
-		return hours*60 + minutes;
+		return (hours*60 + minutes);
 	}
+	
+	public int[] getTimeAsArray()
+	{
+		int[] t = {this.hours, this.minutes}; 
+		return t;
+	}
+	
+	
 	/**
 	 * 
 	 * @return time of TimeBlock as String
@@ -91,6 +107,8 @@ public class TimeBlock
 	
 	public boolean isDate(int year, int month, int day)
 	{
+		Log.d("Inserted Day", ""+year);
+		Log.d("TimeBlock Day", ""+date.get(Calendar.YEAR));
 		if(this.date.get(Calendar.YEAR)==year && this.date.get(Calendar.MONTH) == month && this.date.get(Calendar.DAY_OF_MONTH)==day)
 			return true;
 		

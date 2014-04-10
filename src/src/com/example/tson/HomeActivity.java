@@ -46,14 +46,13 @@ public class HomeActivity extends Activity
 	View currentPage;
 	ListView projectListView;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
-	//Database Helper
-
 
 	//Database Helper
 	public static DatabaseHelper db;
 	
 	List<Project> projectList;
 	
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) 
@@ -94,8 +93,6 @@ public class HomeActivity extends Activity
 
         projectAdapter.notifyDataSetChanged();
         super.onCreate(savedInstanceState);
-
-
     }
 
     //Creating the dialog for the specific time

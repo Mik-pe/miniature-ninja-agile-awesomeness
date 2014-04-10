@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import tson.sqlite.helper.DatabaseHelper;
+import android.util.Log;
+
+import com.example.tson.HomeActivity;
+
 /**
  * Project class is used as an object for each project created
  * by the user. User can add time, get time and get the name
@@ -36,10 +41,20 @@ public class Project {
 	{
 		
 		TimeBlock t = new TimeBlock(year, month, day, h, m);
-		if(!submissionList.contains(t))
-				submissionList.add(t);
+		
+		//if(!submissionList.contains(t)){
+			submissionList.add(t);
+			HomeActivity.db.createTimeBlock(t, this);
+		//}
+		//else
+			//editTime();
+				
 	}
 	
+	public void setSubmissionList(List<TimeBlock> list)
+	{
+		this.submissionList.addAll(list);
+	}
 	/**
 	 * Getter of string
 	 * @param d  date the time should correspond to
@@ -47,15 +62,16 @@ public class Project {
 	 */
 	public TimeBlock getTimeByDate(Calendar cal)
 	{
-		if(!this.submissionList.isEmpty())			
-			for(int i=this.submissionList.size()-1; i>=0 ;i--)
-			{
-				
-				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
-					return this.submissionList.get(i);
-				
-			}
 		
+		if(!submissionList.isEmpty())		
+			Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
+			for(int i=submissionList.size()-1; i>=0 ;i--)
+			{
+				if(submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH))){
+					return submissionList.get(i);	
+				}
+			}
+		Log.d("NO TIME BLOCK FOUND", "<-----------");
 		return null;
 	}
 	
@@ -68,13 +84,16 @@ public class Project {
 		return name;
 	}
 	
+
+	public List<TimeBlock> getSubmissionList()
+	{
+		return this.submissionList;
+	}
+
 	
 	/*TODO
 	public void editTime(Calendar cal,int h, int m)
 	{
-	 Adds time to a certain date...
-	 //TODO? - Make function to call, like getTimeBlockByDate(Calendar cal)? 
-	 
 	 TimeBlock t;
 	 if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
@@ -84,9 +103,12 @@ public class Project {
 					t = this.submissionList.get(i);
 				
 			}
+<<<<<<< HEAD
 		//Reference based t should work..?
 		 * This function can be used when editing time in HomeActivity, so that the values are saved.
 <<<<<<< HEAD
+=======
+>>>>>>> eb7cae5303a06749a9a565d410bad4f8f5f8199e
 		t.setMinutes(m);
 		t.setHours(h);
 =======
