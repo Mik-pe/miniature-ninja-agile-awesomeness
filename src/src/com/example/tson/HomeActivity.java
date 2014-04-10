@@ -103,6 +103,7 @@ public class HomeActivity extends FragmentActivity
         db.getAllTimeBlocks();
         db.logTimeblocks();
         projectList = db.getAllProjects();
+        user.getProjects().clear();
         for (int i = 0; i < projectList.size(); i++)
         {
         	

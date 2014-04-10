@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment
 			hour=hourOfDay;
 			min=minute;
 			Calendar c = Calendar.getInstance();
-			
+
 			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
    			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
 
@@ -160,6 +160,7 @@ public class HomeFragment extends Fragment
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");
     		}catch (Exception name) {
     			Log.d("ERROR", name + "");
+    			projectTime.setText("0 h : 0 m");
     		}
     		
     		projectTime.setOnClickListener(new View.OnClickListener() {

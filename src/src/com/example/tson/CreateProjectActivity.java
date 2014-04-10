@@ -1,6 +1,7 @@
 package com.example.tson;
 
 import com.example.tson.HomeActivity;
+
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
 import tson_utilities.User;
@@ -9,6 +10,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,8 +66,6 @@ public class CreateProjectActivity extends Activity {
         
 		homeActivity.user.addProject(p1);
 		db.createProject(p1);
-		
-		HomeActivity.user.createProject(projectName);
 
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();
 		
