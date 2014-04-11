@@ -70,6 +70,7 @@ public class HomeActivity extends FragmentActivity
 	ListView projectListView;
 	ActionBar ab;
 	
+	
 	public static DatabaseHelper db;
 	List<Project> projectList;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
