@@ -69,6 +69,7 @@ public class HomeActivity extends FragmentActivity
 	View currentPage;
 	ListView projectListView;
 	ActionBar ab;
+	private static Calendar c;
 	
 	public static DatabaseHelper db;
 	List<Project> projectList;
@@ -97,7 +98,7 @@ public class HomeActivity extends FragmentActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		Calendar c = Calendar.getInstance();
+		c = Calendar.getInstance();
         db = new DatabaseHelper(getApplicationContext());
         db.getAllProjects();
         db.getAllTimeBlocks();
@@ -176,9 +177,18 @@ public class HomeActivity extends FragmentActivity
 			//on first time display view for first nav item
 			displayView(0);
 		}
-
+		
+		
 	}
-
+	
+	/**
+	 * Getter of Calendar from the Homeactivity
+	 * @return the date of HomeActivity
+	 */
+	public static Calendar getCal(){
+		return c;	
+	}
+	
 	/**
 	 * Slide menu item click listener
 	 * */
