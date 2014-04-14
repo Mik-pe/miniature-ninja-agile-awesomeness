@@ -122,7 +122,7 @@ public class SubmissionListFragment extends Fragment {
 					ActionBar actionBar = getActivity().getActionBar();
 					actionBar.removeAllTabs();
 					actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-					
+					getActivity().setTitle("Home");					
 					
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
