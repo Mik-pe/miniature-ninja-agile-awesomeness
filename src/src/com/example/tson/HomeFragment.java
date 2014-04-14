@@ -125,6 +125,24 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         }
         
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
+        projectListView.setOnTouchListener(new ListView.OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				switch(action){
+				case MotionEvent.ACTION_DOWN:
+					v.getParent().requestDisallowInterceptTouchEvent(true);
+					break;
+				case MotionEvent.ACTION_UP:
+					v.getParent().requestDisallowInterceptTouchEvent(false);
+					break;
+				}
+				
+				// handle listview touch events.
+				v.onTouchEvent(event);
+				return true;
+			}
+        });
         
         projectAdapter = new ProjectListAdapter();
         
