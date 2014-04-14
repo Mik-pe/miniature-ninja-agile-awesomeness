@@ -60,9 +60,17 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
             Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        
+        Bundle bundle = this.getArguments();
         homeFragmentCalendar = Calendar.getInstance();
         
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        int dateDifference = 0;
+        try{
+	         dateDifference = bundle.getInt("dateDifference");
+	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
+        }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
+        
         
         prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
         prevDate.setOnClickListener(new View.OnClickListener() {
