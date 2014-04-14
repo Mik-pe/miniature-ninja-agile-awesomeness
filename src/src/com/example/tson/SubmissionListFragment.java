@@ -3,13 +3,14 @@ package com.example.tson;
 
 import java.util.ArrayList;
 
-import com.learn2crack.tab.*;
+
 
 import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
 import android.R.layout;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 
 public class SubmissionListFragment extends Fragment {
 	
@@ -75,7 +77,7 @@ public class SubmissionListFragment extends Fragment {
     			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
     		
     		view.setBackgroundColor(Color.GREEN);
-    		Calendar currentDate = calList.get(position);
+    		final Calendar currentDate = calList.get(position);
     		
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
     		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
@@ -104,6 +106,29 @@ public class SubmissionListFragment extends Fragment {
     		if(HomeActivity.user.getTimeByDate(currentDate)==0){
     			view.setBackgroundColor(Color.RED);
     		}
+    		
+    		editButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+								
+					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentDate.get(Calendar.DAY_OF_YEAR));
+					
+					Fragment switchToFragment = new HomeFragment();
+					Bundle bundle = new Bundle();
+					bundle.putInt("dateDifference", dateDifference);
+					switchToFragment.setArguments(bundle);
+					
+					ActionBar actionBar = getActivity().getActionBar();
+					actionBar.removeAllTabs();
+					actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+					
+					
+					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					fragmentManager.beginTransaction()
+					.replace(R.id.frame_container, switchToFragment).commit();
+				}
+			});
     		
     		return view;
     	}

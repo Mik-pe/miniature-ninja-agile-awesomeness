@@ -48,6 +48,11 @@ public class HomeFragment extends Fragment
 	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
 	
+	//A calendar object for what date to show. 
+	//Default value is today.
+	Calendar dateToShow = Calendar.getInstance();	
+	
+	//Empty Constructor, Required
 	public HomeFragment(){}
 	
 	@Override
@@ -55,9 +60,18 @@ public class HomeFragment extends Fragment
             Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-        Calendar c = Calendar.getInstance();
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         listView = inflater.inflate(R.layout.project_listview_item, container, false);
+        
+        Bundle bundle = this.getArguments();
+        
+        int dateDifference = 0;
+        try{
+        	dateDifference = bundle.getInt("dateDifference");
+        }catch(Exception e)
+        {Log.d("HerregudNull", "Nu blev det null!!!!");}       
+        
+        Log.d("testDateDifference", Integer.toString(dateDifference));
         
         createProjectButton = (Button) rootView.findViewById(R.id.create_project_button);
         createProjectButton.setOnClickListener(new View.OnClickListener() {
