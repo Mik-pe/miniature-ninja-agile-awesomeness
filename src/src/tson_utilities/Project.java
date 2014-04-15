@@ -19,8 +19,16 @@ import com.example.tson.HomeActivity;
  */
 public class Project {
 	
+	 /***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	private String name;
 	private List<TimeBlock> submissionList = new ArrayList<TimeBlock>();
+	
+	 /***********************
+	  *  	CONSTRUCTORS 	*/	
+	 /***********************/
 	
 	/**
 	 * Constructor for Project Class, submissions are added
@@ -31,6 +39,10 @@ public class Project {
 	{
 		this.name = name;
 	}
+	 
+	 /***********************
+	  *  	SETTERS  		*/	
+	 /***********************
 	
 	/**
 	 * Adds a TimeBlock to a project
@@ -50,13 +62,17 @@ public class Project {
 		//else
 			//editTime();
 				
-
 	}
 	
 	public void setSubmissionList(List<TimeBlock> list)
 	{
 		this.submissionList.addAll(list);
 	}
+		 
+	 /***********************
+	  *  	GETTTERS  		*/	
+	 /************************/
+	
 	/**
 	 * Getter of string
 	 * @param d  date the time should correspond to
