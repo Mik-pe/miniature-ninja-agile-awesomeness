@@ -6,11 +6,20 @@ import android.util.Log;
 
 public class TimeBlock 
 {
+	
+	 /***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	private Calendar date;
 	private int hours;
 	private int minutes;
 	private int confirmed;
 	private long ID;
+	
+	 /***********************
+	  *  	CONSTRUCTORS 	*/	
+	 /***********************/
 	
 	public TimeBlock()
 	{
@@ -21,6 +30,11 @@ public class TimeBlock
 	{
 		setTimeBlock(year, month, day, theHours, theMinutes);
 	}
+	
+	 /***********************
+	  *  	SETTERS  		*/	
+	 /***********************/
+	
 	/**
 	 * @param theDate - Java Calendar type
 	 * @param theHours - hours
@@ -46,24 +60,16 @@ public class TimeBlock
 		Log.d("Confirmed", "ok");
 	}
 	
-	public int getConfirmed(){
-		return confirmed;
-	}
+
 
 	/**
 	 * Sets unique ID for timeblock in DB
 	 * @param i = index automatically returned from DB when timeblock inserted
 	 */
-	public void setID(long i){
+	public void setID(long i)
+	{
 		ID = i;
-		Log.d("DB ID set", "ok");
-	}
-	
-	/**
-	 * @return unique ID for editing timeblock in DB
-	 */
-	public long getID(){
-		return ID;
+		//Log.d("DB ID set", "ok");
 	}
 
 	/**
@@ -96,6 +102,28 @@ public class TimeBlock
 		setHours(h);
 		setMinutes(m);
 	}
+	
+	 /***********************
+	  *  	GETTTERS  		*/	
+	 /************************/
+	
+	/**
+	 * @return unique ID for editing timeblock in DB
+	 */
+	public long getID()
+	{
+		return ID;
+	}
+	
+	/**
+	 * Return status of timeblock confirmed = 1 / not confirmed = 0
+	 * @return
+	 */	
+	public int getConfirmed()
+	{
+		return confirmed;
+	}
+	
 	/**
 	 * @return time of TimeBlock in minutes
 	 */
@@ -103,6 +131,7 @@ public class TimeBlock
 	{
 		return (hours*60 + minutes);
 	}
+	
 	/**
 	 * @return time as array with time on form [hours, minutes]
 	 */
@@ -111,6 +140,7 @@ public class TimeBlock
 		int[] t = {this.hours, this.minutes}; 
 		return t;
 	}
+	
 	/**
 	 * @return time of TimeBlock as String
 	 */
@@ -121,6 +151,7 @@ public class TimeBlock
 		else
 		return hours+" h : "+minutes+" m";
 	}
+	
 	/**
 	 * @return the date as Calendar type
 	 */
@@ -135,15 +166,20 @@ public class TimeBlock
 	 * @param day
 	 * @return
 	 */
+	
+	 /***********************
+	  *  	OTEHRS  		*/	
+	 /************************/
 	public boolean isDate(int year, int month, int day)
 	{
-		Log.d("Inserted Day", ""+year);
-		Log.d("TimeBlock Day", ""+date.get(Calendar.YEAR));
+		//Log.d("Inserted Day", ""+year);
+		//Log.d("TimeBlock Day", ""+date.get(Calendar.YEAR));
 		if(this.date.get(Calendar.YEAR)==year && this.date.get(Calendar.MONTH) == month && this.date.get(Calendar.DAY_OF_MONTH)==day)
 			return true;
 		
 		return false;
 	}
+	
 	/**
 	 * @return date as string
 	 */
