@@ -133,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		String selectQuery = "SELECT * FROM " + TABLE_PROJECT + " WHERE "
 				+ KEY_ID + " = " + project_id;
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		Cursor c = db.rawQuery(selectQuery, null);
 				
 		if(c != null)
@@ -155,7 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		List<Project> projects = new ArrayList<Project>();
 		String selectQuery = "SELECT * FROM " + TABLE_PROJECT;
 		
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 		
@@ -181,9 +181,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		String selectQuery = "SELECT "+ "*" + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + "'" + project_name + "'";
-		//Log.e("TEEEEEEEEEEEEHKADKJHFJLAD", selectQuery);
 		Cursor c = db.rawQuery(selectQuery, null);
-		Log.e(LOG, c.toString());
+		//Log.e(LOG, c.toString());
 		if(c != null)
 			c.moveToFirst();
 		return c.getLong(0);
@@ -218,7 +217,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 */
 	public long createTimeBlock(TimeBlock timeblock, Project project)
 	{
-		Log.d("createTB", "ok");
+		//Log.d("createTB", "ok");
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		Calendar d = timeblock.getDate();
@@ -226,8 +225,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
-
-		Log.d("DB CHECKKKKKKKKKKKKKK", "" + timeblock.getTimeInMinutes() + " on project " + project.getName() + "with id" + getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_YEAR, d.get(Calendar.YEAR));
 		values.put(KEY_TIME_BLOCK_MONTH, d.get(Calendar.MONTH));
 		values.put(KEY_TIME_BLOCK_DAY, d.get(Calendar.DAY_OF_MONTH));
@@ -253,7 +250,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		    values.put(KEY_TIME_BLOCK_CONFIRMED, timeblock.getConfirmed());
 		 
 		    //updating row
-		    Log.d("Set confirmed", "" + timeblock.getID());
+		    //Log.d("Set confirmed", "" + timeblock.getID());
 		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
 		            new String[] { String.valueOf(timeblock.getID()) });
 	}
@@ -296,7 +293,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
 					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
-					Log.d("Get all timeblocks",   " " + c.getColumnIndex(KEY_TIME_BLOCK_PROJECT_ID));
 					int hours = (int)minutes/60;
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
@@ -315,7 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		long pid = getProjectId(p.getName());
 		String selectQuery = "SELECT * FROM " + TABLE_TIME_BLOCK + " WHERE "+ KEY_TIME_BLOCK_PROJECT_ID + " = " + pid;
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -329,7 +325,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
 					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
-					Log.d("TIMEBLOCK CHEK",   " " + day + " on project " + p.getName());
 					int hours = minutes/60;
 					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
 					
@@ -339,7 +334,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}
-			Log.d("DB RETURN", "Submission list init");
 			return timeblocks;
 	}
 	
