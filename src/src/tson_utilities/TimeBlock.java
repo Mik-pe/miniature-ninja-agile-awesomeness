@@ -9,6 +9,8 @@ public class TimeBlock
 	private Calendar date;
 	private int hours;
 	private int minutes;
+	private int confirmed;
+	private long ID;
 	
 	public TimeBlock()
 	{
@@ -19,9 +21,7 @@ public class TimeBlock
 	{
 		setTimeBlock(year, month, day, theHours, theMinutes);
 	}
-
 	/**
-	 * 
 	 * @param theDate - Java Calendar type
 	 * @param theHours - hours
 	 * @param theMinutes - minutes
@@ -34,9 +34,39 @@ public class TimeBlock
 		date.set(Calendar.DAY_OF_MONTH, day);
 		hours = theHours;
 		minutes = theMinutes;
+		confirmed = 0;
+		//ID = 0;
 	}
 	/**
-	 * 
+	 * Controls color in submission
+	 * @param i = 0 for time added (yellow), 1 for time confirmed (green)
+	 */
+	public void setConfirmed(int i){
+		confirmed = i;
+		Log.d("Confirmed", "ok");
+	}
+	
+	public int getConfirmed(){
+		return confirmed;
+	}
+
+	/**
+	 * Sets unique ID for timeblock in DB
+	 * @param i = index automatically returned from DB when timeblock inserted
+	 */
+	public void setID(long i){
+		ID = i;
+		Log.d("DB ID set", "ok");
+	}
+	
+	/**
+	 * @return unique ID for editing timeblock in DB
+	 */
+	public long getID(){
+		return ID;
+	}
+
+	/**
 	 * @param d - Java Calendar type
 	 */
 	public void setDate(Calendar d)
@@ -44,7 +74,6 @@ public class TimeBlock
 		date = d;
 	}
 	/**
-	 * 
 	 * @param h - hours
 	 */
 	public void setHours(int h)
@@ -52,7 +81,6 @@ public class TimeBlock
 		hours = h;
 	}
 	/**
-	 * 
 	 * @param m - minutes
 	 */
 	public void setMinutes(int m)
@@ -60,7 +88,6 @@ public class TimeBlock
 		minutes = m;
 	}
 	/**
-	 * 
 	 * @param h - hours
 	 * @param m - minutes
 	 */
@@ -70,23 +97,21 @@ public class TimeBlock
 		setMinutes(m);
 	}
 	/**
-	 * 
 	 * @return time of TimeBlock in minutes
 	 */
 	public int getTimeInMinutes()
 	{
 		return (hours*60 + minutes);
 	}
-	
+	/**
+	 * @return time as array with time on form [hours, minutes]
+	 */
 	public int[] getTimeAsArray()
 	{
 		int[] t = {this.hours, this.minutes}; 
 		return t;
 	}
-	
-	
 	/**
-	 * 
 	 * @return time of TimeBlock as String
 	 */
 	public String getTimeAsString()
@@ -97,14 +122,19 @@ public class TimeBlock
 		return hours+" h : "+minutes+" m";
 	}
 	/**
-	 * 
 	 * @return the date as Calendar type
 	 */
 	public Calendar getDate()
 	{
 		return date;
 	}
-	
+	/**
+	 * Check input of date, return true if correct
+	 * @param year
+	 * @param month
+	 * @param day
+	 * @return
+	 */
 	public boolean isDate(int year, int month, int day)
 	{
 		Log.d("Inserted Day", ""+year);
@@ -114,11 +144,12 @@ public class TimeBlock
 		
 		return false;
 	}
-	
+	/**
+	 * @return date as string
+	 */
 	public String getDateAsString()
 	{
 		return date.toString();
-		//return date.get(Calendar.DAY_OF_MONTH)+"/"+date.get(Calendar.MONTH)+ "-" + date.get(Calendar.YEAR); 
-	}
+	}	
 	
-}
+} //End of TimeBlock Class

@@ -4,8 +4,6 @@
  */
 package tson.sqlite.helper;
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-
-
-	private static final int DATABASE_VERSION = 18;
-
-	
+	private static final int DATABASE_VERSION = 21;
+		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager";
 	
@@ -46,13 +41,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TABLE_TIME_BLOCK = "time_blocks";
 	
 	// Common column names
-	private static final String KEY_ID = "id";
-	
+	private static final String KEY_ID = "id";	
 	
 	//PROJECTS Table
 	private static final String KEY_PROJECT_NAME = "project_name";
-	
-
 
 	//TIME BLOCKS TABLE
 	private static final String KEY_TIME_BLOCK_PROJECT_ID = "project_id";
@@ -60,21 +52,17 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_TIME_BLOCK_MONTH = "month";
 	private static final String KEY_TIME_BLOCK_DAY = "day";
 	private static final String KEY_TIME_BLOCK_MINUTES = "minutes";
-	
+	private static final String KEY_TIME_BLOCK_CONFIRMED = "confirmed";
 	
 	// Table Create Statements
 	// Project table create statement
 	private static final String CREATE_TABLE_PROJECT = "CREATE TABLE "
 			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_NAME
 			+ " TEXT" + ")";
-	
-
 
 	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
-			+ KEY_TIME_BLOCK_MONTH + " INTEGER," + KEY_TIME_BLOCK_DAY + " INTEGER," + KEY_TIME_BLOCK_MINUTES + " INTEGER"  +")";
-
-	
+			+ KEY_TIME_BLOCK_MONTH + " INTEGER," + KEY_TIME_BLOCK_DAY + " INTEGER," + KEY_TIME_BLOCK_MINUTES + " INTEGER,"  + KEY_TIME_BLOCK_CONFIRMED + " INTEGER"  +")";
 	
 	public DatabaseHelper(Context context)
 	{
@@ -101,10 +89,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//Create new tables
 		onCreate(db);
 	}
-
-
-
-	
 	
 	//========================================================
 	// PROJECT ===============================================
@@ -112,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	/**
 	 * Creating a project
-	 * @param project - the projec object
+	 * @param project - the project object
 	 * @param tag_ids - the tags, e.g. name
 	 * @return - returns the id of the row
 	 */
@@ -126,10 +110,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//insert row
 		long project_id = db.insert(TABLE_PROJECT, null, values);
 		
-		//assigning tags to project
-	
-		return project_id;
-		
+		//assigning tags to project	
+		return project_id;		
 	}
 	
 	/**
@@ -201,13 +183,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				new String[] {String.valueOf(project_id) });
 	}
 	
-	
 	//========================================================
 	// TIME BLOCK ============================================
 	//========================================================
 	
 	public long createTimeBlock(TimeBlock timeblock, Project project)
 	{
+		Log.d("createTB", "ok");
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		Calendar d = timeblock.getDate();
@@ -220,14 +202,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_TIME_BLOCK_YEAR, d.get(Calendar.YEAR));
 		values.put(KEY_TIME_BLOCK_MONTH, d.get(Calendar.MONTH));
 		values.put(KEY_TIME_BLOCK_DAY, d.get(Calendar.DAY_OF_MONTH));
-		
-		
+		values.put(KEY_TIME_BLOCK_CONFIRMED, timeblock.getConfirmed());
+				
 		//insert row
 		long timeblock_id = db.insert(TABLE_TIME_BLOCK, null, values);
-	
+		timeblock.setID(timeblock_id);
 		logTimeblocks();
 		return timeblock_id;
 		
+	}
+	
+	public int setConfirmed(TimeBlock timeblock)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		  
+		    ContentValues values = new ContentValues();
+		    values.put(KEY_TIME_BLOCK_CONFIRMED, timeblock.getConfirmed());
+		 
+		    //updating row
+		    Log.d("Set confirmed", "" + timeblock.getID());
+		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
+		            new String[] { String.valueOf(timeblock.getID()) });
 	}
 	
 
@@ -280,9 +275,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
 					Log.d("TIMEBLOCK CHEK",   " " + day + " on project " + p.getName());
 					int hours = minutes/60;
+					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
 					
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
+					t.setConfirmed(confirmed);
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}
@@ -304,9 +301,5 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(db!= null && db.isOpen())
 			db.close();
 	}
-	
-	
-	
-	
 
 }

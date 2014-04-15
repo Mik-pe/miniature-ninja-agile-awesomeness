@@ -57,9 +57,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-
-
-
 public class HomeActivity extends FragmentActivity
 {
 	int hour,min, newHour, newMin;
@@ -74,7 +71,6 @@ public class HomeActivity extends FragmentActivity
 	List<Project> projectList;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 	
-
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -225,11 +221,12 @@ public class HomeActivity extends FragmentActivity
 		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
+	
 
 	/**
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
-	private void displayView(int position) {
+		private void displayView(int position) {
 		//update the main content by replacing fragments
 		Fragment fragment = null;
 		ab = getActionBar();
