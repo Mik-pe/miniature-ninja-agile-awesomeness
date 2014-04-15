@@ -100,7 +100,6 @@ public class CalendarAdapter extends BaseAdapter{
 		if(position >= 0 && position < 7){
 			v = vi.inflate(R.layout.day_of_week, null);
 			TextView day = (TextView)v.findViewById(R.id.textView1);
-			
 			if(position == 0){
 				day.setText(R.string.sunday);
 			}else if(position == 1){

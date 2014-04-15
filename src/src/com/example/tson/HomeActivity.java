@@ -261,10 +261,10 @@ public class HomeActivity extends FragmentActivity
 		case 2:
 			fragment = new StatisticsFragment();
 			break;
-			/*case 3:
-			fragment = new CommunityFragment();
+		case 3:
+			fragment = new ExportFragment();
 			break;
-			case 4:
+			/*case 4:
 			fragment = new PagesFragment();
 			break;
 			case 5:
