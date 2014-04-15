@@ -114,6 +114,32 @@ public class TimeBlock
 	{
 		return ID;
 	}
+
+	/**
+	 * Returns the year of the time block
+	 * @return int year
+	 */
+	public int getYear()
+	{
+		return date.get(Calendar.YEAR);
+	}
+	/**
+	 * Returns the month of the time block
+	 * @return int month
+	 */
+	public int getMonth()
+	{
+		return date.get(Calendar.MONTH);
+	}
+	
+	/**
+	 * Returns the day of month of the time block
+	 * @return int day
+	 */
+	public int getDay()
+	{
+		return date.get(Calendar.DAY_OF_MONTH);
+	}
 	
 	/**
 	 * Return status of timeblock confirmed = 1 / not confirmed = 0
