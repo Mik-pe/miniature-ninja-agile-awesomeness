@@ -106,6 +106,24 @@ public class User
 	 /************************/
 	 
 	 /**
+	  * Check if a date is confirmed.
+	  * @param cal - Calendar object for the date to check
+	  * @return - Returns 1 IF CONFIRMED, 0 if timeblock EXISTS, -1 if no timeblock exists.
+	  */
+	 public int isDateConfirmed(Calendar cal){
+		 TimeBlock t;
+		 int confirmed=-1;
+		 for(int i=0;i<projectList.size();i++){
+			 t=projectList.get(i).getTimeByDate(cal);
+			 if(t != null){
+				 confirmed=t.getConfirmed();
+				 if(confirmed == 1)
+					 return confirmed;
+			 }
+		 }
+		return confirmed;
+	 }
+	 /**
 	  * Adds an existing project to user's project list
 	  * @param p - Name of project
 	  */
