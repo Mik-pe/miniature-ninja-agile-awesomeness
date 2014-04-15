@@ -58,8 +58,6 @@ public class SubmissionListFragment extends Fragment {
 		return true;
 	}
 	
-	
-	
 	private class SubmissionListAdapter extends ArrayAdapter<Calendar>
     {
 		
