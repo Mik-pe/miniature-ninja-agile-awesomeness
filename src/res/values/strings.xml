@@ -17,7 +17,6 @@
     <string name="title_activity_adapter">Adapter</string>
     <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
-
     <string name="monday">MON</string>
     <string name="tuesday">TUE</string>
     <string name="wednesday">WED</string>
@@ -27,24 +26,27 @@
     <string name="sunday">SUN</string>
     <string name="confirm_button">Confirm</string>
     <string name="cancel_button">Cancel</string>
-    <string name= "title_confirm_time">Are you sure?</string>
-    <string name= "confirm_dialog_message">Time info Bitch</string>
+    <string name="title_confirm_time">Are you sure?</string>
+    <string name="confirm_dialog_message">Time info Bitch</string>
     <string name="select_start">StartStat</string>
     <string name="select_end">EndStat</string>
     <string name="stat">Statistics</string>
     <string name="go_statistics">GO</string>
+    <string name="select_start_export">GO</string>
+    <string name="select_end_export">GO</string>
+    <string name="export">Export</string>
 
-	<!-- Menu items -->
-	<string-array name="nav_drawer_items">
-	    <item >Home</item>
-	    <item >Submissions</item>
-	    <item >Statistics</item>
-	    <item >Export</item>
-	    <item >Settings</item>
-	</string-array>
-	
-	<!-- If we want icons -->
-	<!--  
+    <!-- Menu items -->
+    <string-array name="nav_drawer_items">
+        <item>Home</item>
+        <item>Submissions</item>
+        <item>Statistics</item>
+        <item>Export</item>
+        <item>Settings</item>
+    </string-array>
+
+    <!-- If we want icons -->
+    <!--
 	<array name="nav_drawer_icons">
 		<item>@drawable/ic_home</item>
         <item>@drawable/ic_people</item>
@@ -53,11 +55,12 @@
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>   
 	</array>
-	-->
-	
-	<!-- Content Description -->
+    -->
+
+
+    <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
+    <string name="title_activity_export_fragment">ExportFragment</string>
 
 </resources>
-
