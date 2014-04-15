@@ -17,12 +17,20 @@ import tson.sqlite.helper.DatabaseHelper;
  */
 public class User
 {
+	 /***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	 private String email = "";
 	 private String name = ""; 
 	 private String id = "";
 	 private List<Project> projectList = new ArrayList<Project>();
 	 DatabaseHelper db;
 	 public HomeActivity homeActivity = new HomeActivity();
+	 
+	 /***********************
+	  *  	CONSTRUCTORS 	*/	
+	 /***********************/
 	 
 	 /**
 	  * Constructor for a User, information to be fetched from Google account in the future
@@ -35,28 +43,6 @@ public class User
 		 this.email = email;
 		 this.name = name;
 		 this.id = id;
-	 }
-	 
-	 /**
-	  * Adds an existing project to user's project list
-	  * @param p - Name of project
-	  */
-	 public void addProject(Project p)
-	 {
-		 if(!projectList.contains(p))
-		 {
-			 projectList.add(p);
-		 }
-	 }
-	 
-	 /**
-	  * Function creating a new project and adding it to the users project list
-	  * @param name - Name of new project
-	  */
-	 public void createProject(String name){
-		 
-		 Project p = new Project(name);
-		 addProject(p);
 	 }
 	 
 	 /***********************
@@ -113,5 +99,31 @@ public class User
 			 }
 		 }
 		 return totalTime;
+	 }
+	 
+	 /***********************
+	  *  	OTEHRS  		*/	
+	 /************************/
+	 
+	 /**
+	  * Adds an existing project to user's project list
+	  * @param p - Name of project
+	  */
+	 public void addProject(Project p)
+	 {
+		 if(!projectList.contains(p))
+		 {
+			 projectList.add(p);
+		 }
+	 }
+	 
+	 /**
+	  * Function creating a new project and adding it to the users project list
+	  * @param name - Name of new project
+	  */
+	 public void createProject(String name){
+		 
+		 Project p = new Project(name);
+		 addProject(p);
 	 }
 }

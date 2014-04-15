@@ -59,6 +59,10 @@ import android.widget.ListView;
 
 public class HomeActivity extends FragmentActivity
 {
+	 /***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
@@ -68,6 +72,7 @@ public class HomeActivity extends FragmentActivity
 	ActionBar ab;
 	private static Calendar c;
 	
+	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
@@ -85,12 +90,16 @@ public class HomeActivity extends FragmentActivity
 	//slide menu items
 	private String[] navMenuTitles;
 	//private TypedArray navMenuIcons;
-
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 
+	 /***********************
+	  *  	OTHERS			*/	
+	 /************************/
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
@@ -103,79 +112,77 @@ public class HomeActivity extends FragmentActivity
         user.getProjects().clear();
         for (int i = 0; i < projectList.size(); i++)
         {
-        	
 	        user.addProject(projectList.get(i));
-
-	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));
-	       	
+	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	
 	        List<TimeBlock> temp = db.getTimeBlocksByProject(user.getProjects().get(i));
-	        Log.d("Listing all tprojects", projectList.get(i).getName() + "");
+	        //Log.d("Listing all tprojects", projectList.get(i).getName() + "");
 	        for (TimeBlock time : temp) {
-	            Log.d("Listing all times for a project", time.getTimeAsString());
-	        }
-       
+	            //Log.d("Listing all times for a project", time.getTimeAsString());
         }
-		mTitle = mDrawerTitle = getTitle();
+       
+    }//End onCreate-function
+	
+    mTitle = mDrawerTitle = getTitle();
 
-		//load slide menu items
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+	//load slide menu items
+	navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
+	mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+	mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
-		navDrawerItems = new ArrayList<NavDrawerItem>();
-		Log.d("navMenu", Integer.toString(navDrawerItems.size()));
-		//adding nav drawer items to array
-		//Home
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0]));
-		//Find People
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1]));
-		//Photos
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2]));
-		//Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], true, "22"));
-		//Pages
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4]));
-		Log.d("navMenu", Integer.toString(navDrawerItems.size()));
+	navDrawerItems = new ArrayList<NavDrawerItem>();
+	Log.d("navMenu", Integer.toString(navDrawerItems.size()));
+	//adding nav drawer items to array
+	//Home
+	navDrawerItems.add(new NavDrawerItem(navMenuTitles[0]));
+	//Find People
+	navDrawerItems.add(new NavDrawerItem(navMenuTitles[1]));
+	//Photos
+	navDrawerItems.add(new NavDrawerItem(navMenuTitles[2]));
+	//Communities, Will add a counter here
+	navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], true, "22"));
+	//Pages
+	navDrawerItems.add(new NavDrawerItem(navMenuTitles[4]));
+	Log.d("navMenu", Integer.toString(navDrawerItems.size()));
 
 
-		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());	
+	mDrawerList.setOnItemClickListener(new SlideMenuClickListener());	
 
-		//setting the nav drawer list adapter
-		adapter = new NavDrawerListAdapter(getApplicationContext(),
-				navDrawerItems);
-		mDrawerList.setAdapter(adapter);
+	//setting the nav drawer list adapter
+	adapter = new NavDrawerListAdapter(getApplicationContext(),
+			navDrawerItems);
+	mDrawerList.setAdapter(adapter);
 
-		//enabling action bar app icon and behaving it as toggle button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);	
+	//enabling action bar app icon and behaving it as toggle button
+	getActionBar().setDisplayHomeAsUpEnabled(true);
+	getActionBar().setHomeButtonEnabled(true);	
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, //nav menu toggle icon
-				R.string.app_name, // nav drawer open - description for accessibility
-				R.string.app_name // nav drawer close - description for accessibility
-				) {
-			public void onDrawerClosed(View view) {
-				getActionBar().setTitle(mTitle);
-				//calling onPrepareOptionsMenu() to show action bar icons
-				invalidateOptionsMenu();
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
-				//calling onPrepareOptionsMenu() to hide action bar icons
-				invalidateOptionsMenu();
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		if (savedInstanceState == null) {
-			//on first time display view for first nav item
-			displayView(0);
+	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+			R.drawable.ic_drawer, //nav menu toggle icon
+			R.string.app_name, // nav drawer open - description for accessibility
+			R.string.app_name // nav drawer close - description for accessibility
+			) {
+		public void onDrawerClosed(View view) {
+			getActionBar().setTitle(mTitle);
+			//calling onPrepareOptionsMenu() to show action bar icons
+			invalidateOptionsMenu();
 		}
-		
-		
+
+		public void onDrawerOpened(View drawerView) {
+			getActionBar().setTitle(mDrawerTitle);
+			//calling onPrepareOptionsMenu() to hide action bar icons
+			invalidateOptionsMenu();
+		}
+	};
+	mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+	if (savedInstanceState == null) {
+		//on first time display view for first nav item
+		displayView(0);
 	}
+	
+	
+}
 	
 	/**
 	 * Getter of Calendar from the Homeactivity

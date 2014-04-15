@@ -1,6 +1,5 @@
 package com.example.tson;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -12,22 +11,20 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CalendarView;
-import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 public class SubmissionCalFragment extends Fragment {
-
-	List<Calendar> calList = new ArrayList<Calendar>();
-	ListView submissionCalendarView;
+	
+	
+	/************************
+	  *  	VARIABLES		*/	
+	 /***********************/
 	List<Project> projectList = HomeActivity.user.getProjects();
 	Calendar today = Calendar.getInstance();
 	ExtendedCalendarView cal;
@@ -40,33 +37,44 @@ public class SubmissionCalFragment extends Fragment {
         
         cal = (ExtendedCalendarView) subCalView.findViewById(R.id.calendar);
 		
+        
+        //Override the listener in the ExtendedCalenderView.
 		cal.setOnDayClickListener(new OnDayClickListener(){
 
 			@Override
 			public void onDayClicked(AdapterView<?> adapter, View view,
 					int position, long id, Day day) {
+				
 				Calendar tempCal = Calendar.getInstance();
 				tempCal.set(day.getYear(), day.getMonth(), day.getDay());
 				int dateDifference = -(today.get(Calendar.DAY_OF_YEAR) - tempCal.get(Calendar.DAY_OF_YEAR));	
 				
-				Fragment switchToFragment = new HomeFragment();
-				Bundle bundle = new Bundle();
-				bundle.putInt("dateDifference", dateDifference);
-				switchToFragment.setArguments(bundle);
+				//Only past dates are clickable and will change the fragment
+				if(dateDifference <= 0)
+				{
+					//Create a new instance of HomeFragment
+					Fragment switchToFragment = new HomeFragment();
+					
+					//Create a bundle to send the date to HomeFragment
+					Bundle bundle = new Bundle();
+					bundle.putInt("dateDifference", dateDifference);
+					switchToFragment.setArguments(bundle);
+					
+					//Reset the actionBar
+					ActionBar actionBar = getActivity().getActionBar();
+					actionBar.removeAllTabs();
+					actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+					getActivity().setTitle("Home");					
+					
+					//And switch
+					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					fragmentManager.beginTransaction()
+					.replace(R.id.frame_container, switchToFragment).commit();
+				}
 				
-				ActionBar actionBar = getActivity().getActionBar();
-				actionBar.removeAllTabs();
-				actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-				getActivity().setTitle("Home");					
-				
-				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-				fragmentManager.beginTransaction()
-				.replace(R.id.frame_container, switchToFragment).commit();
 			}
 			
 		});
-        
-        //((TextView)subCalView.findViewById(R.id.textView)).setText("Calendar");
         return subCalView;
 	}
 
