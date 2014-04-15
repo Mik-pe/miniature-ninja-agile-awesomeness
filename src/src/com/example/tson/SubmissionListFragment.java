@@ -27,7 +27,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-
+/**
+ * 
+ * This class is the fragment for the SubmissionLISTpage
+ * Contains subClasses:
+ * {@link SubmissionListAdapter}
+ * {@link SubmissionDayListItem}
+ * @author 
+ *
+ */
 public class SubmissionListFragment extends Fragment {
 	List<SubmissionDayListItem> subList = new ArrayList<SubmissionDayListItem>();
 	ListView submissionListView;
