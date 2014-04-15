@@ -130,7 +130,7 @@ public class SubmissionListFragment extends Fragment {
     		submissionDate.setText(currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
     				
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
-    		
+    		projectTime.setOnClickListener(null);
     		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
     		/**
     		 * Will set the backgroundColor depending on confirmation of the SubListItem
@@ -154,11 +154,11 @@ public class SubmissionListFragment extends Fragment {
 				@Override
 				public void onClick(View v) {
 								
-					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentItem.today.get(Calendar.DAY_OF_YEAR));
+					long dateDifference = -(Calendar.getInstance().getTimeInMillis() - currentItem.today.getTimeInMillis())/(1000*60*60*24);
 					
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();
-					bundle.putInt("dateDifference", dateDifference);
+					bundle.putLong("dateDifference", dateDifference);
 					switchToFragment.setArguments(bundle);
 					
 					ActionBar actionBar = getActivity().getActionBar();

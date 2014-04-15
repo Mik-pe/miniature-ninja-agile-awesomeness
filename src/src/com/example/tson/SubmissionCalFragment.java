@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -26,7 +27,7 @@ public class SubmissionCalFragment extends Fragment {
 	  *  	VARIABLES		*/	
 	 /***********************/
 	List<Project> projectList = HomeActivity.user.getProjects();
-	Calendar today = Calendar.getInstance();
+	
 	ExtendedCalendarView cal;
 		
 	
@@ -46,8 +47,11 @@ public class SubmissionCalFragment extends Fragment {
 					int position, long id, Day day) {
 				
 				Calendar tempCal = Calendar.getInstance();
+				Calendar today = Calendar.getInstance();
 				tempCal.set(day.getYear(), day.getMonth(), day.getDay());
-				long dateDifference = -(today.getTimeInMillis() - tempCal.getTimeInMillis())/(1000*60*60*24) - 1;	
+				long dateDifference = -(today.getTimeInMillis() - tempCal.getTimeInMillis())/(1000*60*60*24);
+				
+				Log.e("TimeDifference", Long.toString(dateDifference));
 				
 				//Only past dates are clickable and will change the fragment
 				if(dateDifference <= 0)
