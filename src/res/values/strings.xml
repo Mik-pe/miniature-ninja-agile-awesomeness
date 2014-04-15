@@ -44,12 +44,13 @@
         <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>   
-	</array>
+	</array>
     -->
 
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
+    <string name="title_activity_export_fragment">ExportFragment</string>
 
 </resources>
