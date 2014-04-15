@@ -252,9 +252,10 @@ public class HomeActivity extends FragmentActivity
 		case 1:
 			fragment = new SubmissionFragment();
 			break;
-			/*case 2:
-			fragment = new PhotosFragment();
+		case 2:
+			fragment = new testStats();
 			break;
+		/*
 			case 3:
 			fragment = new CommunityFragment();
 			break;
