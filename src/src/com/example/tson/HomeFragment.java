@@ -24,6 +24,8 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -95,6 +97,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         	@Override
         	public void onClick(View v) {
         		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+        		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
+                projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
         		newDate(homeFragmentCalendar);
         	}
         });
@@ -106,6 +110,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         		if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
             	{
 	        		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+	        		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
+                    projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
 	        		newDate(homeFragmentCalendar);
             	}
         	}
@@ -147,7 +153,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	 * @param c - calendar for the new date.
 	 */
 	public void newDate(Calendar c)
-	{
+	{		
 		homeFragmentCalendar = (Calendar) c.clone();
 		
         dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
@@ -374,16 +380,18 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
                 // left or right
                 if (deltaX < 0  && (Math.abs(deltaY) < 100) ) {
                     homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+                    dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
+                    projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
                     newDate(homeFragmentCalendar);
-                    dateText.scrollTo(0, (int) dateText.getY());
                     return false;
                 }
                 if (deltaX > 0 && (Math.abs(deltaY) < 100) ) {
                 	if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
                 	{
                 		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+                		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
+                        projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
                 		newDate(homeFragmentCalendar);
-                		dateText.scrollTo(0, (int) dateText.getY());
                 	}
                     return false;
                 }    
