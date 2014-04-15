@@ -90,15 +90,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		onCreate(db);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	//========================================================
 	// PROJECT ===============================================
 	//========================================================
 
 	/**
-	 * Creating a project
-	 * @param project - the project object
-	 * @param tag_ids - the tags, e.g. name
-	 * @return - returns the id of the row
+	 * Creating a project.
+	 * @param project - the project object.
+	 * @param tag_ids - the tags, e.g. name.
+	 * @return - returns the id of the row.
 	 */
 	public long createProject(Project project)
 	{
@@ -115,9 +123,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * Get a single project by an ID
-	 * @param project_id
-	 * @return A new project with the key name
+	 * Get a single project by an ID.
+	 * @param project_id.
+	 * @return A new project with the key name.
 	 */
 	public Project getProject(long project_id)
 	{
@@ -137,8 +145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		return p;
 	}
+	
 	/**
-	 * Select all projects
+	 * Select all projects.
 	 * @return List<Project> 
 	 */
 	public List<Project> getAllProjects()
@@ -163,7 +172,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return projects;
 	}
-	
+	/**
+	 * Get the id of a project by it's name (which should be unique).
+	 * @param project_name - String.
+	 * @return auto incremented id from the database.
+	 */
 	public long getProjectId(String project_name){
 		SQLiteDatabase db = this.getReadableDatabase();
 
@@ -175,7 +188,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			c.moveToFirst();
 		return c.getLong(0);
 	}
-
+	
+	/**
+	 * Delete a project by an id, usually called after getProjectId.
+	 * @param project_id
+	 */
 	public void deleteProject(long project_id)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -183,10 +200,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				new String[] {String.valueOf(project_id) });
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	//========================================================
 	// TIME BLOCK ============================================
 	//========================================================
-	
+	/**	
+	 * Create a timeblock instance in the database.
+	 * @param timeblock - TimeBlock object.
+	 * @param project	- Project object.
+	 * @return			- (long) id of the inserted row.
+	 */
 	public long createTimeBlock(TimeBlock timeblock, Project project)
 	{
 		Log.d("createTB", "ok");
@@ -211,7 +240,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return timeblock_id;
 		
 	}
-	
+	/**
+	 * Set a confirmation tag for a TimeBlock object, this indicates that the user has sumbitted a timeblock for a specific date.
+	 * @param TimeBlock object.
+	 * @return an int indicator if the row was updated.
+	 */
 	public int setConfirmed(TimeBlock timeblock)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -224,8 +257,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
 		            new String[] { String.valueOf(timeblock.getID()) });
 	}
+	/**
+	 * Update a time block, only updates the time column for now.
+	 * @param timeblock.
+	 * @return indicator if the row was updated.
+	 */
+	public int updateTimeBlock(TimeBlock timeblock)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
+		
+		//Update row
+		return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
+				new String[] {String.valueOf(timeblock.getID()) });
+	}
 	
-
+	/**
+	 * Get all the time blocks of all projects.
+	 * @return List<TimeBlock> of all time blocks.
+	 */
 	public List<TimeBlock> getAllTimeBlocks()
 	{
 		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
@@ -255,6 +306,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			return timeblocks;
 	}
 	
+	/**
+	 * Get all time blocks connected to a specific project.
+	 * @param Project object.
+	 * @return List<TimeBlock> of all time blocks for a specific project.
+	 */
 	public List<TimeBlock> getTimeBlocksByProject(Project p)
 	{
 		long pid = getProjectId(p.getName());
@@ -287,7 +343,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			return timeblocks;
 	}
 	
-	
+	/**
+	 * A log time function, not fully implemented.
+	 */
 	public void logTimeblocks()
 	{	
 		getAllTimeBlocks();
@@ -295,6 +353,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	
 	//Close database
+	/**
+	 * Close the database.
+	 */
 	public void closeDB()
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
