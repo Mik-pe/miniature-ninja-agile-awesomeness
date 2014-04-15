@@ -15,12 +15,20 @@ import android.widget.ImageButton;
 
 public class StatisticsFragment extends Fragment{
 	
+	 /***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	ImageButton btnStart, btnEnd;
 	Button btnGo;
-	
 	Calendar cal;
 	int day, day2, month, month2, year, year2, i, totalDays, totalDays2;
 	EditText startTime, endTime;
+	
+	
+	 /***********************
+	  *  	OTHERS			*/	
+	 /************************/
 	
 	public StatisticsFragment(){}
 
@@ -40,6 +48,7 @@ public class StatisticsFragment extends Fragment{
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
 		  
+		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -48,6 +57,7 @@ public class StatisticsFragment extends Fragment{
 				}
 		  });		
 		  
+		  //onClick on btnEnd
 		  btnEnd.setOnClickListener(new View.OnClickListener() {			
 				@Override
 				public void onClick(View v) {
@@ -56,22 +66,13 @@ public class StatisticsFragment extends Fragment{
 				}
 		  });	
 		  
-		  
+		  //onClick on btnGo
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					
-					Log.v("blah", "blah blah");
 					Calendar temp = Calendar.getInstance();
 					temp.set(Calendar.YEAR, year);
 					temp.set(Calendar.MONTH, month-1);
 					temp.set(Calendar.DAY_OF_MONTH, day);
-					
-					while(temp != HomeActivity.getCal())
-					{
-						
-					}
-					int dateDifference = -(HomeActivity.getCal().get(Calendar.DAY_OF_YEAR) - temp.get(Calendar.DAY_OF_YEAR));
-
 				}
 		  });
 		  
