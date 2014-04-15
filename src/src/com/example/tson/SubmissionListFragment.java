@@ -15,6 +15,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -28,8 +29,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 public class SubmissionListFragment extends Fragment {
-	
-	List<Calendar> calList = new ArrayList<Calendar>();
+	List<SubmissionDayListItem> subList = new ArrayList<SubmissionDayListItem>();
 	ListView submissionListView;
 	List<Project> projectList = HomeActivity.user.getProjects();
 	Calendar today = Calendar.getInstance();
@@ -42,19 +42,20 @@ public class SubmissionListFragment extends Fragment {
 		
 		submissionListView = (ListView) subListView.findViewById(R.id.submittedDaysListView);
 		
-		for(int i=0;i<10;i++)
+		for(int i=0;i<30;i++)
 		{
-			
-			calList.add((Calendar) today.clone());
+			subList.add(new SubmissionDayListItem(today,HomeActivity.user.getTimeByDate(today), HomeActivity.user.isDateConfirmed(today)));
 			today.add(Calendar.DAY_OF_YEAR, -1);
 		}
-		ArrayAdapter<Calendar> subAdapter = new SubmissionListAdapter();
+		
+		ArrayAdapter<SubmissionDayListItem> subAdapter = new SubmissionListAdapter();
+		
 		submissionListView.setAdapter(subAdapter);
 		
 		return subListView;
 	}
 
-	
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getActivity().getMenuInflater().inflate(R.menu.sub_list, menu);
@@ -62,31 +63,44 @@ public class SubmissionListFragment extends Fragment {
 	}
 	
 	
+	public class SubmissionDayListItem
+	{
+		Calendar today;
+		int timeWorked;
+		int isConfirmed;
+		
+		public SubmissionDayListItem(Calendar c, int t, int i){
+			today = (Calendar) c.clone();
+			timeWorked=t;
+			isConfirmed = i;
+		}
+	}
 	
-	private class SubmissionListAdapter extends ArrayAdapter<Calendar>
+	private class SubmissionListAdapter extends ArrayAdapter<SubmissionDayListItem>
     {
 		
 		public SubmissionListAdapter()
     	{
-    		super(getActivity(), R.layout.submissionlist_day_item, calList);
+    		super(getActivity(), R.layout.submissionlist_day_item, subList);
+    		
     	}
     	
     	@Override
     	public View getView(int position, View view, ViewGroup parent)
     	{
+    		
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
-    		
-    		final Calendar currentDate = calList.get(position);
-
+    		final SubmissionDayListItem currentItem = subList.get(position);
+    		Log.d("Adapter call", "here"+currentItem.today.get(Calendar.DAY_OF_WEEK));
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
     		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
     		Button editButton = (Button) view.findViewById(R.id.editDayButton);	
+    		TextView weekText = (TextView) view.findViewById(R.id.weekText);
     		
-    		if(position == 0 || currentDate.get(Calendar.DAY_OF_WEEK)==7)
+    		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
-    			TextView weekText = (TextView) view.findViewById(R.id.weekText);
-    			weekText.setText("Week: "+currentDate.get(Calendar.WEEK_OF_YEAR));
+    			weekText.setText("Week: "+currentItem.today.get(Calendar.WEEK_OF_YEAR));
     			
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
@@ -95,45 +109,36 @@ public class SubmissionListFragment extends Fragment {
     			RelativeLayout.LayoutParams paramsButton =  (RelativeLayout.LayoutParams)editButton.getLayoutParams();
     			paramsButton.addRule(RelativeLayout.BELOW, R.id.weekText);
     		}
+    		else
+    		{
+    			weekText.setText("");
+    			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
+    			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+    			params.addRule(RelativeLayout.BELOW, 0);
+    			
+    			RelativeLayout.LayoutParams paramsButton =  (RelativeLayout.LayoutParams)editButton.getLayoutParams();
+    			paramsButton.addRule(RelativeLayout.BELOW, 0);
+    		}
     		
-    		submissionDate.setText(currentDate.get(Calendar.DAY_OF_MONTH)+"/"+(currentDate.get(Calendar.MONTH)+1));
+    		submissionDate.setText(currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
     				
-    		projectTime.setText(HomeActivity.user.getTimeByDate(currentDate)/60 + ":" +HomeActivity.user.getTimeByDate(currentDate)%60);
+    		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		
     		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
-    		
-    			List<Project> projectList = (ArrayList<Project>) HomeActivity.user.getProjects();
-	       		
-	       		for(int i=0; i<projectList.size(); i++)
-	       		{
-	       			Project p = projectList.get(i);
-	       			
-	       			TimeBlock t = p.getTimeByDate(currentDate);
-	       			if(t != null){
-	       					if(t.getConfirmed()==1){
-	       						view.setBackgroundColor(Color.rgb(126, 218, 126));//green
-	       						break;
-	       					}
-	       					
-	       					else{
-	       						view.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow
-	       						break;
-	       					}
-	       					
-	       				}
-	       			else
-   						view.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0
-	       		}
-    			
-    		
-    		
-    		
+
+			if(currentItem.isConfirmed==1)
+				view.setBackgroundColor(Color.rgb(126, 218, 126));//green
+			else if(currentItem.isConfirmed==0)
+				view.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow
+   			else
+				view.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0
+
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 								
-					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentDate.get(Calendar.DAY_OF_YEAR));
+					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentItem.today.get(Calendar.DAY_OF_YEAR));
 					
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();

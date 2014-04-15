@@ -75,6 +75,12 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	
 	public HomeFragment(){}
 	
+	/**
+	 * OnCreateView for home fragment will catch eventual datechanges for when HomeFragment is
+	 * Called from Submissions.
+	 * It creates onClicks for the previous and next Dates.
+	 *
+	 */
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -82,16 +88,21 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         
+        /**
+         * Bundle contains the date difference from submission.
+         * The homeFragmentCalendar has its' date changed
+         */
         Bundle bundle = this.getArguments();
         homeFragmentCalendar = Calendar.getInstance();
-        
         int dateDifference = 0;
         try{
 	         dateDifference = bundle.getInt("dateDifference");
 	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
         }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
         
-        
+        /**
+         * Creates the onClick-function for the PREVIOUSDATE-image
+         */
         prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
         prevDate.setOnClickListener(new View.OnClickListener() {
         	@Override
@@ -103,6 +114,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         	}
         });
         
+        /**
+         * Creates the onClick-function for the NEXTDATE-image
+         */
         nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
         nextDate.setOnClickListener(new View.OnClickListener() {
         	@Override
@@ -114,6 +128,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
                     projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
 	        		newDate(homeFragmentCalendar);
             	}
+        			
         	}
         });
         
@@ -148,8 +163,10 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         return rootView;
         
     }//End OnCreate-function
+	
 	/**
 	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
+	 * Also adds the touch event handler to the projectListView, so it's scrollable.
 	 * @param c - calendar for the new date.
 	 */
 	public void newDate(Calendar c)
@@ -157,13 +174,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		homeFragmentCalendar = (Calendar) c.clone();
 		
         dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
+        nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
         if(homeFragmentCalendar.get(Calendar.DATE) == HomeActivity.getCal().get(Calendar.DATE))
         {
         	dateText.setText("Today");
+        	nextDate.setAlpha((float)0.25);
         }
         else
         {
         	dateText.setText(homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1));
+        	nextDate.setAlpha((float)1.0);
         }
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
         projectListView.setOnTouchListener(new ListView.OnTouchListener(){
@@ -212,12 +232,17 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 			Log.d("ERROR", name + "");
 		}
     	
-    	//Show dialog for time reporting
+    	/**
+    	 * Show the TimePickerDialog
+    	 */
     	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
     }
 	
-	//Creates the Dialog with the right time from which click   
-    //When u click Done in the dialog it will save it in the user and print the time out
+	//
+	/**
+	 * Creates the Dialog with the right time from which click   
+	 * When you click Done in the dialog it will save it in the user and print the time out
+	 */
     private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -249,7 +274,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     
     /**
      * Creating the dialog for confirming reported time
-     * @param v
+     * @param v - the View for this.
      */
    	public void showReportDialog(View v)
     {
@@ -314,7 +339,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     {
    		/**
    		 *Constructor, calls the superclass constructor which will call getView (below)
-   		 *(below) for each element in projectList
+   		 *for each element in projectList
    		 */
   
     	public ProjectListAdapter()
@@ -375,9 +400,13 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
             
             deltaX = downX - upX;
             deltaY = downY - upY;
-            // horizontal swipe detection
+            /**
+             * Only check if we swipe some distance horizontally
+             */
             if (Math.abs(deltaX) > MIN_DISTANCE) {
-                // left or right
+                /**
+                 * LEFT -> RIGHT
+                 */
                 if (deltaX < 0  && (Math.abs(deltaY) < 100) ) {
                     homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
                     dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
@@ -385,6 +414,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
                     newDate(homeFragmentCalendar);
                     return false;
                 }
+                /**
+                 * RIGHT -> LEFT
+                 */
                 if (deltaX > 0 && (Math.abs(deltaY) < 100) ) {
                 	if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
                 	{
