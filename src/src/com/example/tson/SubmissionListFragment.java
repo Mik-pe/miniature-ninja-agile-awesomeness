@@ -107,6 +107,7 @@ public class SubmissionListFragment extends Fragment {
     		 */
     		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
+    			weekText.setText("Week: " + currentItem.today.get(Calendar.WEEK_OF_YEAR));
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
     			params.addRule(RelativeLayout.BELOW, R.id.weekText);
