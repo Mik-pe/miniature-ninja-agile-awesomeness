@@ -18,17 +18,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 
-public class HomeFragment extends Fragment 
+public class HomeFragment extends Fragment implements View.OnTouchListener
 {
 	
 	int hour,min, newHour, newMin;
@@ -39,12 +41,15 @@ public class HomeFragment extends Fragment
 	View currentPage;
 	ListView projectListView;
 	private View rootView;
-	private View listView;
 	Button createProjectButton;
-	TextView projectTimeTextViewVar;
+	TextView dateText;
+	ImageButton prevDate;
+	ImageButton nextDate;
 	ArrayAdapter<Project> projectAdapter;
-	
-
+	Calendar homeFragmentCalendar;
+	private static final int MIN_DISTANCE = 100;
+    private float downX, downY, upX, upY;
+    
 	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
 	
@@ -55,32 +60,99 @@ public class HomeFragment extends Fragment
             Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
-        Calendar c = Calendar.getInstance();
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        listView = inflater.inflate(R.layout.project_listview_item, container, false);
+        
+        Bundle bundle = this.getArguments();
+        homeFragmentCalendar = Calendar.getInstance();
+        
+        int dateDifference = 0;
+        try{
+	         dateDifference = bundle.getInt("dateDifference");
+	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
+        }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
+        
+        
+        prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
+        prevDate.setOnClickListener(new View.OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+        		newDate(homeFragmentCalendar);
+        	}
+        });
+        
+        nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
+        nextDate.setOnClickListener(new View.OnClickListener() {
+        	@Override
+        	public void onClick(View v) {
+        		if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
+            	{
+	        		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+	        		newDate(homeFragmentCalendar);
+            	}
+        	}
+        });
         
         createProjectButton = (Button) rootView.findViewById(R.id.create_project_button);
         createProjectButton.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
 				startActivity(intent);
-				
 			}
 		});
+        //Sets touch listener to be the homeFragment, which implements the touchlistener for swiping
+        rootView.setOnTouchListener(this);
+        newDate(homeFragmentCalendar); 
+        return rootView;
+    }
+	/**
+	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
+	 * @param c - calendar for the new date.
+	 */
+	public void newDate(Calendar c)
+	{
+		homeFragmentCalendar = (Calendar) c.clone();
+		
+        dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
+        if(homeFragmentCalendar.get(Calendar.DATE) == HomeActivity.getCal().get(Calendar.DATE))
+        {
+        	dateText.setText("Today");
+        }
+        else
+        {
+        	dateText.setText(homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1));
+        }
         
-       
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
+        projectListView.setOnTouchListener(new ListView.OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				int action = event.getAction();
+				switch(action){
+				case MotionEvent.ACTION_DOWN:
+					v.getParent().requestDisallowInterceptTouchEvent(true);
+					break;
+				case MotionEvent.ACTION_UP:
+					v.getParent().requestDisallowInterceptTouchEvent(false);
+					break;
+				}
+				
+				// handle listview touch events.
+				v.onTouchEvent(event);
+				return true;
+			}
+        });
         
         projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
-         
-        return rootView;
-    }
+	}
 	
-    //Creating the dialog for the specific time
+    /**
+     * ShowTimeDialog shows the time dialog when a textfield has been clicked.
+     * @param v - the view for the timedialog.
+     */
 	public void showTimeDialog(View v)
     {
 		
@@ -90,7 +162,7 @@ public class HomeFragment extends Fragment
     	//Calculate what hour and minute that we are at when we click
 		try 
 		{
-			hourmin = user.getProjects().get(holder).getTimeByDate(Calendar.getInstance()).getTimeAsArray();	    	
+			hourmin = user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).getTimeAsArray();	    	
 	    	newHour = hourmin[0];
 	    	newMin = hourmin[1];
 		}catch (Exception name) 
@@ -110,10 +182,9 @@ public class HomeFragment extends Fragment
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			hour=hourOfDay;
 			min=minute;
-			Calendar c = Calendar.getInstance();
 
-			user.getProjects().get(holder).addTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH),hour, min);
-   			user.getProjects().get(holder).getTimeByDate(c).setTimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), hour, min);
+			user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+   			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);
 
 			projectAdapter.notifyDataSetChanged();
 		}
@@ -156,7 +227,7 @@ public class HomeFragment extends Fragment
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
 
     		try{
-    			int[] time = currentProject.getTimeByDate(Calendar.getInstance()).getTimeAsArray();
+    			int[] time = currentProject.getTimeByDate(homeFragmentCalendar).getTimeAsArray();
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");
     		}catch (Exception name) {
     			Log.d("ERROR", name + "");
@@ -174,5 +245,45 @@ public class HomeFragment extends Fragment
     		
     		return view;
     	}
-    }    
+    }
+    
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		float deltaX;
+		float deltaY;	
+
+		switch (event.getAction()) {
+            
+        case MotionEvent.ACTION_DOWN:
+            downX = event.getX();
+            downY = event.getY();
+        case MotionEvent.ACTION_UP:
+            upX = event.getX();
+            upY = event.getY();
+            
+            deltaX = downX - upX;
+            deltaY = downY - upY;
+            // horizontal swipe detection
+            if (Math.abs(deltaX) > MIN_DISTANCE) {
+                // left or right
+                if (deltaX < 0  && (Math.abs(deltaY) < 100) ) {
+                    homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+                    newDate(homeFragmentCalendar);
+                    dateText.scrollTo(0, (int) dateText.getY());
+                    return false;
+                }
+                if (deltaX > 0 && (Math.abs(deltaY) < 100) ) {
+                	if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
+                	{
+                		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+                		newDate(homeFragmentCalendar);
+                		dateText.scrollTo(0, (int) dateText.getY());
+                	}
+                    return false;
+                }    
+            return false; // allow other events like Click to be processed
+            }
+		}
+		return false;
+	}    
 }
