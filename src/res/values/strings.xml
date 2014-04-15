@@ -8,7 +8,7 @@
     <string name="create_project_button"> Create Project</string>
     <string name="project">Your Projects</string>
     <string name="today">Today</string>
-    <string name="report_time">Report Time</string>
+    <string name="report_time">Confirm Time</string>
     <string name="add_text">Add Project</string>
     <string name="create_text">Create</string>
     <string name="add_hint_text">Enter your project name</string>
@@ -17,6 +17,10 @@
     <string name="title_activity_adapter">Adapter</string>
     <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="cancel_button">Cancel</string>
+    <string name= "title_confirm_time">Are you sure?</string>
+    <string name= "confirm_dialog_message">Time info Bitch</string>
 
 	<!-- Menu items -->
 	<string-array name="nav_drawer_items">
