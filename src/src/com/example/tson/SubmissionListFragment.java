@@ -77,8 +77,6 @@ public class SubmissionListFragment extends Fragment {
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
     		
-
-    		//view.setBackgroundColor(Color.YELLOW);
     		final Calendar currentDate = calList.get(position);
 
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
@@ -109,11 +107,7 @@ public class SubmissionListFragment extends Fragment {
 	       		for(int i=0; i<projectList.size(); i++)
 	       		{
 	       			Project p = projectList.get(i);
-	       			//List<TimeBlock> s = p.getSubmissionList();
 	       			
-	       				//for(int j=0; j<s.size() ; j++)
-	       				//{    				
-	       					//currentDate = s.get(j).getDate();
 	       			TimeBlock t = p.getTimeByDate(currentDate);
 	       			if(t != null){
 	       					if(t.getConfirmed()==1){
