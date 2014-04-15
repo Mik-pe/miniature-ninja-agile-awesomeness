@@ -256,10 +256,10 @@ public class HomeActivity extends FragmentActivity
 		case 1:
 			fragment = new SubmissionFragment();
 			break;
-			/*case 2:
-			fragment = new PhotosFragment();
+		case 2:
+			fragment = new StatisticsFragment();
 			break;
-			case 3:
+			/*case 3:
 			fragment = new CommunityFragment();
 			break;
 			case 4:
