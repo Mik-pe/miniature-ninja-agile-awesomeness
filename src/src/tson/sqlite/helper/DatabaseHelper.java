@@ -31,10 +31,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 21;
+	private static final int DATABASE_VERSION = 23;
 		
 	//Database Name
-	private static final String DATABASE_NAME = "timeManager";
+	private static final String DATABASE_NAME = "timeManager.db";
 	
 	//Table Names
 	private static final String TABLE_PROJECT = "projects";
@@ -90,15 +90,23 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		onCreate(db);
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	//========================================================
 	// PROJECT ===============================================
 	//========================================================
 
 	/**
-	 * Creating a project
-	 * @param project - the project object
-	 * @param tag_ids - the tags, e.g. name
-	 * @return - returns the id of the row
+	 * Creating a project.
+	 * @param project - the project object.
+	 * @param tag_ids - the tags, e.g. name.
+	 * @return - returns the id of the row.
 	 */
 	public long createProject(Project project)
 	{
@@ -115,9 +123,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	/**
-	 * Get a single project by an ID
-	 * @param project_id
-	 * @return A new project with the key name
+	 * Get a single project by an ID.
+	 * @param project_id.
+	 * @return A new project with the key name.
 	 */
 	public Project getProject(long project_id)
 	{
@@ -125,7 +133,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		String selectQuery = "SELECT * FROM " + TABLE_PROJECT + " WHERE "
 				+ KEY_ID + " = " + project_id;
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		Cursor c = db.rawQuery(selectQuery, null);
 				
 		if(c != null)
@@ -137,8 +145,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		return p;
 	}
+	
 	/**
-	 * Select all projects
+	 * Select all projects.
 	 * @return List<Project> 
 	 */
 	public List<Project> getAllProjects()
@@ -146,7 +155,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		List<Project> projects = new ArrayList<Project>();
 		String selectQuery = "SELECT * FROM " + TABLE_PROJECT;
 		
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 		
@@ -163,19 +172,26 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		}
 		return projects;
 	}
-	
+	/**
+	 * Get the id of a project by it's name (which should be unique).
+	 * @param project_name - String.
+	 * @return auto incremented id from the database.
+	 */
 	public long getProjectId(String project_name){
 		SQLiteDatabase db = this.getReadableDatabase();
 
 		String selectQuery = "SELECT "+ "*" + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + "'" + project_name + "'";
-		//Log.e("TEEEEEEEEEEEEHKADKJHFJLAD", selectQuery);
 		Cursor c = db.rawQuery(selectQuery, null);
-		Log.e(LOG, c.toString());
+		//Log.e(LOG, c.toString());
 		if(c != null)
 			c.moveToFirst();
 		return c.getLong(0);
 	}
-
+	
+	/**
+	 * Delete a project by an id, usually called after getProjectId.
+	 * @param project_id
+	 */
 	public void deleteProject(long project_id)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -183,13 +199,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				new String[] {String.valueOf(project_id) });
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 	//========================================================
 	// TIME BLOCK ============================================
 	//========================================================
-	
+	/**	
+	 * Create a timeblock instance in the database.
+	 * @param timeblock - TimeBlock object.
+	 * @param project	- Project object.
+	 * @return			- (long) id of the inserted row.
+	 */
 	public long createTimeBlock(TimeBlock timeblock, Project project)
 	{
-		Log.d("createTB", "ok");
+		//Log.d("createTB", "ok");
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		Calendar d = timeblock.getDate();
@@ -197,8 +225,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
-
-		Log.d("DB CHECKKKKKKKKKKKKKK", "" + timeblock.getTimeInMinutes() + " on project " + project.getName() + "with id" + getProjectId(project.getName()));
 		values.put(KEY_TIME_BLOCK_YEAR, d.get(Calendar.YEAR));
 		values.put(KEY_TIME_BLOCK_MONTH, d.get(Calendar.MONTH));
 		values.put(KEY_TIME_BLOCK_DAY, d.get(Calendar.DAY_OF_MONTH));
@@ -211,21 +237,46 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return timeblock_id;
 		
 	}
-	
+	/**
+	 * Set a confirmation tag for a TimeBlock object, this indicates that the user has sumbitted a timeblock for a specific date.
+	 * @param TimeBlock object.
+	 * @return an int indicator if the row was updated.
+	 */
 	public int setConfirmed(TimeBlock timeblock)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		  
 		    ContentValues values = new ContentValues();
 		    values.put(KEY_TIME_BLOCK_CONFIRMED, timeblock.getConfirmed());
-		 
+		    //String strFilter = "year=" + timeblock.getYear() 
+		   
 		    //updating row
-		    Log.d("Set confirmed", "" + timeblock.getID());
+		    //Log.d("Set confirmed", "" + timeblock.getID());
 		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
 		            new String[] { String.valueOf(timeblock.getID()) });
 	}
+	/**
+	 * Update a time block, only updates the time column for now.
+	 * @param timeblock.
+	 * @return indicator if the row was updated.
+	 */
+	public int updateTimeBlock(TimeBlock timeblock)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
+		
+		// This will be send as a parameter to db.update
+		String[] args = new String[]{String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
+		//Update row
+		return db.update(TABLE_TIME_BLOCK, values, KEY_TIME_BLOCK_YEAR + " = ?" + " AND " + KEY_TIME_BLOCK_MONTH + " = ?" + " AND " + KEY_TIME_BLOCK_DAY + " = ?",
+				args);
+	}
 	
-
+	/**
+	 * Get all the time blocks of all projects.
+	 * @return List<TimeBlock> of all time blocks.
+	 */
 	public List<TimeBlock> getAllTimeBlocks()
 	{
 		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
@@ -245,7 +296,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
 					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
-					Log.d("Get all timeblocks",   " " + c.getColumnIndex(KEY_TIME_BLOCK_PROJECT_ID));
 					int hours = (int)minutes/60;
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
@@ -255,11 +305,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			return timeblocks;
 	}
 	
+	/**
+	 * Get all time blocks connected to a specific project.
+	 * @param Project object.
+	 * @return List<TimeBlock> of all time blocks for a specific project.
+	 */
 	public List<TimeBlock> getTimeBlocksByProject(Project p)
 	{
 		long pid = getProjectId(p.getName());
 		String selectQuery = "SELECT * FROM " + TABLE_TIME_BLOCK + " WHERE "+ KEY_TIME_BLOCK_PROJECT_ID + " = " + pid;
-		Log.e(LOG, selectQuery);
+		//Log.e(LOG, selectQuery);
 		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -273,7 +328,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
 					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
-					Log.d("TIMEBLOCK CHEK",   " " + day + " on project " + p.getName());
 					int hours = minutes/60;
 					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
 					
@@ -283,11 +337,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}
-			Log.d("DB RETURN", "Submission list init");
 			return timeblocks;
 	}
 	
-	
+	/**
+	 * A log time function, not fully implemented.
+	 */
 	public void logTimeblocks()
 	{	
 		getAllTimeBlocks();
@@ -295,6 +350,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	
 	//Close database
+	/**
+	 * Close the database.
+	 */
 	public void closeDB()
 	{
 		SQLiteDatabase db = this.getReadableDatabase();

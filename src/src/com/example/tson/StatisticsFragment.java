@@ -21,8 +21,9 @@ public class StatisticsFragment extends Fragment{
 	
 	ImageButton btnStart, btnEnd;
 	Button btnGo;
-	Calendar cal;
-	int day, day2, month, month2, year, year2, i, totalDays, totalDays2;
+	Calendar startDate;
+	Calendar endDate;
+	int i;
 	EditText startTime, endTime;
 	
 	
@@ -38,13 +39,11 @@ public class StatisticsFragment extends Fragment{
 		 
 		  super.onCreate(savedInstanceState);
 		  View statistics = inflater.inflate(R.layout.statistics_fragment, container, false);
+		  startDate = Calendar.getInstance();
+		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStart);
 		  btnEnd = (ImageButton) statistics.findViewById(R.id.imageButtonEnd);
 		  btnGo = (Button) statistics.findViewById(R.id.goStatistics);
-		  cal = Calendar.getInstance();
-		  day2 = day = cal.get(Calendar.DAY_OF_MONTH);
-		  month2 = month = cal.get(Calendar.MONTH);
-		  year2 = year = cal.get(Calendar.YEAR);
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
 		  
@@ -53,7 +52,7 @@ public class StatisticsFragment extends Fragment{
 				@Override
 				public void onClick(View v) {
 					i = 0;
-					showDateDialog(v, year, month, day);					
+					showDateDialog(v, startDate);					
 				}
 		  });		
 		  
@@ -62,17 +61,17 @@ public class StatisticsFragment extends Fragment{
 				@Override
 				public void onClick(View v) {
 					i = 1;
-					showDateDialog(v, year2, month2, day2);					
+					showDateDialog(v, endDate);					
 				}
 		  });	
 		  
 		  //onClick on btnGo
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
-					Calendar temp = Calendar.getInstance();
-					temp.set(Calendar.YEAR, year);
-					temp.set(Calendar.MONTH, month-1);
-					temp.set(Calendar.DAY_OF_MONTH, day);
+					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
+					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
+					Log.d("StartDifference", ""+daysSinceStartDate);
+					Log.d("EndDifference", ""+daysSinceEndDate);
 				}
 		  });
 		  
@@ -86,10 +85,12 @@ public class StatisticsFragment extends Fragment{
 	 	 * @param theMonth -- Get what month you have
 	 	 * @param theDay -- Get what day you have
 	 	 */
-	 	public void showDateDialog(View v, int theYear, int theMonth, int theDay)
+	 	public void showDateDialog(View v, Calendar theCalendar)
 	    {
 	    	//Visar dialogrutan med datum
-	    	new DatePickerDialog(getActivity(), datePickerListener, theYear, theMonth, theDay).show();
+	    	DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
+	    	dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+	    	dialog.show();
 	    }
 	    
 	 	/**
@@ -100,21 +101,20 @@ public class StatisticsFragment extends Fragment{
 	 		public void onDateSet(DatePicker view, int selectedYear,
 		    int selectedMonth, int selectedDay) 
 	 		{
+	 			Calendar temp = Calendar.getInstance();
+	 			
+	 			temp.set(selectedYear, selectedMonth, selectedDay);
 	 			//Checks if the date is bigger then the actual and changes it if its true
-	 			if(year > selectedYear || month > selectedMonth || day > selectedDay)
+	 			if(startDate.after(temp))
 	 			{
-	 				year = selectedYear;
-	 				month = selectedMonth;
-	 				day = selectedDay;
+	 				startDate = (Calendar) temp.clone();
 	 				startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 				  			+ selectedYear);
 	 			}
 	 			//Checks if the date2 is smaller then the actual and changes it if its true
-	 			if(year2 < selectedYear || month2 < selectedMonth || day2 < selectedDay)
+	 			if(endDate.before(temp))
 	 			{
-	 				year2 = selectedYear;
-	 				month2 = selectedMonth;
-	 				day2 = selectedDay;
+	 				endDate = (Calendar) temp.clone();
 	 				endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 				  			+ selectedYear);
 	 			}
@@ -123,17 +123,13 @@ public class StatisticsFragment extends Fragment{
 				{
 					startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 							  			+ selectedYear);
-					year = selectedYear;
-					month = selectedMonth;
-					day = selectedDay;
+					startDate = (Calendar) temp.clone();
 				}
 				else
 				{
 					endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 							  + selectedYear);
-					year2 = selectedYear;
-					month2 = selectedMonth;
-					day2 = selectedDay;
+					endDate = (Calendar) temp.clone();
 				}
 	 		}
 		 };

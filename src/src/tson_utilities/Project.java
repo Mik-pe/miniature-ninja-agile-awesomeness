@@ -50,18 +50,32 @@ public class Project {
 	 * @param h - hours
 	 * @param m - minutes
 	 */
-	public void addTime(int year, int month, int day, int h, int m)
+	public void addTime(Calendar c, int h, int m)
 	{
+
+		// Create temporary time block object, will only be added if the update fails (time object doesn't exist)
+		TimeBlock t = new TimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), h, m); 
 		
-		TimeBlock t = new TimeBlock(year, month, day, h, m);
+		//Update in database, if returns > 0 it has updated existing row
+		int update = HomeActivity.db.updateTimeBlock(t);
 		
-		//if(!submissionList.contains(t)){
+		if( update > 0)
+		{
+			//UPDATE CURRENT TIME BLOCK OBJECT
+			t = getTimeByDate(c);
+			t.setHours(h);
+			t.setMinutes(m);
+			
+			//Log.d("UPDATE TIME", "UPDATE TIME RETURNED: " + update);
+		}
+		else
+		{
+			// CREATE NEW TIME BLOCK OBJECT AND ADD IT TO SUBMISSION LIST
 			submissionList.add(t);
 			HomeActivity.db.createTimeBlock(t, this);
-		//}
-		//else
-			//editTime();
-				
+			//Log.d("ADD TIME", "ADDING TIME");
+		}
+		
 	}
 	
 	public void setSubmissionList(List<TimeBlock> list)
@@ -111,10 +125,10 @@ public class Project {
 	}
 
 	
-	/*TODO
+	//TODO
 	public void editTime(Calendar cal,int h, int m)
 	{
-	 TimeBlock t;
+	 TimeBlock t = null;
 	 if(!this.submissionList.isEmpty())			
 			for(int i=this.submissionList.size()-1; i>=0 ;i--)
 			{
@@ -125,7 +139,6 @@ public class Project {
 			}
 		t.setDuration(h, m);
 	}
-	*/
 
 }
 
