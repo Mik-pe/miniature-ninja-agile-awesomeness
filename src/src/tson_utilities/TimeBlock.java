@@ -170,6 +170,7 @@ public class TimeBlock
 	 /***********************
 	  *  	OTEHRS  		*/	
 	 /************************/
+	
 	public boolean isDate(int year, int month, int day)
 	{
 		//Log.d("Inserted Day", ""+year);
