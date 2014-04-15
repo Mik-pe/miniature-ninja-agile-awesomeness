@@ -18,6 +18,7 @@
             android:layout_alignBaseline="@+id/editDayButton"
             android:layout_alignBottom="@+id/editDayButton"
             android:layout_toLeftOf="@+id/editDayButton"
+            android:fontFamily="sans-serif-thin"
             android:clickable="true"
             android:onClick="showTimeDialog"
             android:text="Medium Text"
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-thin"
             android:layout_marginTop="10dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />

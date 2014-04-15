@@ -1,6 +1,5 @@
 package com.example.tson;
 
-
 import java.util.ArrayList;
 
 
@@ -132,6 +131,7 @@ public class SubmissionListFragment extends Fragment {
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		projectTime.setOnClickListener(null);
     		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
+
     		/**
     		 * Will set the backgroundColor depending on confirmation of the SubListItem
     		 * IF: 		Green
@@ -139,16 +139,17 @@ public class SubmissionListFragment extends Fragment {
     		 * ELSE:	Red
     		 */
 			if(currentItem.isConfirmed==1)
-				view.setBackgroundColor(Color.rgb(126, 218, 126));
+				view.setBackgroundColor(Color.rgb(145, 218, 149));
 			else if(currentItem.isConfirmed==0)
-				view.setBackgroundColor(Color.rgb(246, 237, 134)); 
+				view.setBackgroundColor(Color.rgb(246, 241, 171)); 
    			else
-				view.setBackgroundColor(Color.rgb(245, 116, 103)); 
+				view.setBackgroundColor(Color.rgb(199, 199, 199)); 
 			
 			/**
 			 * OnClickListener for edit Button
 			 * Takes you to Homescreen for pressed DATE
 			 */
+
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
