@@ -59,8 +59,10 @@ public class User
 		 addProject(p);
 	 }
 	 
-	 /* Getters */	
-	 /**
+	 /***********************
+	  *  	GETTTERS  		*/	
+	 /***********************
+	  * 
 	  * Return list of projects
 	  * @return
 	  */
@@ -92,7 +94,11 @@ public class User
 	 {
 		 return email;
 	 }
-	 
+	 /**
+	  * Send in cal object and get number of reported minutes for that date
+	  * @param cal
+	  * @return
+	  */
 	 public int getTimeByDate(Calendar cal)
 	 {
 		 int totalTime = 0;
