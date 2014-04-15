@@ -35,6 +35,10 @@ import android.widget.TimePicker;
 
 public class HomeFragment extends Fragment implements View.OnTouchListener
 {
+	/***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	//Extend Home Activity to connect to DB
 	public HomeActivity homeActivity = new HomeActivity();
 	DatabaseHelper db = homeActivity.db;
@@ -62,6 +66,10 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     private float downX, downY, upX, upY;
 	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
+	
+	/***********************
+	  *  	CONSTRUCTOR		*/	
+	 /***********************/
 	
 	public HomeFragment(){}
 	
@@ -273,8 +281,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		 			FragmentManager fragmentManager = getFragmentManager();
 		 			fragmentManager.beginTransaction()
 		 			.replace(R.id.frame_container, fragment).commit();
-		 			getActivity().setTitle("Submissions");
-		 			Log.d("time block confirmed", "test");				   	
+		 			getActivity().setTitle("Submissions");	
 		   	 	} 
 		   	}
        });
@@ -299,6 +306,11 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
      */
    	private class ProjectListAdapter extends ArrayAdapter<Project>
     {
+   		/**
+   		 *Constructor, calls the superclass constructor which will call getView (below)
+   		 *(below) for each element in projectList
+   		 */
+  
     	public ProjectListAdapter()
     	{
     		super(getActivity(), R.layout.project_listview_item, projectList);
@@ -338,7 +350,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		return view;
     	}
     }
-    
+   /**
+   * OnTouch for swiping between days on the home screen
+   */
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		float deltaX;
