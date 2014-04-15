@@ -26,6 +26,14 @@
     <string name="stat">Statistics</string>
     <string name="go_statistics">GO</string>
     <string name ="cancel_project_button">Back</string>
+    
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
 
     <!-- Menu items -->
     <string-array name="nav_drawer_items">
@@ -54,3 +62,4 @@
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
 
 </resources>
+

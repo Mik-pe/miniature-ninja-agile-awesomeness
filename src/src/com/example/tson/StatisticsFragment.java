@@ -21,7 +21,6 @@ public class StatisticsFragment extends Fragment{
 	
 	ImageButton btnStart, btnEnd;
 	Button btnGo;
-	Calendar cal;
 	Calendar startDate;
 	Calendar endDate;
 	int i;
@@ -104,9 +103,7 @@ public class StatisticsFragment extends Fragment{
 	 		{
 	 			Calendar temp = Calendar.getInstance();
 	 			
-	 			temp.set(Calendar.YEAR, selectedYear);
-	 			temp.set(Calendar.MONTH, selectedMonth);
-	 			temp.set(Calendar.DAY_OF_MONTH, selectedDay);
+	 			temp.set(selectedYear, selectedMonth, selectedDay);
 	 			//Checks if the date is bigger then the actual and changes it if its true
 	 			if(startDate.after(temp))
 	 			{

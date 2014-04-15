@@ -8,9 +8,6 @@
 		android:interpolator="@android:anim/linear_interpolator"
 		android:repeatCount="0"
 		android:toXDelta="200" >
-		
-		    
-		
 		</translate>
 		
 		<alpha
@@ -28,7 +25,6 @@
 		android:interpolator="@android:anim/linear_interpolator"
 		android:repeatCount="0"
 		android:toXDelta="-400" >
-		    
 		</translate>
 			
 		<translate

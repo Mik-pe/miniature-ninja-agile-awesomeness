@@ -31,10 +31,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 21;
+	private static final int DATABASE_VERSION = 23;
 		
 	//Database Name
-	private static final String DATABASE_NAME = "timeManager";
+	private static final String DATABASE_NAME = "timeManager.db";
 	
 	//Table Names
 	private static final String TABLE_PROJECT = "projects";
@@ -248,7 +248,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		  
 		    ContentValues values = new ContentValues();
 		    values.put(KEY_TIME_BLOCK_CONFIRMED, timeblock.getConfirmed());
-		 
+		    //String strFilter = "year=" + timeblock.getYear() 
+		   
 		    //updating row
 		    //Log.d("Set confirmed", "" + timeblock.getID());
 		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
@@ -265,9 +266,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
 		
+		// This will be send as a parameter to db.update
+		String[] args = new String[]{String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
 		//Update row
-		return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
-				new String[] {String.valueOf(timeblock.getID()) });
+		return db.update(TABLE_TIME_BLOCK, values, KEY_TIME_BLOCK_YEAR + " = ?" + " AND " + KEY_TIME_BLOCK_MONTH + " = ?" + " AND " + KEY_TIME_BLOCK_DAY + " = ?",
+				args);
 	}
 	
 	/**
