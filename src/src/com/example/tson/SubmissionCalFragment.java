@@ -5,12 +5,19 @@ import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import tyczj.extendedcalendarview.Day;
+import tyczj.extendedcalendarview.ExtendedCalendarView;
+import tyczj.extendedcalendarview.ExtendedCalendarView.OnDayClickListener;
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.CalendarView.OnDateChangeListener;
 import android.widget.ListView;
@@ -23,7 +30,7 @@ public class SubmissionCalFragment extends Fragment {
 	ListView submissionCalendarView;
 	List<Project> projectList = HomeActivity.user.getProjects();
 	Calendar today = Calendar.getInstance();
-	CalendarView cal;
+	ExtendedCalendarView cal;
 		
 	
 	@Override
@@ -31,24 +38,35 @@ public class SubmissionCalFragment extends Fragment {
             Bundle savedInstanceState) {
         View subCalView = inflater.inflate(R.layout.submission_cal_fragment, container, false);
         
-        cal = (CalendarView) subCalView.findViewById(R.id.calendarView);
+        cal = (ExtendedCalendarView) subCalView.findViewById(R.id.calendar);
 		
-		//cal.getDate().setSelectedDateVerticalBar(R.drawable.ic_launcher);
-		
-		cal.setOnDateChangeListener(new OnDateChangeListener() {
-			
+		cal.setOnDayClickListener(new OnDayClickListener(){
+
 			@Override
-			public void onSelectedDayChange(CalendarView view, int year, int month,
-					int dayOfMonth) {
-				// TODO Auto-generated method stub
+			public void onDayClicked(AdapterView<?> adapter, View view,
+					int position, long id, Day day) {
+				Calendar tempCal = Calendar.getInstance();
+				tempCal.set(day.getYear(), day.getMonth(), day.getDay());
+				int dateDifference = -(today.get(Calendar.DAY_OF_YEAR) - tempCal.get(Calendar.DAY_OF_YEAR));	
 				
-				Toast.makeText(getActivity().getBaseContext(),"Selected Date is\n\n"
-					+dayOfMonth+" : "+month+" : "+year , 
-					Toast.LENGTH_SHORT).show();
+				Fragment switchToFragment = new HomeFragment();
+				Bundle bundle = new Bundle();
+				bundle.putInt("dateDifference", dateDifference);
+				switchToFragment.setArguments(bundle);
+				
+				ActionBar actionBar = getActivity().getActionBar();
+				actionBar.removeAllTabs();
+				actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+				getActivity().setTitle("Home");					
+				
+				FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+				fragmentManager.beginTransaction()
+				.replace(R.id.frame_container, switchToFragment).commit();
 			}
+			
 		});
         
-        ((TextView)subCalView.findViewById(R.id.textView)).setText("Calendar");
+        //((TextView)subCalView.findViewById(R.id.textView)).setText("Calendar");
         return subCalView;
 	}
 

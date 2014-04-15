@@ -17,6 +17,14 @@
     <string name="title_activity_adapter">Adapter</string>
     <string name="title_activity_submission_cal_fragment">SubmissionCalFragment</string>
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
+    
 
 	<!-- Menu items -->
 	<string-array name="nav_drawer_items">
