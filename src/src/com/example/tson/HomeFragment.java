@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         homeFragmentCalendar = Calendar.getInstance();
         int dateDifference = 0;
         try{
-	         dateDifference = bundle.getInt("dateDifference");
+	         dateDifference =(int) bundle.getLong("dateDifference");
 	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
         }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
         
