@@ -142,7 +142,7 @@ public class CalendarAdapter extends BaseAdapter{
 			//Create a calendarObject of the day which is currently being printed
 			Calendar tempCal = Calendar.getInstance();
 			tempCal.set(day.getYear(), day.getMonth(), day.getDay());
-       		
+
 			
 			//Same loop as in SubmissionListFragment
        		for(int i = 0; i < projectList.size(); i++)
@@ -167,7 +167,7 @@ public class CalendarAdapter extends BaseAdapter{
        			else
        			{
        				//Turn the future dates gray.
-       				if(-(thisDay.get(Calendar.DAY_OF_YEAR)-tempCal.get(Calendar.DAY_OF_YEAR)) > 0)
+       				if(thisDay.before(tempCal))
        					rl.setBackgroundColor(Color.rgb(140, 140, 140)); //Grey
        				else
        					rl.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0       				
