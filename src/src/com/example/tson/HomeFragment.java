@@ -223,8 +223,10 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			hour=hourOfDay;
 			min=minute;
-
-			user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+			
+			// Update to see if timeblock already exists
+			//user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+			user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
    			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);
 
 			projectAdapter.notifyDataSetChanged();
