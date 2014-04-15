@@ -1,7 +1,9 @@
 package com.example.tson;
 
 import java.util.ArrayList;
+
 import com.example.tson.HomeActivity;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -17,6 +19,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -325,6 +328,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     	@Override
     	public View getView(int position, View view, ViewGroup parent)
     	{
+
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.project_listview_item, parent, false);
     		
@@ -334,6 +338,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
+    		ImageButton projectTime2 = (ImageButton) view.findViewById(R.id.imageButton1);
 
     		try{
     			int[] time = currentProject.getTimeByDate(homeFragmentCalendar).getTimeAsArray();
@@ -351,7 +356,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 
 					showTimeDialog(v);					
 				}
-			});		
+			});	
+    		
+    		projectTime2.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+
+					showTimeDialog(v);					
+				}
+			});	
     		
     		return view;
     	}

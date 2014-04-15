@@ -1,6 +1,5 @@
 package com.example.tson;
 
-
 import java.util.ArrayList;
 
 
@@ -117,18 +116,18 @@ public class SubmissionListFragment extends Fragment {
 	       			TimeBlock t = p.getTimeByDate(currentDate);
 	       			if(t != null){
 	       					if(t.getConfirmed()==1){
-	       						view.setBackgroundColor(Color.rgb(126, 218, 126));//green
+	       						view.setBackgroundColor(Color.rgb(145, 218, 149));//green
 	       						break;
 	       					}
 	       					
 	       					else{
-	       						view.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow
+	       						view.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow
 	       						break;
 	       					}
 	       					
 	       				}
 	       			else
-   						view.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0
+   						view.setBackgroundColor(Color.rgb(199, 199, 199)); //red (getTimeByDate(currentDate) == 0
 	       		}
     			
     		

@@ -25,6 +25,7 @@
     <string name="select_end">EndStat</string>
     <string name="stat">Statistics</string>
     <string name="go_statistics">GO</string>
+    <string name ="cancel_project_button">Back</string>
 
     <!-- Menu items -->
     <string-array name="nav_drawer_items">
