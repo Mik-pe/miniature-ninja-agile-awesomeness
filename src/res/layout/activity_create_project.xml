@@ -14,9 +14,9 @@
          <View
             android:id="@+id/add_line3"
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_marginTop="50dp"
-            android:background="@android:color/darker_gray" />
+            android:background="#DB8C0C"/>
 	
         <TextView
             android:id="@+id/add_text"
@@ -33,18 +33,24 @@
         <View
             android:id="@+id/add_line2"
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
 
         <EditText
             android:id="@+id/project_name_editText"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_marginTop="60dp"
-            android:ems="10"
+            android:background="#00FFFFFF"
+            android:textSize="30sp"
+            android:ems="15"
             android:fontFamily="sans-serif-thin"
-            android:hint="@string/add_hint_text" >
+            android:hint="@string/add_hint_text"
+            android:textColorLink="@color/counter_text_bg" >
 
             <requestFocus />
         </EditText>
@@ -52,14 +58,28 @@
         <Button
             android:id="@+id/add_button"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_marginBottom="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
             android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
             android:text="@string/create_text"
             android:textSize="32sp"
             android:onClick = "createProject" />
+        
+         <Button
+            android:id="@+id/cancel_project_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:text="@string/cancel_project_button"
+            android:textSize="32sp"
+            android:onClick = "cancelProject" />
         
     </LinearLayout>
 

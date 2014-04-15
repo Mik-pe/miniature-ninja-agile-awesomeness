@@ -49,6 +49,14 @@
             android:name="com.example.tson.SubmissionFragment"
             android:label="@string/title_activity_submission_fragment" >
         </activity>
+        <activity
+            android:name="com.example.tson.StatisticsFragment"
+            android:label="@string/title_activity_statistics_fragment" >
+        </activity>
+        <activity
+            android:name="com.example.tson.ExportFragment"
+            android:label="@string/title_activity_export_fragment" >
+        </activity>
     </application>
 
 </manifest>

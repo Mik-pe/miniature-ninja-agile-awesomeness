@@ -1,19 +1,25 @@
 package com.example.tson;
 
 import java.util.ArrayList;
+
+import com.example.tson.HomeActivity;
+
 import java.util.Calendar;
 import java.util.List;
 
+import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
 import tson_utilities.User;
-
-
 import android.app.Dialog;
-
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +27,8 @@ import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,16 +40,28 @@ import android.widget.TimePicker;
 
 public class HomeFragment extends Fragment implements View.OnTouchListener
 {
+	/***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
 	
-	int hour,min, newHour, newMin;
+	//Extend Home Activity to connect to DB
+	public HomeActivity homeActivity = new HomeActivity();
+	DatabaseHelper db = homeActivity.db;
+	
+	//Update reported time
+	int hour, min, newHour, newMin;
 	int holder = 0;
-	static final int TIME_DIALOG_ID=0;
+	static final int TIME_DIALOG_ID = 0;
 
 	int[] hourmin = {0,0};
 	View currentPage;
 	ListView projectListView;
 	private View rootView;
 	Button createProjectButton;
+	Button reportTimeButton; 
+	TextView projectTimeTextViewVar;
+	
+
 	TextView dateText;
 	ImageButton prevDate;
 	ImageButton nextDate;
@@ -49,12 +69,21 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Calendar homeFragmentCalendar;
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
-    
 	public static User user = HomeActivity.user;
 	List<Project> projectList = user.getProjects();
 	
+	/***********************
+	  *  	CONSTRUCTOR		*/	
+	 /***********************/
+	
 	public HomeFragment(){}
 	
+	/**
+	 * OnCreateView for home fragment will catch eventual datechanges for when HomeFragment is
+	 * Called from Submissions.
+	 * It creates onClicks for the previous and next Dates.
+	 *
+	 */
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -62,25 +91,35 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
         rootView = inflater.inflate(R.layout.fragment_home, container, false);
         
+        /**
+         * Bundle contains the date difference from submission.
+         * The homeFragmentCalendar has its' date changed
+         */
         Bundle bundle = this.getArguments();
         homeFragmentCalendar = Calendar.getInstance();
-        
         int dateDifference = 0;
         try{
-	         dateDifference = bundle.getInt("dateDifference");
+	         dateDifference =(int) bundle.getLong("dateDifference");
 	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
         }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
         
-        
+        /**
+         * Creates the onClick-function for the PREVIOUSDATE-image
+         */
         prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
         prevDate.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
         		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+        		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
+                projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
         		newDate(homeFragmentCalendar);
         	}
         });
         
+        /**
+         * Creates the onClick-function for the NEXTDATE-image
+         */
         nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
         nextDate.setOnClickListener(new View.OnClickListener() {
         	@Override
@@ -88,12 +127,21 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         		if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
             	{
 	        		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+	        		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
+                    projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
 	        		newDate(homeFragmentCalendar);
             	}
+        			
         	}
         });
         
+        //Declaration of buttons on home screen
         createProjectButton = (Button) rootView.findViewById(R.id.create_project_button);
+        reportTimeButton = (Button) rootView.findViewById(R.id.report_time);
+        
+        /**
+         * PopUp for "Create Project" button
+         */
         createProjectButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -101,29 +149,45 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 				startActivity(intent);
 			}
 		});
+
+        /**
+         * PopUp for "Confirm Time" button
+         */
+        reportTimeButton.setOnClickListener(new View.OnClickListener() {		
+			@Override
+			public void onClick(View v) {				
+				showReportDialog(v);
+			}
+		});
+            
         //Sets touch listener to be the homeFragment, which implements the touchlistener for swiping
         rootView.setOnTouchListener(this);
         newDate(homeFragmentCalendar); 
         return rootView;
-    }
+        
+    }//End OnCreate-function
+	
 	/**
 	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
+	 * Also adds the touch event handler to the projectListView, so it's scrollable.
 	 * @param c - calendar for the new date.
 	 */
 	public void newDate(Calendar c)
-	{
+	{		
 		homeFragmentCalendar = (Calendar) c.clone();
 		
         dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
+        nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
         if(homeFragmentCalendar.get(Calendar.DATE) == HomeActivity.getCal().get(Calendar.DATE))
         {
         	dateText.setText("Today");
+        	nextDate.setAlpha((float)0.25);
         }
         else
         {
         	dateText.setText(homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1));
+        	nextDate.setAlpha((float)1.0);
         }
-        
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
         projectListView.setOnTouchListener(new ListView.OnTouchListener(){
 			@Override
@@ -154,8 +218,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
      * @param v - the view for the timedialog.
      */
 	public void showTimeDialog(View v)
-    {
-		
+    {		
 		//calculates what page and position we are at
 		holder = projectListView.getPositionForView(v);
     	
@@ -165,25 +228,33 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 			hourmin = user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).getTimeAsArray();	    	
 	    	newHour = hourmin[0];
 	    	newMin = hourmin[1];
-		}catch (Exception name) 
+	    	
+		}
+		catch (Exception name) 		
 		{
 			Log.d("ERROR", name + "");
 		}
     	
-    	//Visar dialogrutan med timepicker
+    	/**
+    	 * Show the TimePickerDialog
+    	 */
     	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
     }
 	
-	//Creates the Dialog with the right time from which click
-    
-    //When u click Done in the dialog it will save it in the user and print the time out
+	//
+	/**
+	 * Creates the Dialog with the right time from which click   
+	 * When you click Done in the dialog it will save it in the user and print the time out
+	 */
     private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 			hour=hourOfDay;
 			min=minute;
-
-			user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+			
+			// Update to see if timeblock already exists
+			//user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+			user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
    			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);
 
 			projectAdapter.notifyDataSetChanged();
@@ -195,6 +266,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         getActivity().getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
+    
     /**
      * Opens the Create Project View when the "Create Project" button is clicked
      * @param view - View for Create Project Screen
@@ -202,12 +274,79 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     public void openCreateProjectActivity(View view)
     {    	
     	Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-    	getActivity().startActivity(intent);
-    	
+    	getActivity().startActivity(intent);   	
     }
     
-    private class ProjectListAdapter extends ArrayAdapter<Project>
+    /**
+     * Creating the dialog for confirming reported time
+     * @param v - the View for this.
+     */
+   	public void showReportDialog(View v)
     {
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+	   	//Add title
+   		builder.setTitle(R.string.title_confirm_time);
+   		
+   		//Add message
+   		builder.setMessage(R.string.confirm_dialog_message);
+ 		
+   		//Add the buttons 		
+	   	builder.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() 
+	   	{	   	
+		    // User clicked OK button - Go to submission page       
+		   	public void onClick(DialogInterface dialog, int id) 
+		   	{   	        	   
+	       		//Change status on all reported timeblocks to Confirmed = true
+	       		//List<Project> projectList = (ArrayList<Project>) user.getProjects();
+	       		
+	       		for(int i=0; i<projectList.size(); i++)
+	       		{
+	       			Project p = projectList.get(i);
+
+	       					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
+	       					if(t!=null){
+	       						
+	       					t.setConfirmed(1);
+	       					db.setConfirmed(t);}
+	       				
+	       		}
+	       		//Create Submission fragment
+	    	   	Fragment fragment = new SubmissionFragment();
+	        	if (fragment != null) 
+	        	{
+		 			FragmentManager fragmentManager = getFragmentManager();
+		 			fragmentManager.beginTransaction()
+		 			.replace(R.id.frame_container, fragment).commit();
+		 			getActivity().setTitle("Submissions");	
+		   	 	} 
+		   	}
+       });
+	   //Cancel button close the dialog and go back to home screen
+	   builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() 
+	   {
+           public void onClick(DialogInterface dialog, int id) 
+           {
+               
+           }
+	   });
+	   	
+	   	// Create the AlertDialog
+	   	AlertDialog dialog = builder.create();
+	   	dialog.show();
+	   	
+    }//End Dialog confirm reported time
+    
+    /**
+     * The ProjectListAdapter class takes the projectList Array and converts the items into 
+     * View objects to be loaded into the ListView container.
+     */
+   	private class ProjectListAdapter extends ArrayAdapter<Project>
+    {
+   		/**
+   		 *Constructor, calls the superclass constructor which will call getView (below)
+   		 *for each element in projectList
+   		 */
+  
     	public ProjectListAdapter()
     	{
     		super(getActivity(), R.layout.project_listview_item, projectList);
@@ -216,6 +355,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     	@Override
     	public View getView(int position, View view, ViewGroup parent)
     	{
+
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.project_listview_item, parent, false);
     		
@@ -225,11 +365,13 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		projectName.setText(currentProject.getName());
     		
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
+    		ImageButton projectTime2 = (ImageButton) view.findViewById(R.id.imageButton1);
 
     		try{
     			int[] time = currentProject.getTimeByDate(homeFragmentCalendar).getTimeAsArray();
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");
     		}catch (Exception name) {
+    			Log.d("Test", "Hej");
     			Log.d("ERROR", name + "");
     			projectTime.setText("0 h : 0 m");
     		}
@@ -241,12 +383,23 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 
 					showTimeDialog(v);					
 				}
-			});		
+			});	
+    		
+    		projectTime2.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+
+					showTimeDialog(v);					
+				}
+			});	
     		
     		return view;
     	}
     }
-    
+   /**
+   * OnTouch for swiping between days on the home screen
+   */
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		float deltaX;
@@ -263,21 +416,30 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
             
             deltaX = downX - upX;
             deltaY = downY - upY;
-            // horizontal swipe detection
+            /**
+             * Only check if we swipe some distance horizontally
+             */
             if (Math.abs(deltaX) > MIN_DISTANCE) {
-                // left or right
+                /**
+                 * LEFT -> RIGHT
+                 */
                 if (deltaX < 0  && (Math.abs(deltaY) < 100) ) {
                     homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, -1);
+                    dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
+                    projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.left_to_right));
                     newDate(homeFragmentCalendar);
-                    dateText.scrollTo(0, (int) dateText.getY());
                     return false;
                 }
+                /**
+                 * RIGHT -> LEFT
+                 */
                 if (deltaX > 0 && (Math.abs(deltaY) < 100) ) {
                 	if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
                 	{
                 		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
+                		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
+                        projectListView.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
                 		newDate(homeFragmentCalendar);
-                		dateText.scrollTo(0, (int) dateText.getY());
                 	}
                     return false;
                 }    
