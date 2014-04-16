@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignTop="@+id/textView2"
-        android:layout_margin="5dp"
+        android:layout_margin="10dp"
         android:text="@string/project_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

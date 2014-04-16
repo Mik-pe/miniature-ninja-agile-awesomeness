@@ -1,9 +1,9 @@
 package com.example.tson;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
 import tson_utilities.User;
 
 import android.app.DatePickerDialog;
@@ -35,13 +35,16 @@ public class StatisticsFragment extends Fragment{
 	Calendar endDate;
 	int i;
 	int j = 0;
+	int totalMinutes;
+    int updateWidth = 0;
+    
 	EditText startTime, endTime;
 	ListView projectListView;
 	ArrayAdapter<Project> statsAdapter;
 	
 	public static User user = HomeActivity.user;
 	List<Project> projectListStats = user.getProjects();
-	List<StatisticsProjectItem> statItems = new ArrayList<StatisticsProjectItem>();
+	double[] projectMinutes = new double[projectListStats.size()];
 	
 	 /***********************
 	  *  	OTHERS			*/	
@@ -66,9 +69,11 @@ public class StatisticsFragment extends Fragment{
 	        projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
 	        
 	        
-		  for(int i=0;i<projectListStats.size();i++){
-			  statItems.add(new StatisticsProjectItem(projectListStats.get(i).getName(), tWorked))
-		  }
+	        
+		      
+		    
+	        
+		  
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -98,10 +103,6 @@ public class StatisticsFragment extends Fragment{
 		  });
 		  
 		  
-		  statsAdapter = new statsAdapter();
-	        
-	      projectListView.setAdapter(statsAdapter);
-		  
 		  
 		  return statistics;
 		 }
@@ -116,9 +117,20 @@ public class StatisticsFragment extends Fragment{
 	 	public void showDateDialog(View v, Calendar theCalendar)
 	    {
 	    	//Visar dialogrutan med datum
-	    	DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
-	    	dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-	    	dialog.show();
+	 		if(i==0)
+	 		{
+	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
+	 			dialog.getDatePicker().setMaxDate(endDate.getTimeInMillis());
+	 			dialog.show();
+	 		}
+	 		else
+	 		{
+	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
+		    	dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+		    	dialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
+		    	dialog.show();
+	 		}
+	    	
 	    }
 	    
 	 	/**
@@ -129,35 +141,73 @@ public class StatisticsFragment extends Fragment{
 	 		public void onDateSet(DatePicker view, int selectedYear,
 		    int selectedMonth, int selectedDay) 
 	 		{
+	 			
 	 			Calendar temp = Calendar.getInstance();
 	 			
 	 			temp.set(selectedYear, selectedMonth, selectedDay);
-	 			//Checks if the date is bigger then the actual and changes it if its true
-	 			if(startDate.after(temp))
-	 			{
-	 				startDate = (Calendar) temp.clone();
-	 				startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-				  			+ selectedYear);
-	 			}
-	 			//Checks if the date2 is smaller then the actual and changes it if its true
-	 			if(endDate.before(temp))
-	 			{
-	 				endDate = (Calendar) temp.clone();
-	 				endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-				  			+ selectedYear);
-	 			}
-	 			//Sets and shows the chosen date 
+	 			
+	 			//Sets and shows the chosen date 	 			
 				if(i==0)
-				{
+				{	
+					totalMinutes = 0;
+					for(int i=0;i<projectListStats.size();i++){
+						List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
+						  for(int j=0;j < tb.size(); j++)
+						  {
+							  Calendar compareDate = tb.get(j).getDate();
+							  if(temp.compareTo(compareDate) == -1 && endDate.compareTo(compareDate) == 1)
+							  {
+								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+								  projectMinutes[i] += tb.get(j).getTimeInMinutes();								  
+							  }
+							  else if(compareDate == temp|| compareDate == endDate)
+							  {
+								  Log.d("hejsan", "HAHAHAH");
+								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+							  }
+							  
+						  }
+					}
 					startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 							  			+ selectedYear);
 					startDate = (Calendar) temp.clone();
+					
+					statsAdapter = new statsAdapter();
+				    projectListView.setAdapter(statsAdapter);
+					
+					
 				}
 				else
 				{
+					totalMinutes = 0;
+					for(int i=0;i<projectListStats.size();i++){
+						List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
+						  for(int j=0;j < tb.size(); j++)
+						  {
+							  Calendar compareDate = tb.get(j).getDate();
+							  
+							  if(startDate.compareTo(compareDate) == -1 && temp.compareTo(compareDate) == 1)
+							  {
+								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+							  }
+							  
+							  else if(startDate.compareTo(compareDate) == 1 && temp.compareTo(compareDate) == -1)
+							  {
+								  Log.d("hejsan", "HAHAHAHooooooooooooo");
+								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+							  }
+							  
+						  }
+					}					
 					endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
 							  + selectedYear);
 					endDate = (Calendar) temp.clone();
+					
+					statsAdapter = new statsAdapter();
+				    projectListView.setAdapter(statsAdapter);
 				}
 	 		}
 		 };
@@ -167,11 +217,11 @@ public class StatisticsFragment extends Fragment{
 		        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
 		    }
 		    
-		    private class statsAdapter extends ArrayAdapter<StatisticsProjectItem>{
+		    private class statsAdapter extends ArrayAdapter<Project>{
 		    	
 		    	
 				public statsAdapter() {
-					super(getActivity(), R.layout.statistics_listview_item, statItems);
+					super(getActivity(), R.layout.statistics_listview_item, projectListStats);
 					// TODO Auto-generated constructor stub
 				}
 				
@@ -183,23 +233,20 @@ public class StatisticsFragment extends Fragment{
 					Calendar temp = (Calendar) startDate.clone();
 			        TextView projectItem = (TextView) view.findViewById(R.id.statistics_project_item);
 			        TextView progBar = (TextView) view.findViewById(R.id.statistics_progress_bar);
+			        TextView projectName = (TextView) view.findViewById(R.id.textProject);
+			        projectName.setText(user.getProjects().get(position).getName());
 			        //double x = 0.2;
 			        
 			        double widthHolder = 300;
-			        double x = 0;
+			        double y = 0;
+			        updateWidth = 0;
+			        y = projectMinutes[position]/totalMinutes;
+			        projectMinutes[position] = 0;
+			        updateWidth = (int)(y*widthHolder);
 			        
-			        while(temp.before(endDate))
-			        {
-			        	x += user.getProjects().get(position).getTimeByDate(temp).getTimeInMinutes();
-			        	temp.add(Calendar.DAY_OF_YEAR, 1);
-			        }
+			        Log.d("HEJ",""+updateWidth);
 			        
-			        
-			        int y = (int) (x * widthHolder);
-			        
-			        Log.d("YYYYYYY",""+holder);
-			        
-			        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(dpToPx(y), dpToPx(40));
+			        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(dpToPx(updateWidth), dpToPx(40));
 			        rl.setMargins(dpToPx(5),dpToPx(5),dpToPx(5),dpToPx(5));
 			        
 			        progBar.setLayoutParams(rl);
@@ -209,20 +256,5 @@ public class StatisticsFragment extends Fragment{
 					
 				}
 		    }
-		    public class StatisticsProjectItem
-		    {
-		    	String projectName;
-		    	int timeWorked;
-		    	double percentWorked;
-		    	public StatisticsProjectItem(String pName, int tWorked)
-		    	{
-		    		projectName = pName;
-		    		timeWorked = tWorked;
-		    	}
-		    	
-		    	public void setPercentWorked(double p)
-		    	{
-		    		percentWorked = p;
-		    	}
-		    }
+
 }
