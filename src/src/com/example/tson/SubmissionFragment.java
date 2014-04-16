@@ -74,6 +74,8 @@ public class SubmissionFragment extends Fragment {
 				
 			}};
 			//Add New Tab
+			
+			
 			if(actionBar.getTabCount() <2)
 			{
 				actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));

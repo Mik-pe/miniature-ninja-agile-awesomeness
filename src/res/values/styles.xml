@@ -4,8 +4,9 @@
     
     <style name="ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
 	    <item name="android:background">@color/combitech_blue</item>
-	    <item name="android:backgroundStacked">@color/combitech_blue</item>
+	    <item name="android:backgroundStacked">@color/combitech_grey</item>
 	    <item name="android:backgroundSplit">@color/combitech_blue</item>
+	    <item name="android:selectableItemBackground">@color/combitech_blue</item>
 	</style>
 
     <!--

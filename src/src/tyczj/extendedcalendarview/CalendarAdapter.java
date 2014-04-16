@@ -153,12 +153,12 @@ public class CalendarAdapter extends BaseAdapter{
        			{
        				if(t.getConfirmed()==1)
        				{
-       					rl.setBackgroundColor(Color.rgb(126, 218, 126));//green
+       					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
        					break;
        				}       					
        				else
        				{
-       					rl.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow       					
+       					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
        					break;
        				}
        					
@@ -167,9 +167,9 @@ public class CalendarAdapter extends BaseAdapter{
        			{
        				//Turn the future dates gray.
        				if(thisDay.before(tempCal))
-       					rl.setBackgroundColor(Color.rgb(140, 140, 140)); //Grey
+       					rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
        				else
-       					rl.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0       				
+       					rl.setBackgroundColor(Color.rgb(199, 199, 199)); //red (getTimeByDate(currentDate) == 0       				
        			}
 						
        		}

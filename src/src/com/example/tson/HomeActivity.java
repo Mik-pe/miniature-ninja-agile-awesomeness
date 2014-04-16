@@ -47,6 +47,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -71,6 +72,7 @@ public class HomeActivity extends FragmentActivity
 	ListView projectListView;
 	ActionBar ab;
 	private static Calendar c;
+	//Typeface tf = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
 	
 	//DATABASE
 	public static DatabaseHelper db;
