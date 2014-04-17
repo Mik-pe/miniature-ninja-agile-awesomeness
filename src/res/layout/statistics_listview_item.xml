@@ -6,7 +6,8 @@
         android:id="@+id/statistics_project_item"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:layout_margin="5dp"
+        android:layout_margin="0dp"
+        android:layout_marginBottom="5dp"
         android:background="@color/list_item_statistics"
         android:gravity="center_horizontal"
         android:width="20dp" />
@@ -27,7 +28,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignTop="@+id/textView2"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
+        android:layout_marginLeft="5dp"
         android:text="@string/project_name"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -36,5 +38,33 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/percantValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="100%"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/minuteValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/percantValue"
+        android:text="10 m"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/hourValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/percantValue"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/minuteValue"
+        android:text="10 h"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

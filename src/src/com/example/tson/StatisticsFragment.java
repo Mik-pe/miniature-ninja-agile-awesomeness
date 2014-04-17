@@ -1,4 +1,6 @@
 package com.example.tson;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -37,6 +39,11 @@ public class StatisticsFragment extends Fragment{
 	int j = 0;
 	int totalMinutes;
     int updateWidth = 0;
+    int k = 0;
+    
+    int projectHours = 0;
+    
+    DecimalFormat decimalFormat=new DecimalFormat("#.#");
     
 	EditText startTime, endTime;
 	ListView projectListView;
@@ -65,15 +72,8 @@ public class StatisticsFragment extends Fragment{
 		  btnGo = (Button) statistics.findViewById(R.id.goStatistics);
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
-		  
-	        projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
-	        
-	        
-	        
-		      
-		    
-	        
-		  
+		  projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
+
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -158,11 +158,11 @@ public class StatisticsFragment extends Fragment{
 							  if(temp.compareTo(compareDate) == -1 && endDate.compareTo(compareDate) == 1)
 							  {
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-								  projectMinutes[i] += tb.get(j).getTimeInMinutes();								  
+								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+								  
 							  }
 							  else if(compareDate == temp|| compareDate == endDate)
 							  {
-								  Log.d("hejsan", "HAHAHAH");
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
 							  }
@@ -185,12 +185,15 @@ public class StatisticsFragment extends Fragment{
 						List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
 						  for(int j=0;j < tb.size(); j++)
 						  {
+							  //gets the day from each timeblock for each project.
 							  Calendar compareDate = tb.get(j).getDate();
 							  
 							  if(startDate.compareTo(compareDate) == -1 && temp.compareTo(compareDate) == 1)
 							  {
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+								  
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+								  
 							  }
 							  
 							  else if(startDate.compareTo(compareDate) == 1 && temp.compareTo(compareDate) == -1)
@@ -229,28 +232,32 @@ public class StatisticsFragment extends Fragment{
 				public View getView(int position, View view, ViewGroup parent){
 					if(view == null)
 						view = getActivity().getLayoutInflater().inflate(R.layout.statistics_listview_item, parent, false);
-					
-					Calendar temp = (Calendar) startDate.clone();
-			        TextView projectItem = (TextView) view.findViewById(R.id.statistics_project_item);
+				
 			        TextView progBar = (TextView) view.findViewById(R.id.statistics_progress_bar);
 			        TextView projectName = (TextView) view.findViewById(R.id.textProject);
+			        TextView percentValue = (TextView) view.findViewById(R.id.percantValue);
+			        TextView hourValue = (TextView) view.findViewById(R.id.hourValue);
+			        TextView minuteValue = (TextView) view.findViewById(R.id.minuteValue);
 			        projectName.setText(user.getProjects().get(position).getName());
-			        //double x = 0.2;
+			        hourValue.setText("x h");
+			        minuteValue.setText("x m");
 			        
-			        double widthHolder = 300;
-			        double y = 0;
+			        double widthHolder = parent.getWidth();
+			        double percent = 0;
+			        String output = "";
 			        updateWidth = 0;
-			        y = projectMinutes[position]/totalMinutes;
+			        
+			        percent = projectMinutes[position]/totalMinutes;
 			        projectMinutes[position] = 0;
-			        updateWidth = (int)(y*widthHolder);
+			        updateWidth = (int)(percent*widthHolder);
 			        
-			        Log.d("HEJ",""+updateWidth);
+			        output = decimalFormat.format(Math.round(percent*100));
+			        percentValue.setText(output + " %");
 			        
-			        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(dpToPx(updateWidth), dpToPx(40));
-			        rl.setMargins(dpToPx(5),dpToPx(5),dpToPx(5),dpToPx(5));
-			        
+			        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(updateWidth, dpToPx(40));
+			        rl.setMargins(0,0,0,dpToPx(5));
+			    
 			        progBar.setLayoutParams(rl);
-			        
 			        
 			        return view;
 					
