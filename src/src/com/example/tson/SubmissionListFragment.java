@@ -1,6 +1,5 @@
 package com.example.tson;
 
-
 import java.util.ArrayList;
 
 
@@ -107,6 +106,8 @@ public class SubmissionListFragment extends Fragment {
     		 */
     		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
+    			weekText.setText("Week: "+currentItem.today.get(Calendar.WEEK_OF_YEAR));
+        		
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
     			params.addRule(RelativeLayout.BELOW, R.id.weekText);
@@ -128,8 +129,9 @@ public class SubmissionListFragment extends Fragment {
     		submissionDate.setText(currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
     				
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
-    		
+    		projectTime.setOnClickListener(null);
     		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
+
     		/**
     		 * Will set the backgroundColor depending on confirmation of the SubListItem
     		 * IF: 		Green
@@ -137,26 +139,27 @@ public class SubmissionListFragment extends Fragment {
     		 * ELSE:	Red
     		 */
 			if(currentItem.isConfirmed==1)
-				view.setBackgroundColor(Color.rgb(126, 218, 126));
+				view.setBackgroundColor(Color.rgb(145, 218, 149));
 			else if(currentItem.isConfirmed==0)
-				view.setBackgroundColor(Color.rgb(246, 237, 134)); 
+				view.setBackgroundColor(Color.rgb(246, 241, 171)); 
    			else
-				view.setBackgroundColor(Color.rgb(245, 116, 103)); 
+				view.setBackgroundColor(Color.rgb(199, 199, 199)); 
 			
 			/**
 			 * OnClickListener for edit Button
 			 * Takes you to Homescreen for pressed DATE
 			 */
+
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 								
-					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentItem.today.get(Calendar.DAY_OF_YEAR));
+					long dateDifference = -(Calendar.getInstance().getTimeInMillis() - currentItem.today.getTimeInMillis())/(1000*60*60*24);
 					
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();
-					bundle.putInt("dateDifference", dateDifference);
+					bundle.putLong("dateDifference", dateDifference);
 					switchToFragment.setArguments(bundle);
 					
 					ActionBar actionBar = getActivity().getActionBar();

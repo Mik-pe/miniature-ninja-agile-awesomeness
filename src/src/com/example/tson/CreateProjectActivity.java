@@ -74,8 +74,21 @@ public class CreateProjectActivity extends Activity {
     	
     	startActivity(intent);
     	finish(); //finish this activity, remove from history	
+       	
+	}
+	/**
+	 * Function that takes you back to home page from create project page, if user change his/her mind
+	 * @param view
+	 */
+	public void cancelProject(View view)
+	{
+
+		Intent intent = new Intent(this, HomeActivity.class);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //set flag on intent to clear history stack of all activities
     	
-    	
+    	startActivity(intent);
+    	finish(); //finish this activity, remove from history	
+       	
 	}
 
 	/**

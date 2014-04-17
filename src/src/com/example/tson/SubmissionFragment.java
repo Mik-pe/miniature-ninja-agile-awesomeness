@@ -11,11 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * Class for the SubmissionFragment as a whole
+ * Contains the tabs for subfragments:
+ * {@link SubmissionListFragment}
+ * {@link SubmissionCalFragment}
+ * @author 
+ *
+ */
 public class SubmissionFragment extends Fragment {
 	ViewPager Tab;
     TabAdapter TabAdapter;
 	ActionBar actionBar;
-
+	/**
+	 * Constructor for 
+	 * {@link SubmissionFragment}
+	 */
 	public SubmissionFragment(){}
 	
     @Override
@@ -63,6 +74,8 @@ public class SubmissionFragment extends Fragment {
 				
 			}};
 			//Add New Tab
+			
+			
 			if(actionBar.getTabCount() <2)
 			{
 				actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));
