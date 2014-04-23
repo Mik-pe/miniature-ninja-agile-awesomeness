@@ -120,6 +120,9 @@
          <item name="android:alertDialogStyle">@style/CustomDialogTheme</item>
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Combitechstyle.Widget</item>
+       <!-- <item name="android:actionBarStyle">@style/ActionBar</item>
+        	    <item name="android:backgroundStacked">@color/combitech_blue</item>
+	    <item name="android:backgroundSplit">@color/combitech_blue</item>-->
     </style>
     
 </resources>
