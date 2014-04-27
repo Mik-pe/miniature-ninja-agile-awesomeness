@@ -174,10 +174,44 @@ public class CalendarAdapter extends BaseAdapter{
 //       			}
 //						
 //       		}
-       		
+			
        		if(tempCal.after(thisDay)) //check if current calendar-block is after todays date
        		{
-           		rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
+//           		rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
+       			
+       			/*******ugly code because something is fishy with the dates********/
+       			if(projectList.size()>0)
+       			{
+	       			for(int i = 0; i < projectList.size(); i++)
+	           		{
+	           			Project p = projectList.get(i);
+	           			
+	           			TimeBlock t = p.getTimeByDate(tempCal);
+	          
+	           			if(t != null)
+	           			{
+	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+	           					break;
+	           				}       					
+	           				else //coloring for unconfirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+	           					break;
+	           				}
+	           					
+	           			}
+	           			else //coloring for past blocks with unreported time
+	           			{
+	           				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
+	           			}
+	           		}
+       			}
+       			else //coloring for past blocks with unreported time
+       				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
+       			/*********ugly code**********/
+       			
        		}
        		else //the current calendar-block is before todays date
        		{
