@@ -1,14 +1,12 @@
 
-
-  <ScrollView
-         xmlns:android="http://schemas.android.com/apk/res/android"
-   		 xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/scrollView1"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content" >
+  <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:id="@+id/scrollView1"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
@@ -92,6 +90,14 @@
             android:text="@string/go_statistics"
             android:textSize="32sp"
             android:onClick = "showStatistics" />
+
+		    <ListView
+		        android:id="@+id/statistics_view"
+		        android:layout_width="match_parent"
+		        android:layout_height="256dp" >
+		    </ListView>
+
+            
         
 </LinearLayout>
 </ScrollView>

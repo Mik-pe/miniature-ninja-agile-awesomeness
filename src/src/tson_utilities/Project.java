@@ -119,7 +119,6 @@ public class Project {
 	{
 		return name;
 	}
-	
 
 	public List<TimeBlock> getSubmissionList()
 	{
