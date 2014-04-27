@@ -169,7 +169,7 @@ public class CalendarAdapter extends BaseAdapter{
        				if(thisDay.before(tempCal))
        					rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
        				else
-       					rl.setBackgroundColor(Color.rgb(199, 199, 199)); //red (getTimeByDate(currentDate) == 0       				
+       					rl.setBackgroundColor(Color.rgb(229, 229, 229)); //red (getTimeByDate(currentDate) == 0       				
        			}
 						
        		}

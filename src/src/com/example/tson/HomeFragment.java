@@ -7,6 +7,8 @@ import com.example.tson.HomeActivity;
 import java.util.Calendar;
 import java.util.List;
 
+import qustomstyle.QustomDialogBuilder;
+
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
@@ -17,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -283,15 +286,24 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
      */
    	public void showReportDialog(View v)
     {
-   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-	   	//Add title
+   		//AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+   		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+   		//Add title
    		builder.setTitle(R.string.title_confirm_time);
    		
    		//Add message
    		builder.setMessage(R.string.confirm_dialog_message);
- 		
+   		
+   		/*QustomDialogBuilder qBuilder = new QustomDialogBuilder(getActivity());
+   		qBuilder.setTitle(R.string.title_confirm_time);
+   		qBuilder.setTitleColor("#063A70");
+   		qBuilder.setDividerColor("#DB8C3A");
+   		qBuilder.setMessage(R.string.confirm_dialog_message);
+*/
+   		
    		//Add the buttons 		
-	   	builder.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() 
+   		builder.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() 
 	   	{	   	
 		    // User clicked OK button - Go to submission page       
 		   	public void onClick(DialogInterface dialog, int id) 
@@ -329,7 +341,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
                
            }
 	   });
-	   	
+	   //qBuilder.show();
+		
 	   	// Create the AlertDialog
 	   	AlertDialog dialog = builder.create();
 	   	dialog.show();

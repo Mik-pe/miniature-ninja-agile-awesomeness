@@ -72,7 +72,7 @@ public class HomeActivity extends FragmentActivity
 	ListView projectListView;
 	ActionBar ab;
 	private static Calendar c;
-	//Typeface tf = Typeface.createFromAsset(getAssets(), "fontawesome-webfont.ttf");
+	//Typeface tf = Typeface.createFromAsset(getAssets(), "assets/fontawesome-webfont.ttf");
 	
 	//DATABASE
 	public static DatabaseHelper db;
