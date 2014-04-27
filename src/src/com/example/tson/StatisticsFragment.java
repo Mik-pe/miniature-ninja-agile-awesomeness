@@ -159,16 +159,19 @@ public class StatisticsFragment extends Fragment{
 							  // 1 if the time of this calendar is after the other one.
 							  if(temp.compareTo(compareDate) == -1 && endDate.compareTo(compareDate) == 1)
 							  {
-								  Log.d("TEMP", ""+temp.getTime());
-								  Log.d("COMPAREDATE", ""+compareDate.getTime());
-								  Log.d("ENDDATE:",""+endDate.getTime());
-								  Log.d("--------", "-----------");
+								  //Log.d("TEMP", ""+temp.getTime());
+								  //Log.d("COMPAREDATE", ""+compareDate.getTime());
+								  //Log.d("ENDDATE:",""+endDate.getTime());
+								  //Log.d("--------", "-----------");
+								  Log.d("IF","IF");
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+								  Log.d("------------","-----------");
 								  
 							  }
 							  else if(compareDate == temp || compareDate == endDate)
 							  {
+								  Log.d("ELSE","ELSE");
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
 							  }
@@ -248,12 +251,13 @@ public class StatisticsFragment extends Fragment{
 			        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
 			        
 			        double widthHolder = parent.getWidth();
+			        Log.d("widthHolder", ""+widthHolder);
 			        double percent = 0;
 			        updateWidth = 0;
 			        if(totalMinutes != 0){
 			        	percent = projectMinutes[position]/totalMinutes;
 			        }
-			        
+			        Log.d("projectMinutes", ""+projectMinutes[position]);
 			        projectMinutes[position] = 0; //resets the amount of project minutes
 			        updateWidth = (int)(percent*widthHolder);//sets the width of percent bar
 			        
