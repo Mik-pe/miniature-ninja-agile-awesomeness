@@ -120,12 +120,13 @@ public class StatisticsFragment extends Fragment{
 	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
 	 			dialog.getDatePicker().setMaxDate(endDate.getTimeInMillis());
 	 			dialog.show();
+	 			//Log.d("i=0", ""+i);
 	 		}
 	 		else
 	 		{
 	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
-		    	dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-		    	dialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
+	 			dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+		    	//dialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
 		    	dialog.show();
 	 		}
 	    	
@@ -164,7 +165,6 @@ public class StatisticsFragment extends Fragment{
 								  Log.d("IF","IF");
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-								  Log.d("------------","-----------");
 								  
 							  }
 							  else if(compareDate == temp || compareDate == endDate)
@@ -203,7 +203,7 @@ public class StatisticsFragment extends Fragment{
 								  
 							  }
 							  
-							  else if(startDate.compareTo(compareDate) == 1 && temp.compareTo(compareDate) == -1)
+							  else if(startDate.compareTo(compareDate) == 0 && temp.compareTo(compareDate) == 0)
 							  {
 								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
 								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
@@ -231,7 +231,6 @@ public class StatisticsFragment extends Fragment{
 		    	
 				public statsAdapter() {
 					super(getActivity(), R.layout.statistics_listview_item, projectListStats);
-					// TODO Auto-generated constructor stub
 				}
 				
 				@Override
@@ -245,8 +244,14 @@ public class StatisticsFragment extends Fragment{
 			        TextView hourValue = (TextView) view.findViewById(R.id.hourValue);
 			        TextView minuteValue = (TextView) view.findViewById(R.id.minuteValue);
 			        projectName.setText(user.getProjects().get(position).getName());
-			        hourValue.setText(""+(int) projectMinutes[position]/60 + " h");
-			        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
+			        
+			        //on tablet
+			        hourValue.setText(""+(int) projectMinutes[position]/(60*2) + " h");
+			        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%(60*2)) + " m");
+			        
+			        //on phone
+			        //hourValue.setText(""+(int) projectMinutes[position]/60 + " h");
+			        //minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
 			        
 			        double widthHolder = parent.getWidth();
 			        Log.d("widthHolder", ""+widthHolder);
@@ -254,6 +259,9 @@ public class StatisticsFragment extends Fragment{
 			        updateWidth = 0;
 			        if(totalMinutes != 0){
 			        	percent = projectMinutes[position]/totalMinutes;
+			        	
+			        	//comment if on phone
+			        	percent = percent/2;
 			        }
 			        Log.d("projectMinutes", ""+projectMinutes[position]);
 			        projectMinutes[position] = 0; //resets the amount of project minutes
