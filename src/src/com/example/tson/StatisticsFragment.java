@@ -102,8 +102,6 @@ public class StatisticsFragment extends Fragment{
 				}
 		  });
 		  
-		  
-		  
 		  return statistics;
 		 }
 		
