@@ -9,13 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
-
-import com.example.tson.HomeActivity;
-import com.example.tson.R;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.Time;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +20,9 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.example.tson.HomeActivity;
+import com.example.tson.R;
 
 /***********************
  *  	Calendar adapter for visualizing the calendar		*/	
@@ -90,9 +90,10 @@ public class CalendarAdapter extends BaseAdapter{
 	}
 	
 	/***********************
-	  *  	Here the coloring of the boxes happen!		*/	
+	  *  	Coloring of calendar-boxes happens here!		*/	
 	 /***********************/
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -143,36 +144,110 @@ public class CalendarAdapter extends BaseAdapter{
 			tempCal.set(day.getYear(), day.getMonth(), day.getDay());
 
 			
-			//Same loop as in SubmissionListFragment
-       		for(int i = 0; i < projectList.size(); i++)
+//			//Same loop as in SubmissionListFragment
+//       		for(int i = 0; i < projectList.size(); i++)
+//       		{
+//       			Project p = projectList.get(i);
+//       			
+//       			TimeBlock t = p.getTimeByDate(tempCal);
+//      
+//       			if(t != null)
+//       			{
+//       				if(t.getConfirmed()==1) //color for confirmed timeblocks
+//       				{
+//       					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+//       					break;
+//       				}       					
+//       				else //color for unconfirmed timeblocks
+//       				{
+//       					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+//       					break;
+//       				}
+//       					
+//       			}
+//       			else
+//       			{
+//       				if(tempCal.after(thisDay)) //Turn the future dates gray.
+//       					rl.setBackgroundColor(Color.rgb(229, 229, 229)); //Grey
+//       				else //color for previous dates
+//       					rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red (getTimeByDate(currentDate) == 0       				
+//       			}
+//						
+//       		}
+			
+       		if(tempCal.after(thisDay)) //check if current calendar-block is after todays date
        		{
-       			Project p = projectList.get(i);
+//           		rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
        			
-       			TimeBlock t = p.getTimeByDate(tempCal);
-       			if(t != null)
+       			/*******ugly code because something is fishy with the dates********/
+       			if(projectList.size()>0)
        			{
-       				if(t.getConfirmed()==1)
-       				{
-       					rl.setBackgroundColor(Color.rgb(126, 218, 126));//green
-       					break;
-       				}       					
-       				else
-       				{
-       					rl.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow       					
-       					break;
-       				}
-       					
+	       			for(int i = 0; i < projectList.size(); i++)
+	           		{
+	           			Project p = projectList.get(i);
+	           			
+	           			TimeBlock t = p.getTimeByDate(tempCal);
+	          
+	           			if(t != null)
+	           			{
+	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+	           					break;
+	           				}       					
+	           				else //coloring for unconfirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+	           					break;
+	           				}
+	           					
+	           			}
+	           			else //coloring for past blocks with unreported time
+	           			{
+	           				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
+	           			}
+	           		}
        			}
-       			else
-       			{
-       				//Turn the future dates gray.
-       				if(thisDay.before(tempCal))
-       					rl.setBackgroundColor(Color.rgb(140, 140, 140)); //Grey
-       				else
-       					rl.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0       				
-       			}
-						
+       			else //coloring for past blocks with unreported time
+       				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
+       			/*********ugly code**********/
+       			
        		}
+       		else //the current calendar-block is before todays date
+       		{
+       			if(projectList.size()>0)
+       			{
+	       			for(int i = 0; i < projectList.size(); i++)
+	           		{
+	           			Project p = projectList.get(i);
+	           			
+	           			TimeBlock t = p.getTimeByDate(tempCal);
+	          
+	           			if(t != null)
+	           			{
+	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+	           					break;
+	           				}       					
+	           				else //coloring for unconfirmed timeblocks
+	           				{
+	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+	           					break;
+	           				}
+	           					
+	           			}
+	           			else //coloring for past blocks with unreported time
+	           			{
+	           				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //red (getTimeByDate(currentDate) == 0
+	           			}
+	           		}
+       			}
+       			else //coloring for past blocks with unreported time
+       				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //red (getTimeByDate(currentDate) == 0
+       		}
+       		
+       		
 				
 			if(day.getDay() == 0){
 				rl.setVisibility(View.GONE);

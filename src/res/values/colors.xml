@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- COMBITECH COLORS -->
+    
+    <color name="combitech_grey">#C7C7C7</color>
+    <color name="combitech_light_grey">#E5E5E5</color>
+    <color name="combitech_dark_grey">#787878</color>
+    <color name="combitech_blue">#063A70</color>
+    <color name="combitech_orange">#DB8C3A</color>
+    <color name="combitech_pink">#B72D64</color>
+    
+    <!-- CALENDER COLORS -->
+    
+    <color name="calender_red">#F57467</color>
+    <color name="calender_green">#91DA95</color>
+    <color name="calender_yellow">#F6F1AB</color>
+    
+    <!-- OTHERS -->
+    
     <color name="list_item_title">#fff</color>
     <color name="list_background">#303030</color>
     <color name="list_background_pressed">#992416</color>
     <color name="list_divider">#272727</color>
+
+    <color name="list_item_statistics">#E5E5E5</color>
+    <color name="list_item_statistics_bar">#C0063A70</color>
+
     <color name="counter_text_bg">#063A70</color>
     <color name="counter_text_color">#063A70</color>
+
 </resources>

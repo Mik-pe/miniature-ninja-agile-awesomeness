@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -96,7 +97,7 @@ public class SubmissionListFragment extends Fragment {
     		final SubmissionDayListItem currentItem = subList.get(position);
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
     		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
-    		Button editButton = (Button) view.findViewById(R.id.editDayButton);	
+    		ImageButton editButton = (ImageButton) view.findViewById(R.id.editDayButton);	
     		TextView weekText = (TextView) view.findViewById(R.id.weekText);
     		/**
     		 * Will check if this is the first SubMissionListItem or a SUNDAY
@@ -142,7 +143,7 @@ public class SubmissionListFragment extends Fragment {
 			else if(currentItem.isConfirmed==0)
 				view.setBackgroundColor(Color.rgb(246, 241, 171)); 
    			else
-				view.setBackgroundColor(Color.rgb(199, 199, 199)); 
+				view.setBackgroundColor(Color.rgb(229, 229, 229)); 
 			
 			/**
 			 * OnClickListener for edit Button
