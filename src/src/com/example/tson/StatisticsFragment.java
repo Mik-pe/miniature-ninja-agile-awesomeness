@@ -40,8 +40,8 @@ public class StatisticsFragment extends Fragment{
 	int totalMinutes;
     int updateWidth = 0;
     int k = 0;
-    
     int projectHours = 0;
+    boolean mFirst;
     
     DecimalFormat decimalFormat=new DecimalFormat("#0.#");
     
@@ -66,6 +66,7 @@ public class StatisticsFragment extends Fragment{
 		  super.onCreate(savedInstanceState);
 		  View statistics = inflater.inflate(R.layout.statistics_fragment, container, false);
 		  startDate = Calendar.getInstance();
+		  startDate.set(startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),1);
 		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStart);
 		  btnEnd = (ImageButton) statistics.findViewById(R.id.imageButtonEnd);
@@ -73,7 +74,14 @@ public class StatisticsFragment extends Fragment{
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
 		  projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
+		  
 
+		  calculateStartTime(startDate, startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH));
+		  for(int i = 0; i < projectMinutes.length; i++)
+			  projectMinutes[i] = 0;
+		  calculateEndTime(endDate, endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH));
+		  
+		  
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -92,16 +100,6 @@ public class StatisticsFragment extends Fragment{
 				}
 		  });	
 		  
-		  //onClick on btnGo
-		  btnGo.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View v) {
-					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
-					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
-					Log.d("StartDifference", ""+daysSinceStartDate);
-					Log.d("EndDifference", ""+daysSinceEndDate);
-				}
-		  });
-		  
 		  return statistics;
 		 }
 		
@@ -117,16 +115,20 @@ public class StatisticsFragment extends Fragment{
 	    	//Visar dialogrutan med datum
 	 		if(i==0)
 	 		{
+	 			mFirst = true;
 	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
 	 			dialog.getDatePicker().setMaxDate(endDate.getTimeInMillis());
+	 			dialog.getDatePicker().setCalendarViewShown(false);
 	 			dialog.show();
 	 			//Log.d("i=0", ""+i);
 	 		}
 	 		else
 	 		{
-	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
+	 			mFirst = true;
+	 			DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH)); 
 	 			dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
-		    	//dialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
+	 			dialog.getDatePicker().setCalendarViewShown(false);
+		    	dialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
 		    	dialog.show();
 	 		}
 	    	
@@ -140,86 +142,98 @@ public class StatisticsFragment extends Fragment{
 	 		public void onDateSet(DatePicker view, int selectedYear,
 		    int selectedMonth, int selectedDay) 
 	 		{
-	 			
-	 			Calendar temp = Calendar.getInstance();
-	 			
-	 			temp.set(selectedYear, selectedMonth, selectedDay);
-	 			
-	 			//Sets and shows the chosen date 	 			
-				if(i==0)
-				{	
-					totalMinutes = 0;
-					for(int i=0;i<projectListStats.size();i++){
-						List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
-						  for(int j=0;j < tb.size(); j++)
-						  {
-							  Calendar compareDate = tb.get(j).getDate();
-							  // 0 if equals, -1 if the time of this calendar is before the other one,
-							  // 1 if the time of this calendar is after the other one.
-							  if(temp.compareTo(compareDate) == -1 && endDate.compareTo(compareDate) == 1)
-							  {
-								  //Log.d("TEMP", ""+temp.getTime());
-								  //Log.d("COMPAREDATE", ""+compareDate.getTime());
-								  //Log.d("ENDDATE:",""+endDate.getTime());
-								  //Log.d("--------", "-----------");
-								  Log.d("IF","IF");
-								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-								  
-							  }
-							  else if(compareDate == temp || compareDate == endDate)
-							  {
-								  Log.d("ELSE","ELSE");
-								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-							  }
-							  
-						  }
+	 			if (mFirst) 
+	 			{
+		 	        mFirst = false;
+		 			Calendar temp = Calendar.getInstance();
+		 			temp.set(selectedYear, selectedMonth, selectedDay);
+		 			//Sets and shows the chosen date 	 			
+					if(i==0)
+					{	
+						calculateStartTime(temp, selectedYear, selectedMonth, selectedDay);				
 					}
-					startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-							  			+ selectedYear);
-					startDate = (Calendar) temp.clone();
-					
-					statsAdapter = new statsAdapter();
-				    projectListView.setAdapter(statsAdapter);
-					
-					
-				}
-				else
-				{
-					totalMinutes = 0;
-					for(int i=0;i<projectListStats.size();i++){
-						List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
-						  for(int j=0;j < tb.size(); j++)
-						  {
-							  //gets the day from each timeblock for each project.
-							  Calendar compareDate = tb.get(j).getDate();
-							  
-							  if(startDate.compareTo(compareDate) == -1 && temp.compareTo(compareDate) == 1)
-							  {
-								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-								  
-								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-								  
-							  }
-							  
-							  else if(startDate.compareTo(compareDate) == 0 && temp.compareTo(compareDate) == 0)
-							  {
-								  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-								  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-							  }
-							  
-						  }
-					}					
-					endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
-							  + selectedYear);
-					endDate = (Calendar) temp.clone();
-					
-					statsAdapter = new statsAdapter();
-				    projectListView.setAdapter(statsAdapter);
-				}
+					else
+					{
+						calculateEndTime(temp, selectedYear, selectedMonth, selectedDay);
+					}
+	 			}
 	 		}
 		 };
+		 
+		 public void calculateStartTime(Calendar temp, int selectedYear,
+				    int selectedMonth, int selectedDay)
+		 {	
+			 int p = 0;
+			 p++;
+			 Log.d("hejsan", "" + p);
+			totalMinutes = 0;
+			for(int i=0;i<projectListStats.size();i++){
+				List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
+				  for(int j=0;j < tb.size(); j++)
+				  {
+					  Calendar compareDate = tb.get(j).getDate();
+					  // 0 if equals, -1 if the time of this calendar is before the other one,
+					  // 1 if the time of this calendar is after the other one.
+					  if(temp.compareTo(compareDate) == -1 && endDate.compareTo(compareDate) == 1)
+					  {
+						  if(user.isDateConfirmed(compareDate) == 1)
+						  {
+							  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+							  projectMinutes[i] += tb.get(j).getTimeInMinutes();									  
+						  }
+						  
+					  }
+					  else if(compareDate == temp || compareDate == endDate)
+					  {
+						  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+						  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+					  }
+					  
+				  }
+			}
+			startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
+					  			+ selectedYear);
+			startDate = (Calendar) temp.clone();
+			
+			statsAdapter = new statsAdapter();
+		    projectListView.setAdapter(statsAdapter);
+		 }
+		 
+		 public void calculateEndTime(Calendar temp, int selectedYear,
+				    int selectedMonth, int selectedDay)
+		 {
+			 totalMinutes = 0;
+				for(int i=0;i<projectListStats.size();i++){
+					List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
+					  for(int j=0;j < tb.size(); j++)
+					  {
+						  //gets the day from each timeblock for each project.
+						  Calendar compareDate = tb.get(j).getDate();
+						  
+						  if(startDate.compareTo(compareDate) == -1 && temp.compareTo(compareDate) == 1)
+						  {
+							  if(user.isDateConfirmed(compareDate) == 1)
+							  {
+							  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+							  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+							  }
+						  }
+						  
+						  else if(startDate.compareTo(compareDate) == 0 && temp.compareTo(compareDate) == 0)
+						  {
+							  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
+							  projectMinutes[i] += tb.get(j).getTimeInMinutes();
+						  }
+						  
+					  }
+				}					
+				endTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
+						  + selectedYear);
+				endDate = (Calendar) temp.clone();
+				
+				statsAdapter = new statsAdapter();
+			    projectListView.setAdapter(statsAdapter);
+		 }
 		 
 		 public static int dpToPx(int dp)
 		    {
@@ -245,25 +259,18 @@ public class StatisticsFragment extends Fragment{
 			        TextView minuteValue = (TextView) view.findViewById(R.id.minuteValue);
 			        projectName.setText(user.getProjects().get(position).getName());
 			        
-			        //on tablet
-			        hourValue.setText(""+(int) projectMinutes[position]/(60*2) + " h");
-			        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%(60*2)) + " m");
 			        
-			        //on phone
-			        //hourValue.setText(""+(int) projectMinutes[position]/60 + " h");
-			        //minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
+			        hourValue.setText(""+(int) projectMinutes[position]/60 + " h");
+			        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
 			        
 			        double widthHolder = parent.getWidth();
-			        Log.d("widthHolder", ""+widthHolder);
 			        double percent = 0;
 			        updateWidth = 0;
-			        if(totalMinutes != 0){
+			        if(totalMinutes != 0)
+			        {
 			        	percent = projectMinutes[position]/totalMinutes;
-			        	
-			        	//comment if on phone
-			        	percent = percent/2;
+	
 			        }
-			        Log.d("projectMinutes", ""+projectMinutes[position]);
 			        projectMinutes[position] = 0; //resets the amount of project minutes
 			        updateWidth = (int)(percent*widthHolder);//sets the width of percent bar
 			        

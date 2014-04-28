@@ -35,7 +35,8 @@ public class CreateProjectActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
-
+	
+	//Hej!
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

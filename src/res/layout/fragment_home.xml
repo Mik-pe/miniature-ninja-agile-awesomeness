@@ -16,7 +16,7 @@
 	    android:paddingTop="@dimen/activity_vertical_margin"
 	    tools:context=".HomeActivity" >
 
-        <LinearLayout
+       <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:layout_marginTop="60dp"
@@ -34,17 +34,21 @@
                 android:id="@+id/projectNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="center"
                 android:fontFamily="sans-serif"
                 android:text="@string/today"
                 android:textColor="#063A70"
-                android:textSize="42sp" />
-
+                android:textSize="32sp"
+                />
+     
             <ImageButton
                 android:id="@+id/imageButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
                 android:background="@null"
                 android:src="@drawable/next" />
 
