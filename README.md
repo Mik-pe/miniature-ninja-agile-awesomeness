@@ -66,7 +66,7 @@ git push origin master
 
 License
 =================================
-miniature-ninja-agile-awesomeness is licensed under the [BSD License](http://www.github.com/Magrit/miniature-ninja-agile-awesomeness/LICENSE)
+miniature-ninja-agile-awesomeness is licensed under the [BSD License](http://www.github.com/Magrit/miniature-ninja-agile-awesomeness/blob/master/LICENSE)
 
 Special considerations
 =================================
