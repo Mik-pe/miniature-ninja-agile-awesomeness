@@ -68,7 +68,6 @@ public class SubmissionListFragment extends Fragment {
 		return true;
 	}
 	
-
 	/**
 	 * Class for adding SubmissionListItems. This takes a list of {@link SubmissionDayListItem} to read from
 	 * and write them out with functionalities such as onClick.
