@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
@@ -107,6 +108,7 @@ public class SubmissionListFragment extends Fragment {
     		 */
     		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
+    			weekText.setVisibility(TextView.VISIBLE);
     			weekText.setText("Week: "+currentItem.today.get(Calendar.WEEK_OF_YEAR));
         		
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
@@ -118,6 +120,7 @@ public class SubmissionListFragment extends Fragment {
     		}
     		else
     		{
+    			weekText.setVisibility(TextView.GONE);
     			weekText.setText("");
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
@@ -127,17 +130,22 @@ public class SubmissionListFragment extends Fragment {
     			paramsButton.addRule(RelativeLayout.BELOW, 0);
     		}
     		
-    		submissionDate.setText(currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
-    				
+    		submissionDate.setText(currentItem.today.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+" "+currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
+    		
+    		if(currentItem.today.get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY||currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
+			{
+				submissionDate.setTextColor(getResources().getColor(R.color.combitech_grey));
+			}
+    		else
+    			submissionDate.setTextColor(Color.BLACK);
+    		
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		projectTime.setOnClickListener(null);
-    		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
-
     		/**
     		 * Will set the backgroundColor depending on confirmation of the SubListItem
     		 * IF: 		Green
     		 * ELSEIF: 	Yellow
-    		 * ELSE:	Red
+    		 * ELSE:	Gray
     		 */
 			if(currentItem.isConfirmed==1)
 				view.setBackgroundColor(Color.rgb(145, 218, 149));
