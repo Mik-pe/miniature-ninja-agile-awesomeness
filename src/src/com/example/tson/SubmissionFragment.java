@@ -3,6 +3,7 @@ package com.example.tson;
 import java.util.Calendar;
 
 import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +11,25 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TabHost;
 
+/**
+ * Class for the SubmissionFragment as a whole
+ * Contains the tabs for subfragments:
+ * {@link SubmissionListFragment}
+ * {@link SubmissionCalFragment}
+ * @author 
+ *
+ */
 public class SubmissionFragment extends Fragment {
 	ViewPager Tab;
     TabAdapter TabAdapter;
 	ActionBar actionBar;
-
+	/**
+	 * Constructor for 
+	 * {@link SubmissionFragment}
+	 */
 	public SubmissionFragment(){}
 	
     @Override
@@ -63,11 +77,33 @@ public class SubmissionFragment extends Fragment {
 				
 			}};
 			//Add New Tab
+			
+			
+		/*	Display display = getWindowManager().getDefaultDisplay();
+	        int width = display.getWidth();
+
+	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+	       TabHost mTabHost = getTabHost();
+
+	       mTabHost.addTab(mTabHost.newTabSpec("tab_test1")
+	               .setIndicator((""),getResources().getDrawable(R.drawable.mzl_05))
+	         .setContent(new Intent(this, NearBy.class)));
+	       mTabHost.addTab(mTabHost.newTabSpec("tab_test2")
+	               .setIndicator((""),getResources().getDrawable(R.drawable.mzl_08))
+	         .setContent(new Intent(this, SearchBy.class)));
+	               mTabHost.setCurrentTab(0);
+	               mTabHost.getTabWidget().getChildAt(0).setLayoutParams(new
+	                 LinearLayout.LayoutParams((width/2)-2,50));
+	          mTabHost.getTabWidget().getChildAt(1).setLayoutParams(new
+	                     LinearLayout.LayoutParams((width/2)-2,50));*/
 			if(actionBar.getTabCount() <2)
 			{
 				actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));
 				actionBar.addTab(actionBar.newTab().setText("Calendar").setTabListener(tabListener));
 			}
+			
+			final View myview = actionBar.getTabAt(0).getCustomView();
 			
 			return submission;
     }   

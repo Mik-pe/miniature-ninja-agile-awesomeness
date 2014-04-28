@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:gravity="center">
 
             <ImageButton
@@ -36,7 +36,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="sans-serif"
+                android:textColor="#063A70"
                 android:text="@string/today"
                 android:textSize="42sp" />
 
@@ -52,9 +53,10 @@
         <View
             android:id="@+id/view1"
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_marginTop="50dp"
-            android:background="@android:color/darker_gray" />
+            android:background="#DB8C0C"
+             />
 	
         <TextView
             android:id="@+id/TextView01"
@@ -70,14 +72,17 @@
         <View
             android:id="@+id/view2"
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
 
         <ListView
             android:id="@+id/projectListView"
             android:layout_width="match_parent"
-            android:layout_height="262dp"
-            android:layout_marginTop="40dp" >
+            android:layout_height="300dp"
+            android:paddingTop="40dp"
+	 		android:paddingBottom="50dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp" >
 
         </ListView>
 
@@ -85,9 +90,12 @@
             android:id="@+id/create_project_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:minWidth="55dp"
             android:text="@string/create_project_button"
             android:textSize="32sp" />
 
@@ -95,13 +103,16 @@
             android:id="@+id/report_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginTop ="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
             android:text="@string/report_time"
             android:textSize="32sp" />
+
 
 
 </LinearLayout>

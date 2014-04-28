@@ -57,23 +57,25 @@ public class Project {
 		TimeBlock t = new TimeBlock(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH), h, m); 
 		
 		//Update in database, if returns > 0 it has updated existing row
-		int update = HomeActivity.db.updateTimeBlock(t);
+		int update = HomeActivity.db.updateTimeBlock(t, this);
 		
 		if( update > 0)
 		{
+			Log.d("UPDATE TIME", "UPDATE TIME RETURNED: " + update);
 			//UPDATE CURRENT TIME BLOCK OBJECT
 			t = getTimeByDate(c);
 			t.setHours(h);
 			t.setMinutes(m);
 			
-			//Log.d("UPDATE TIME", "UPDATE TIME RETURNED: " + update);
+			
 		}
 		else
 		{
+			Log.d("ADD TIME", "ADDING TIME");
 			// CREATE NEW TIME BLOCK OBJECT AND ADD IT TO SUBMISSION LIST
 			submissionList.add(t);
 			HomeActivity.db.createTimeBlock(t, this);
-			//Log.d("ADD TIME", "ADDING TIME");
+			
 		}
 		
 	}
@@ -117,7 +119,6 @@ public class Project {
 	{
 		return name;
 	}
-	
 
 	public List<TimeBlock> getSubmissionList()
 	{

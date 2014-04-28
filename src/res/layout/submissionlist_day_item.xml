@@ -3,6 +3,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    
+    	<TextView
+            android:id="@+id/submissionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:id="@+id/editDayButton"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="10dp"
+            android:background="#00FFFFFF"
+            android:maxHeight="20dp"
+            android:maxWidth="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pen2" />
+        
+        <TextView
+            android:id="@+id/weekText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <!--  
         <Button
             android:id="@+id/editDayButton"
             style="?android:attr/buttonStyleSmall"
@@ -18,6 +56,7 @@
             android:layout_alignBaseline="@+id/editDayButton"
             android:layout_alignBottom="@+id/editDayButton"
             android:layout_toLeftOf="@+id/editDayButton"
+            android:fontFamily="sans-serif-thin"
             android:clickable="true"
             android:onClick="showTimeDialog"
             android:text="Medium Text"
@@ -29,18 +68,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-thin"
             android:layout_marginTop="10dp"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        
+		-->
+
         <TextView
-            android:id="@+id/weekText"
+            android:id="@+id/workTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
-            android:text=""
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_alignBaseline="@+id/submissionDate"
+            android:layout_alignBottom="@+id/submissionDate"
+            android:layout_toLeftOf="@+id/editDayButton"
+            android:clickable="true"
+            android:fontFamily="sans-serif-thin"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp" />
 
     </RelativeLayout>

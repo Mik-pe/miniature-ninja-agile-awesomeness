@@ -1,6 +1,5 @@
 package com.example.tson;
 
-
 import java.util.ArrayList;
 
 
@@ -22,16 +21,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-
+/**
+ * 
+ * This class is the fragment for the SubmissionLISTpage
+ * Contains subClasses:
+ * {@link SubmissionListAdapter}
+ * {@link SubmissionDayListItem}
+ * @author 
+ *
+ */
 public class SubmissionListFragment extends Fragment {
 	List<SubmissionDayListItem> subList = new ArrayList<SubmissionDayListItem>();
 	ListView submissionListView;
-	List<Project> projectList = HomeActivity.user.getProjects();
 	Calendar today = Calendar.getInstance();
 
 	@Override
@@ -51,7 +58,6 @@ public class SubmissionListFragment extends Fragment {
 		ArrayAdapter<SubmissionDayListItem> subAdapter = new SubmissionListAdapter();
 		
 		submissionListView.setAdapter(subAdapter);
-		
 		return subListView;
 	}
 
@@ -62,46 +68,47 @@ public class SubmissionListFragment extends Fragment {
 		return true;
 	}
 	
-	
-	public class SubmissionDayListItem
-	{
-		Calendar today;
-		int timeWorked;
-		int isConfirmed;
-		
-		public SubmissionDayListItem(Calendar c, int t, int i){
-			today = (Calendar) c.clone();
-			timeWorked=t;
-			isConfirmed = i;
-		}
-	}
-	
+
+	/**
+	 * Class for adding SubmissionListItems. This takes a list of {@link SubmissionDayListItem} to read from
+	 * and write them out with functionalities such as onClick.
+	 *
+	 */
 	private class SubmissionListAdapter extends ArrayAdapter<SubmissionDayListItem>
     {
-		
+		/**
+		 * Constructor to call.
+		 */
 		public SubmissionListAdapter()
     	{
     		super(getActivity(), R.layout.submissionlist_day_item, subList);
     		
     	}
     	
-    	@Override
+		/**
+		 * This gets called at scrolling by default. Will print out the list and weeknumbers.
+		 * Will also check if the {@link SubmissionDayListItem} is confirmed.
+		 */
+		@Override
     	public View getView(int position, View view, ViewGroup parent)
     	{
     		
     		if(view == null)
     			view = getActivity().getLayoutInflater().inflate(R.layout.submissionlist_day_item, parent, false);
     		final SubmissionDayListItem currentItem = subList.get(position);
-    		Log.d("Adapter call", "here"+currentItem.today.get(Calendar.DAY_OF_WEEK));
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
     		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
-    		Button editButton = (Button) view.findViewById(R.id.editDayButton);	
+    		ImageButton editButton = (ImageButton) view.findViewById(R.id.editDayButton);	
     		TextView weekText = (TextView) view.findViewById(R.id.weekText);
-    		
+    		/**
+    		 * Will check if this is the first SubMissionListItem or a SUNDAY
+    		 * IF: 		Will write the week number.
+    		 * ELSE: 	Default resetter of the TextView.
+    		 */
     		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
     			weekText.setText("Week: "+currentItem.today.get(Calendar.WEEK_OF_YEAR));
-    			
+        		
     			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
     			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
     			params.addRule(RelativeLayout.BELOW, R.id.weekText);
@@ -123,26 +130,37 @@ public class SubmissionListFragment extends Fragment {
     		submissionDate.setText(currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
     				
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
-    		
+    		projectTime.setOnClickListener(null);
     		//TODO MAKE THIS WORK WITH BOOLEAN VARIABLE
 
+    		/**
+    		 * Will set the backgroundColor depending on confirmation of the SubListItem
+    		 * IF: 		Green
+    		 * ELSEIF: 	Yellow
+    		 * ELSE:	Red
+    		 */
 			if(currentItem.isConfirmed==1)
-				view.setBackgroundColor(Color.rgb(126, 218, 126));//green
+				view.setBackgroundColor(Color.rgb(145, 218, 149));
 			else if(currentItem.isConfirmed==0)
-				view.setBackgroundColor(Color.rgb(246, 237, 134)); //yellow
+				view.setBackgroundColor(Color.rgb(246, 241, 171)); 
    			else
-				view.setBackgroundColor(Color.rgb(245, 116, 103)); //red (getTimeByDate(currentDate) == 0
+				view.setBackgroundColor(Color.rgb(229, 229, 229)); 
+			
+			/**
+			 * OnClickListener for edit Button
+			 * Takes you to Homescreen for pressed DATE
+			 */
 
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 								
-					int dateDifference = -(Calendar.getInstance().get(Calendar.DAY_OF_YEAR) - currentItem.today.get(Calendar.DAY_OF_YEAR));
+					long dateDifference = -(Calendar.getInstance().getTimeInMillis() - currentItem.today.getTimeInMillis())/(1000*60*60*24);
 					
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();
-					bundle.putInt("dateDifference", dateDifference);
+					bundle.putLong("dateDifference", dateDifference);
 					switchToFragment.setArguments(bundle);
 					
 					ActionBar actionBar = getActivity().getActionBar();
@@ -159,5 +177,28 @@ public class SubmissionListFragment extends Fragment {
     		return view;
     	}
     }
+	
+	/**
+	 * This class makes it easier to interact with the local variables, with only one call to read data in onCreate.
+	 * @author mikpe201
+	 *
+	 */
+	public class SubmissionDayListItem
+	{
+		Calendar today;
+		int timeWorked;
+		int isConfirmed;
+		/**
+		 * Constructor to read values into class
+		 * @param c - Calendar of the date to be showed
+		 * @param t - Time worked in minutes
+		 * @param i - If the SubmissionItem is confirmed or not.
+		 */
+		public SubmissionDayListItem(Calendar c, int t, int i){
+			today = (Calendar) c.clone();
+			timeWorked=t;
+			isConfirmed = i;
+		}
+	}
 
 }

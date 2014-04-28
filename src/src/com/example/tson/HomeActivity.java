@@ -47,6 +47,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -71,6 +72,7 @@ public class HomeActivity extends FragmentActivity
 	ListView projectListView;
 	ActionBar ab;
 	private static Calendar c;
+	//Typeface tf = Typeface.createFromAsset(getAssets(), "assets/fontawesome-webfont.ttf");
 	
 	//DATABASE
 	public static DatabaseHelper db;
@@ -100,6 +102,8 @@ public class HomeActivity extends FragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
+
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
@@ -210,23 +214,20 @@ public class HomeActivity extends FragmentActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
-	}
-
+		return true;}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		//toggle nav drawer on selecting action bar app icon/title
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
+			return true;}
+			else 
+				return false;
 		}
-		//Handle action bar actions click
-		switch (item.getItemId()) {
-		case R.id.action_settings:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-		}
-	}
+
+	
+
+	
 
 	/* *
 	 * Called when invalidateOptionsMenu() is triggered
@@ -235,7 +236,7 @@ public class HomeActivity extends FragmentActivity
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		//if nav drawer is opened, hide the action items
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+		//menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
@@ -259,10 +260,10 @@ public class HomeActivity extends FragmentActivity
 		case 2:
 			fragment = new StatisticsFragment();
 			break;
-			/*case 3:
-			fragment = new CommunityFragment();
+		case 3:
+			//fragment = new ExportFragment();
 			break;
-			case 4:
+			/*case 4:
 			fragment = new PagesFragment();
 			break;
 			case 5:

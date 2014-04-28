@@ -260,16 +260,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 * @param timeblock.
 	 * @return indicator if the row was updated.
 	 */
-	public int updateTimeBlock(TimeBlock timeblock)
+	public int updateTimeBlock(TimeBlock timeblock, Project p)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
 		
 		// This will be send as a parameter to db.update
-		String[] args = new String[]{String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
+		String[] args = new String[]{String.valueOf(getProjectId(p.getName())), String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
 		//Update row
-		return db.update(TABLE_TIME_BLOCK, values, KEY_TIME_BLOCK_YEAR + " = ?" + " AND " + KEY_TIME_BLOCK_MONTH + " = ?" + " AND " + KEY_TIME_BLOCK_DAY + " = ?",
+		return db.update(TABLE_TIME_BLOCK, values, KEY_TIME_BLOCK_PROJECT_ID + " = ?" + " AND " +KEY_TIME_BLOCK_YEAR + " = ?" + " AND " + KEY_TIME_BLOCK_MONTH + " = ?" + " AND " + KEY_TIME_BLOCK_DAY + " = ?",
 				args);
 	}
 	
