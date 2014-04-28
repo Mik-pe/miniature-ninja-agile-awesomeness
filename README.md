@@ -3,7 +3,6 @@ miniature-ninja-agile-awesomeness
 
 Simply the best agile programme for time reporting ever built. This is a project made by students at Linköpings University.
 
-
 Courtesy of Karl-Johan Krantz:
 
 Contributions
@@ -64,6 +63,10 @@ git merge <branch to to merge>
 git commit -m "fixed merge conflict"
 git push origin master
 ```
+
+License
+=================================
+miniature-ninja-agile-awesomeness is licensed under the [BSD License](http://www.github.com/Magrit/miniature-ninja-agile-awesomeness/blob/master/LICENSE)
 
 Special considerations
 =================================
