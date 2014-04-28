@@ -37,8 +37,8 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:fontFamily="sans-serif"
-                android:textColor="#063A70"
                 android:text="@string/today"
+                android:textColor="#063A70"
                 android:textSize="42sp" />
 
             <ImageButton

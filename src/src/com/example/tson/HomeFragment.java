@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	//Update reported time
 	int hour, min, newHour, newMin;
 	int holder = 0;
-	static final int TIME_DIALOG_ID = 0;
+	static final int TIME_DIALOG_ID = 0; 
 
 	int[] hourmin = {0,0};
 	View currentPage;
@@ -188,6 +188,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         }
         else
         {
+    
+
         	dateText.setText(homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1));
         	nextDate.setAlpha((float)1.0);
         }
@@ -380,8 +382,24 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
     		ImageButton projectTime2 = (ImageButton) view.findViewById(R.id.imageButton1);
 
+    		TimeBlock t1 = currentProject.getTimeByDate(homeFragmentCalendar);
+    		
+    		if(t1!=null){
+    		if(t1.getConfirmed() == 1)
+    		{
+            	dateText.setTextColor(getResources().getColor(R.color.calender_green));
+    		}
+    		else if(t1.getConfirmed() == 0)
+    		{
+    			dateText.setTextColor(getResources().getColor(R.color.calender_yellow));
+    		}}
+    		else{
+    			dateText.setTextColor(getResources().getColor(R.color.combitech_grey));
+    		}
+    		
+    		
     		try{
-    			int[] time = currentProject.getTimeByDate(homeFragmentCalendar).getTimeAsArray();
+    			int[] time = t1.getTimeAsArray();
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");
     		}catch (Exception name) {
     			Log.d("Test", "Hej");
