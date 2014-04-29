@@ -101,7 +101,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
          * The homeFragmentCalendar has its' date changed
          */
         Bundle bundle = this.getArguments();
-        homeFragmentCalendar = Calendar.getInstance();
+        homeFragmentCalendar = (Calendar) HomeActivity.getCal().clone();
         int dateDifference = 0;
         try{
 	         dateDifference =(int) bundle.getLong("dateDifference");

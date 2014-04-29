@@ -40,7 +40,7 @@ import android.support.v4.app.FragmentManager;
 public class SubmissionListFragment extends Fragment {
 	List<SubmissionDayListItem> subList = new ArrayList<SubmissionDayListItem>();
 	ListView submissionListView;
-	Calendar today = Calendar.getInstance();
+	Calendar today = (Calendar) HomeActivity.getCal().clone();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -133,10 +133,10 @@ public class SubmissionListFragment extends Fragment {
     		
     		if(currentItem.today.get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY||currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
 			{
-				submissionDate.setTextColor(getResources().getColor(R.color.combitech_grey));
+				submissionDate.setTextColor(getResources().getColor(R.color.combitech_orange));
 			}
     		else
-    			submissionDate.setTextColor(Color.BLACK);
+    			submissionDate.setTextColor(getResources().getColor(R.color.combitech_dark_grey));
     		
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		projectTime.setOnClickListener(null);
