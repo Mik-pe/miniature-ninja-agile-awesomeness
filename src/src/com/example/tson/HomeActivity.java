@@ -261,7 +261,7 @@ public class HomeActivity extends FragmentActivity
 			fragment = new StatisticsFragment();
 			break;
 		case 3:
-			//fragment = new ExportFragment();
+			fragment = new ExportFragment();
 			break;
 			/*case 4:
 			fragment = new PagesFragment();
