@@ -29,8 +29,8 @@ public class SettingsFragment extends Fragment{
 		 
 		 super.onCreate(savedInstanceState);
 		 View settings = inflater.inflate(R.layout.settings_fragment, container, false);
-		 TextView meName = (TextView) settings.findViewById(R.id.meName);
 		 
+		 TextView meName = (TextView) settings.findViewById(R.id.meName);		 
 		 meName.setText(HomeActivity.user.getName());
 		 
 		 return settings;
