@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class SettingsFragment extends Fragment{
 	
@@ -28,7 +29,10 @@ public class SettingsFragment extends Fragment{
 		 
 		 super.onCreate(savedInstanceState);
 		 View settings = inflater.inflate(R.layout.settings_fragment, container, false);
-	
+		 TextView meName = (TextView) settings.findViewById(R.id.meName);
+		 
+		 meName.setText(HomeActivity.user.getName());
+		 
 		 return settings;
 		 
 	}
