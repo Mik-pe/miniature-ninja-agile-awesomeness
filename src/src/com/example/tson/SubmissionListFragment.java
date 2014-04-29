@@ -127,16 +127,19 @@ public class SubmissionListFragment extends Fragment {
     		/**
     		 * Will check if the date is SATURDAY or SUNDAY
     		 * IF: Set text to orange-ish
-    		 * ELSE: Dark-grey
+    		 * ELSE: Black
     		 */
     		if(currentItem.today.get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY||currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
 			{
 				submissionDate.setTextColor(getResources().getColor(R.color.combitech_orange));
+				projectTime.setTextColor(getResources().getColor(R.color.combitech_orange));
 			}
-    		else
-    			submissionDate.setTextColor(getResources().getColor(R.color.combitech_dark_grey));
+    		else{
+    			submissionDate.setTextColor(getResources().getColor(R.color.combitech_black));
+    			projectTime.setTextColor(getResources().getColor(R.color.combitech_black));
+    		}
+    		projectTime.setText(currentItem.timeWorked/60 + " h : " +currentItem.timeWorked%60 + " m");
     		
-    		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		projectTime.setOnClickListener(null);
     		/**
     		 * Will set the backgroundColor depending on confirmation of the SubListItem

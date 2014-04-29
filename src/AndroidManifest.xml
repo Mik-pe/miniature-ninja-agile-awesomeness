@@ -60,8 +60,11 @@
         <service
             android:name="com.example.tson.NotificationHandler"
             android:exported="false"/>
-        
-        
+        <activity
+            android:name="com.example.tson.ManageProjectsActivity"
+            android:label="@string/title_activity_manage_projects" >
+        </activity>
+
     </application>
 
 </manifest>

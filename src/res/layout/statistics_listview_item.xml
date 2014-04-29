@@ -1,70 +1,76 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
-
+    android:layout_height="wrap_content"
+>
+	
+    <!-- Grey Bar -->
     <TextView
         android:id="@+id/statistics_project_item"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_margin="0dp"
-        android:layout_marginBottom="5dp"
         android:background="@color/list_item_statistics"
         android:gravity="center_horizontal"
         android:width="20dp" />
-
+    
+	<!-- Green Bar -->
     <TextView
         android:id="@+id/statistics_progress_bar"
         android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="5dp"
         android:background="@color/calender_green"
         android:gravity="center_horizontal" />
 
+    <!-- Project name -->
     <TextView
         android:id="@+id/textProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignTop="@+id/textView2"
-        android:layout_margin="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp" 
         android:text="@string/project_name"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:fontFamily="sans-serif-thin"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-    </LinearLayout>
-
+    <!-- Hours in % -->
     <TextView
         android:id="@+id/percantValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="100%"
+        android:layout_alignBaseline="@+id/textProject"
+        android:layout_alignBottom="@+id/textProject"
+        android:layout_marginRight="5dp" 
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
+	
+     <!-- Minutes -->
     <TextView
         android:id="@+id/minuteValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/percantValue"
-        android:text="10 m"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignBaseline="@+id/textProject"
+        android:layout_alignBottom="@+id/textProject"
+        android:layout_toLeftOf="@+id/percantValue"
+        android:layout_marginRight="60dp" 
+        android:fontFamily="sans-serif-thin"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp"/>
 
+     <!-- Hours -->
     <TextView
         android:id="@+id/hourValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/percantValue"
-        android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/minuteValue"
-        android:text="10 h"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_alignBaseline="@+id/textProject"
+        android:layout_alignBottom="@+id/textProject"
+        android:layout_toLeftOf="@+id/minuteValue"      
+        android:fontFamily="sans-serif-thin"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
 
 </RelativeLayout>

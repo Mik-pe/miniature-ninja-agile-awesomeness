@@ -3,6 +3,7 @@ package com.example.tson;
 import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
+
 import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.app.AlarmManager;
@@ -10,6 +11,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +33,8 @@ public class SettingsFragment extends Fragment{
 	Calendar notificationCal;
 	Intent mServiceIntent;
 	PendingIntent pendingIntent;
+	Button manageProjectsButton;
+	
 	 /***********************
 	  *  	OTHERS			*/	
 	 /************************/
@@ -53,6 +57,16 @@ public class SettingsFragment extends Fragment{
 		 Button addNotification = (Button) settings.findViewById(R.id.addNotification);
 		 mServiceIntent = new Intent(getActivity(), NotificationHandler.class);
 		 
+
+		 manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
+		 manageProjectsButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), ManageProjectsActivity.class);
+				startActivity(intent);				
+			}
+		});
 		 
 		 addNotification.setOnClickListener(new View.OnClickListener() {
 			@Override

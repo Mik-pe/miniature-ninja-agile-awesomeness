@@ -254,7 +254,7 @@ public class StatisticsFragment extends Fragment{
 		        projectName.setText(user.getProjects().get(position).getName());
 		        
 		        //Sets the text for the hour and minutes
-		        hourValue.setText(""+(int) projectMinutes[position]/60 + " h");
+		        hourValue.setText(""+(int) projectMinutes[position]/60 + " h : ");
 		        minuteValue.setText(""+(int) Math.round(projectMinutes[position]%60) + " m");
 		        
 		        //Calculates the percentage of the width
@@ -277,7 +277,7 @@ public class StatisticsFragment extends Fragment{
 		        percentValue.setText(decimalFormat.format(percent*100) + " %"); 
 		        
 		        //Updates the progBar with the new width
-		        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(updateWidth, dpToPx(40));
+		        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(updateWidth, dpToPx(45));
 		        rl.setMargins(0,0,0,dpToPx(5));
 		        progBar.setLayoutParams(rl);
 		        
