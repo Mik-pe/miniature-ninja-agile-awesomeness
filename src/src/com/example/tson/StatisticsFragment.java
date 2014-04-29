@@ -172,7 +172,7 @@ public class StatisticsFragment extends Fragment{
 					  Calendar compareDate = tb.get(j).getDate();
 					  // 0 if equals, -1 if the time of this calendar is before the other one,
 					  // 1 if the time of this calendar is after the other one.
-					  if(start.before(compareDate) && end.after(compareDate))
+					  if((start.before(compareDate) || isSameDay(start, compareDate)) && end.after(compareDate))
 					  {
 						  if(user.isDateConfirmed(compareDate) == 1)
 						  {
