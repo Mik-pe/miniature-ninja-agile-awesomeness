@@ -247,6 +247,8 @@ public class HomeActivity extends FragmentActivity
 	 * */
 		private void displayView(int position) {
 		//update the main content by replacing fragments
+		//PreviousFragment is nollstalld because otherwise skulle inte navigationen med backbutton work.
+		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
 		ab = getActionBar();
 		ab.removeAllTabs();
