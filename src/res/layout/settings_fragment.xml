@@ -12,7 +12,7 @@
         android:layout_gravity="center" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/meName"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="ME"
@@ -74,7 +74,7 @@
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/profil_pic" />
+            android:src="@drawable/oldman1" />
 
     </RelativeLayout>
 
