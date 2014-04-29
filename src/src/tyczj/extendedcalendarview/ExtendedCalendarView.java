@@ -3,6 +3,7 @@ package tyczj.extendedcalendarview;
 import java.util.Calendar;
 import java.util.Locale;
 
+import com.example.tson.HomeActivity;
 import com.example.tson.R;
 
 import android.annotation.SuppressLint;
@@ -78,7 +79,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	}
 	
 	private void init(){
-		cal = Calendar.getInstance();
+		cal = (Calendar) HomeActivity.getCal().clone();
 		base = new RelativeLayout(context);
 		base.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
 		base.setMinimumHeight(50);

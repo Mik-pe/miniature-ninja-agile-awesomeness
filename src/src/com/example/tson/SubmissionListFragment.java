@@ -40,7 +40,7 @@ import android.support.v4.app.FragmentManager;
 public class SubmissionListFragment extends Fragment {
 	List<SubmissionDayListItem> subList = new ArrayList<SubmissionDayListItem>();
 	ListView submissionListView;
-	Calendar today = Calendar.getInstance();
+	Calendar today = (Calendar) HomeActivity.getCal().clone();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,8 +98,11 @@ public class SubmissionListFragment extends Fragment {
     		final SubmissionDayListItem currentItem = subList.get(position);
     		TextView submissionDate = (TextView) view.findViewById(R.id.submissionDate);
     		TextView projectTime = (TextView) view.findViewById(R.id.workTime);
-    		ImageButton editButton = (ImageButton) view.findViewById(R.id.editDayButton);	
+    		View orangeBelow = (View) view.findViewById(R.id.belowWeek);
+    		View orangeAbove = (View) view.findViewById(R.id.aboveWeek);
     		TextView weekText = (TextView) view.findViewById(R.id.weekText);
+    		ImageButton editButton = (ImageButton) view.findViewById(R.id.editDayButton);
+    		
     		/**
     		 * Will check if this is the first SubMissionListItem or a SUNDAY
     		 * IF: 		Will write the week number.
@@ -107,36 +110,31 @@ public class SubmissionListFragment extends Fragment {
     		 */
     		if(position == 0 || currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
     		{
+    			orangeAbove.setVisibility(View.VISIBLE);
     			weekText.setVisibility(TextView.VISIBLE);
     			weekText.setText("Week: "+currentItem.today.get(Calendar.WEEK_OF_YEAR));
-        		
-    			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
-    			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-    			params.addRule(RelativeLayout.BELOW, R.id.weekText);
-    			
-    			RelativeLayout.LayoutParams paramsButton =  (RelativeLayout.LayoutParams)editButton.getLayoutParams();
-    			paramsButton.addRule(RelativeLayout.BELOW, R.id.weekText);
+    			orangeBelow.setVisibility(View.VISIBLE);
     		}
     		else
     		{
+    			orangeAbove.setVisibility(View.GONE);
     			weekText.setVisibility(TextView.GONE);
     			weekText.setText("");
-    			RelativeLayout.LayoutParams params =  (RelativeLayout.LayoutParams)submissionDate.getLayoutParams();
-    			params.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
-    			params.addRule(RelativeLayout.BELOW, 0);
-    			
-    			RelativeLayout.LayoutParams paramsButton =  (RelativeLayout.LayoutParams)editButton.getLayoutParams();
-    			paramsButton.addRule(RelativeLayout.BELOW, 0);
+    			orangeBelow.setVisibility(View.GONE);
     		}
     		
     		submissionDate.setText(currentItem.today.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+" "+currentItem.today.get(Calendar.DAY_OF_MONTH)+"/"+(currentItem.today.get(Calendar.MONTH)+1));
-    		
+    		/**
+    		 * Will check if the date is SATURDAY or SUNDAY
+    		 * IF: Set text to orange-ish
+    		 * ELSE: Dark-grey
+    		 */
     		if(currentItem.today.get(Calendar.DAY_OF_WEEK)== Calendar.SATURDAY||currentItem.today.get(Calendar.DAY_OF_WEEK)==Calendar.SUNDAY)
 			{
-				submissionDate.setTextColor(getResources().getColor(R.color.combitech_grey));
+				submissionDate.setTextColor(getResources().getColor(R.color.combitech_orange));
 			}
     		else
-    			submissionDate.setTextColor(Color.BLACK);
+    			submissionDate.setTextColor(getResources().getColor(R.color.combitech_dark_grey));
     		
     		projectTime.setText(currentItem.timeWorked/60 + ":" +currentItem.timeWorked%60);
     		projectTime.setOnClickListener(null);
@@ -168,6 +166,7 @@ public class SubmissionListFragment extends Fragment {
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();
 					bundle.putLong("dateDifference", dateDifference);
+					bundle.putString("previousFragment", "Submission");
 					switchToFragment.setArguments(bundle);
 					
 					ActionBar actionBar = getActivity().getActionBar();

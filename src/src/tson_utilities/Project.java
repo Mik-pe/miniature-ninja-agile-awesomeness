@@ -98,16 +98,13 @@ public class Project {
 	{
 		
 		if(!submissionList.isEmpty())		
-			Log.d("TIME BLOCKKKK", "asdasdjpaoöfjkladkjajkldfkladklfjaldf");
 			for(int i=submissionList.size()-1; i>=0 ;i--)
-			{
-				Log.d("SubList: ", ""+name);
-				
+			{				
 				if(this.submissionList.get(i).isDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)))
 					return this.submissionList.get(i);
 				
 			}
-		Log.d("NO TIME BLOCK FOUND", "<-----------");
+
 		return null;
 	}
 	
