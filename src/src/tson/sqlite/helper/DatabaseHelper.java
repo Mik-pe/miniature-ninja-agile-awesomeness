@@ -1,5 +1,5 @@
 /**
- * @author Pär Eriksson
+ * @author Par Eriksson
  * A database helper class that takes care of all interaction with the SQLite database
  */
 package tson.sqlite.helper;
@@ -120,6 +120,22 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		//assigning tags to project	
 		return project_id;		
+	}
+	
+	public long updateProjectName(String newName, Project p)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_PROJECT_NAME, newName);
+		
+		// This will be send as a parameter to db.update
+		Log.d("Kommer vi hit", "TJENARE!");
+		
+		String[] args = new String[]{String.valueOf(getProjectId(p.getName()))};
+		//Update row
+		return db.update(TABLE_PROJECT, values, KEY_ID + " = ?",
+				args);
 	}
 	
 	/**

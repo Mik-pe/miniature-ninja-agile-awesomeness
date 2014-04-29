@@ -57,6 +57,10 @@
             android:name="com.example.tson.ExportFragment"
             android:label="@string/title_activity_export_fragment" >
         </activity>
+        <activity
+            android:name="com.example.tson.ManageProjectsActivity"
+            android:label="@string/title_activity_manage_projects" >
+        </activity>
     </application>
 
 </manifest>

@@ -100,7 +100,7 @@ public class CalendarAdapter extends BaseAdapter{
 		LayoutInflater vi = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		if(position >= 0 && position < 7){
 			v = vi.inflate(R.layout.day_of_week, null);
-			TextView day = (TextView)v.findViewById(R.id.textView1);
+			TextView day = (TextView)v.findViewById(R.id.project_name);
 			if(position == 0){
 				day.setText(R.string.monday);
 			}else if(position == 1){
@@ -130,7 +130,7 @@ public class CalendarAdapter extends BaseAdapter{
 			}
 			
 			
-			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
+			TextView dayTV = (TextView)v.findViewById(R.id.project_name);
 			//rl is the box for a date.
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
 			

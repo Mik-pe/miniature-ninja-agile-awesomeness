@@ -22,27 +22,22 @@
     <string name="title_confirm_time">Confirm reported time?</string>
     <string name="confirm_dialog_message">Have you reported all hours today?</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name ="statistics_text"> Stats For This Month </string>
-    
+    <string name="statistics_text"> Stats For This Month </string>
     <string name="select_start">StartStat</string>
     <string name="select_end">EndStat</string>
     <string name="stat">Statistics</string>
     <string name="go_statistics">GO</string>
-    
-    <string name ="cancel_project_button">Back</string>
-    
+    <string name="cancel_project_button">Back</string>
     <string name="select_start_export">GO</string>
     <string name="select_end_export">GO</string>
     <string name="export">Export</string>
-    
     <string name="monday">MON</string>
     <string name="tuesday">TUE</string>
     <string name="wednesday">WED</string>
     <string name="thursday">THU</string>
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
-	 <string name="sunday">SUN</string>
-
+    <string name="sunday">SUN</string>
 
     <!-- Menu items -->
     <string-array name="nav_drawer_items">
@@ -64,20 +59,17 @@
         <item>@drawable/ic_whats_hot</item>   
 	</array>
     -->
-	
-	<!-- Icons, Font awesome etc... -->
-	<string name="confirmed_icon">&#xf00c; confirmed</string>
-	<string name="not_reported_icon">&#xf057; time is not reported</string>
-	<string name="not_confirmed_icon">&#xf071; time is reported but not confirmed</string>	
-	
-	
-	
-	
+
+
+    <!-- Icons, Font awesome etc... -->
+    <string name="confirmed_icon">&#xf00c; confirmed</string>
+    <string name="not_reported_icon">&#xf057; time is not reported</string>
+    <string name="not_confirmed_icon">&#xf071; time is reported but not confirmed</string>
+
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
     <string name="title_activity_export_fragment">ExportFragment</string>
-
+    <string name="title_activity_manage_projects">ManageProjectsActivity</string>
 
 </resources>
-
