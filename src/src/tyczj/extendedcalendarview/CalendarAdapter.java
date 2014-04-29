@@ -39,7 +39,7 @@ public class CalendarAdapter extends BaseAdapter{
 	Calendar cal;
 	public String[] days;	
 	ArrayList<Day> dayList = new ArrayList<Day>();
-	Calendar thisDay = Calendar.getInstance();
+	
 	
 	/***********************
 	  *  	Constructors		*/	
@@ -129,6 +129,7 @@ public class CalendarAdapter extends BaseAdapter{
 				today.setVisibility(View.GONE);
 			}
 			
+			
 			TextView dayTV = (TextView)v.findViewById(R.id.textView1);
 			//rl is the box for a date.
 			RelativeLayout rl = (RelativeLayout)v.findViewById(R.id.rl);
@@ -142,75 +143,15 @@ public class CalendarAdapter extends BaseAdapter{
 			//Create a calendarObject of the day which is currently being printed
 			Calendar tempCal = Calendar.getInstance();
 			tempCal.set(day.getYear(), day.getMonth(), day.getDay());
-
+			//get todays date
+			Calendar thisDay = Calendar.getInstance();
 			
-//			//Same loop as in SubmissionListFragment
-//       		for(int i = 0; i < projectList.size(); i++)
-//       		{
-//       			Project p = projectList.get(i);
-//       			
-//       			TimeBlock t = p.getTimeByDate(tempCal);
-//      
-//       			if(t != null)
-//       			{
-//       				if(t.getConfirmed()==1) //color for confirmed timeblocks
-//       				{
-//       					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
-//       					break;
-//       				}       					
-//       				else //color for unconfirmed timeblocks
-//       				{
-//       					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
-//       					break;
-//       				}
-//       					
-//       			}
-//       			else
-//       			{
-//       				if(tempCal.after(thisDay)) //Turn the future dates gray.
-//       					rl.setBackgroundColor(Color.rgb(229, 229, 229)); //Grey
-//       				else //color for previous dates
-//       					rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red (getTimeByDate(currentDate) == 0       				
-//       			}
-//						
-//       		}
+			
+			//----functionality for color coding the calendar----//
 			
        		if(tempCal.after(thisDay)) //check if current calendar-block is after todays date
        		{
-//           		rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
-       			
-       			/*******ugly code because something is fishy with the dates********/
-       			if(projectList.size()>0)
-       			{
-	       			for(int i = 0; i < projectList.size(); i++)
-	           		{
-	           			Project p = projectList.get(i);
-	           			
-	           			TimeBlock t = p.getTimeByDate(tempCal);
-	          
-	           			if(t != null)
-	           			{
-	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
-	           					break;
-	           				}       					
-	           				else //coloring for unconfirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
-	           					break;
-	           				}
-	           					
-	           			}
-	           			else //coloring for past blocks with unreported time
-	           			{
-	           				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
-	           			}
-	           		}
-       			}
-       			else //coloring for past blocks with unreported time
-       				rl.setBackgroundColor(Color.rgb(120, 120, 120)); //red 
-       			/*********ugly code**********/
+           		rl.setBackgroundColor(Color.rgb(120, 120, 120)); //Grey
        			
        		}
        		else //the current calendar-block is before todays date
@@ -239,14 +180,14 @@ public class CalendarAdapter extends BaseAdapter{
 	           			}
 	           			else //coloring for past blocks with unreported time
 	           			{
-	           				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //red (getTimeByDate(currentDate) == 0
+	           				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
 	           			}
 	           		}
        			}
        			else //coloring for past blocks with unreported time
-       				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //red (getTimeByDate(currentDate) == 0
+       				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
        		}
-       		
+       		//-----------end of color coding functionality of the calendar-------------//
        		
 				
 			if(day.getDay() == 0){

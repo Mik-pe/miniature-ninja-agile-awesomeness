@@ -73,7 +73,7 @@ public class SubmissionCalFragment extends Fragment {
 					//And switch
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, switchToFragment).commit();
+					.replace(R.id.frame_container, switchToFragment).addToBackStack("submissionCal").commit();
 				}
 				
 			}
