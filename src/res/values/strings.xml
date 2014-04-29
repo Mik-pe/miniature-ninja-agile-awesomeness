@@ -4,7 +4,7 @@
     <string name="app_name">Home</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="project_name">PROJECTNAME</string>
+    <string name="project_name">Tson</string>
     <string name="create_project_button"> Create Project</string>
     <string name="project">Your Projects</string>
     <string name="today">Today</string>
@@ -19,7 +19,7 @@
     <string name="title_activity_submission_fragment">SubmissionFragment</string>
     <string name="confirm_button">Confirm</string>
     <string name="cancel_button">Cancel</string>
-    <string name="title_confirm_time">Are you sure?</string>
+    <string name="title_confirm_time">Confirm reported time?</string>
     <string name="confirm_dialog_message">Time info Bitch</string>
     <string name="alert_image_content_description">Alert Image</string>
     

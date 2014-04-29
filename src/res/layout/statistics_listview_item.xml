@@ -19,7 +19,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_margin="5dp"
-        android:background="@color/list_item_statistics_bar"
+        android:background="@color/calender_green"
         android:gravity="center_horizontal" />
 
     <TextView

@@ -38,6 +38,7 @@ public class Day{
 		this.month = month;
 		this.context = context;
 		Calendar cal = Calendar.getInstance();
+		cal.setFirstDayOfWeek(Calendar.MONDAY);
 		cal.set(year, month-1, day);
 		int end = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		cal.set(year, month, end);

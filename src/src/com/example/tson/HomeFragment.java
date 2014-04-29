@@ -1,3 +1,4 @@
+
 package com.example.tson;
 
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import com.example.tson.HomeActivity;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import qustomstyle.QustomDialogBuilder;
 
@@ -16,6 +18,7 @@ import tson_utilities.User;
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.Html;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	//Update reported time
 	int hour, min, newHour, newMin;
 	int holder = 0;
-	static final int TIME_DIALOG_ID = 0;
+	static final int TIME_DIALOG_ID = 0; 
 
 	int[] hourmin = {0,0};
 	View currentPage;
@@ -63,6 +66,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Button createProjectButton;
 	Button reportTimeButton; 
 	TextView projectTimeTextViewVar;
+	public static String previousFragment;
 	
 
 	TextView dateText;
@@ -99,11 +103,12 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
          * The homeFragmentCalendar has its' date changed
          */
         Bundle bundle = this.getArguments();
-        homeFragmentCalendar = Calendar.getInstance();
+        homeFragmentCalendar = (Calendar) HomeActivity.getCal().clone();
         int dateDifference = 0;
         try{
 	         dateDifference =(int) bundle.getLong("dateDifference");
 	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
+	         previousFragment = (String) bundle.getString("previousFragment");
         }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
         
         /**
@@ -127,7 +132,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         nextDate.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
-        		if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
+        		if(!(homeFragmentCalendar.get(Calendar.YEAR) == HomeActivity.getCal().get(Calendar.YEAR) && homeFragmentCalendar.get(Calendar.DAY_OF_YEAR) == HomeActivity.getCal().get(Calendar.DAY_OF_YEAR)))
             	{
 	        		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
 	        		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
@@ -181,14 +186,15 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		
         dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
         nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
-        if(homeFragmentCalendar.get(Calendar.DATE) == HomeActivity.getCal().get(Calendar.DATE))
+        if( homeFragmentCalendar.get(Calendar.YEAR) == HomeActivity.getCal().get(Calendar.YEAR) && homeFragmentCalendar.get(Calendar.DAY_OF_YEAR) == HomeActivity.getCal().get(Calendar.DAY_OF_YEAR))
         {
         	dateText.setText("Today");
         	nextDate.setAlpha((float)0.25);
         }
         else
         {
-        	dateText.setText(homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1));
+
+        	dateText.setText(Html.fromHtml("<big>" + homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1) + "</big>" + "  -  " + "<small>" +  c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH) + "</center>" + "</small>" ));
         	nextDate.setAlpha((float)1.0);
         }
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
@@ -380,8 +386,24 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		TextView projectTime = (TextView) view.findViewById(R.id.projectTimeTextView);
     		ImageButton projectTime2 = (ImageButton) view.findViewById(R.id.imageButton1);
 
+    		TimeBlock t1 = currentProject.getTimeByDate(homeFragmentCalendar);
+    		
+    		if(t1!=null){
+    		if(t1.getConfirmed() == 1)
+    		{
+            	dateText.setTextColor(getResources().getColor(R.color.calender_green));
+    		}
+    		else if(t1.getConfirmed() == 0)
+    		{
+    			dateText.setTextColor(getResources().getColor(R.color.calender_yellow));
+    		}}
+    		else{
+    			dateText.setTextColor(getResources().getColor(R.color.combitech_grey));
+    		}
+    		
+    		
     		try{
-    			int[] time = currentProject.getTimeByDate(homeFragmentCalendar).getTimeAsArray();
+    			int[] time = t1.getTimeAsArray();
     			projectTime.setText(time[0] + " h : "+ time[1] + " m");
     		}catch (Exception name) {
     			Log.d("Test", "Hej");
@@ -410,6 +432,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		return view;
     	}
     }
+   
+   	
    /**
    * OnTouch for swiping between days on the home screen
    */
@@ -447,7 +471,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
                  * RIGHT -> LEFT
                  */
                 if (deltaX > 0 && (Math.abs(deltaY) < 100) ) {
-                	if(homeFragmentCalendar.get(Calendar.DATE) != HomeActivity.getCal().get(Calendar.DATE))
+                	if(!(homeFragmentCalendar.get(Calendar.YEAR) == HomeActivity.getCal().get(Calendar.YEAR) && homeFragmentCalendar.get(Calendar.DAY_OF_YEAR) == HomeActivity.getCal().get(Calendar.DAY_OF_YEAR)))
                 	{
                 		homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, 1);
                 		dateText.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.right_to_left));
@@ -462,3 +486,4 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		return false;
 	}    
 }
+
