@@ -221,6 +221,8 @@ public class HomeActivity extends FragmentActivity
 	 * */
 		private void displayView(final int position) {
 		//update the main content by replacing fragments
+		//PreviousFragment is nollstalld because otherwise skulle inte navigationen med backbutton work.
+		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
 		
     	ab = getActionBar();
@@ -238,7 +240,7 @@ public class HomeActivity extends FragmentActivity
 			fragment = new StatisticsFragment();
 			break;
 		case 3:
-			//fragment = new ExportFragment();
+			fragment = new ExportFragment();
 			break;
 			/*case 4:
 			fragment = new PagesFragment();
