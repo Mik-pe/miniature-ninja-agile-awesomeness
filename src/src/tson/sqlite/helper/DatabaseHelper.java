@@ -122,6 +122,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		return project_id;		
 	}
 	
+	
+	/**
+	 * Updating the name of a project.
+	 * @param p - the project object.
+	 * @param newName - the specified new name.
+	 * @return - returns an indicator if the row was updated.
+	 */
 	public long updateProjectName(String newName, Project p)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();

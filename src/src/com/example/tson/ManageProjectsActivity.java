@@ -23,14 +23,32 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * ManageProjectActivity Class - Activity accessed from settings. 
+ * Displays all projects and offers he possibility to edit the name of a project or add it to the "archive"
+ * 
+ * @author John, Albin
+ */
 
 
 public class ManageProjectsActivity extends Activity {
+	
+	/***********************
+	  *  	VARIABLES		*/	
+	 /***********************/
+	
 	List<Project> projectList = HomeActivity.user.getProjects();
 	ListView manageProjectsList;
 	ManageProjectListAdapter projectAdapter;
 	DatabaseHelper db = HomeActivity.db;
 	
+	
+	/**
+	 * OnCreateView for ManageProjectsActivity
+	 * 
+	 * sets projectadapter, contains onclicklistener for backbutton.
+	 *
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,6 +77,13 @@ public class ManageProjectsActivity extends Activity {
 		return true;
 	}
 	
+	
+	/**
+	 * Shows an alertDialog for textinput to change the name of a project, 
+	 * sets the new name for the project object and updates the database.
+	 * 
+	 * @param p - received project object.
+	 */
 	public void showInputDialog(final Project p)
 	{
 		final EditText newNameInput = new EditText(this);
@@ -84,6 +109,10 @@ public class ManageProjectsActivity extends Activity {
 		
 	}
 	
+	/**
+     * The ManageProjectListAdapter class takes the projectList Array and converts the items into 
+     * View objects to be loaded into the ListView container.
+     */
 	private class ManageProjectListAdapter extends ArrayAdapter<Project>
     {
    		/**
