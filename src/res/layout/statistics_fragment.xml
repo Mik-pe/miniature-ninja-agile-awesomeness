@@ -4,11 +4,9 @@
       android:id="@+id/scrollView1"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent" >
-      
-
-
+     
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
@@ -17,18 +15,47 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin" >
         
+<!-- Header with Lines -->        
+      <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+                 
+       <View
+            android:id="@+id/add_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="50dp"
+            android:background="#DB8C0C"/>
+	
+        <TextView
+            android:id="@+id/add_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/statistics_text"
+            android:textSize="32sp" 
+            />
         
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
         
+        </LinearLayout>
 
-
+<!-- Insert start Date -->
       <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content" 
          android:layout_marginTop="20dp"
+         android:orientation="horizontal"
          android:gravity="center">
          
-          
-
 		<EditText
          	android:id="@+id/startTime"
         	 android:layout_width="wrap_content"
@@ -48,9 +75,9 @@
         	 android:contentDescription="@string/select_start"
         	 android:onClick="showDateDialog"
         	 android:src="@drawable/calendar_icon1" />
-
        </LinearLayout>
-        
+       
+  <!-- Insert end Date -->      
        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
@@ -80,7 +107,21 @@
          
          </LinearLayout>
 
-                <View
+       <!-- List View of Bar Charts -->
+       
+         <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+     		
+       		    <View
+            android:id="@+id/aboveWeek"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C"
+             />
+       		    
+       		<View
             android:id="@+id/view1"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
@@ -92,9 +133,56 @@
 		        android:layout_width="match_parent"
 		        android:layout_height="256dp" >
 		    </ListView>
+		    
 
+        
+        <View
+            android:id="@+id/belowWeek"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C"
+             />
+        
+    	<TextView
+            android:id="@+id/submissionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+ 
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp" />
+    	
+    	 <TextView
+            android:id="@+id/weekText"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            
+            
+            android:fontFamily="sans-serif"
+            android:textColor="#063A70"
+            android:textSize="32sp"
+            
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:text="Week text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <TextView
+            android:id="@+id/workTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:clickable="true"
+            android:fontFamily="sans-serif-thin"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp" />
+		    
+</LinearLayout>
             
         
-</LinearLayout>
+	</LinearLayout>
 </ScrollView>
  

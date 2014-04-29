@@ -111,15 +111,22 @@ public class User
 	  * @return - Returns 1 IF CONFIRMED, 0 if timeblock EXISTS, -1 if no timeblock exists.
 	  */
 	 public int isDateConfirmed(Calendar cal){
+		 if(projectList.size()==0)
+			 return -1;
 		 TimeBlock t;
 		 int confirmed=-1;
+		 int temp = 0;
 		 for(int i=0;i<projectList.size();i++){
 			 t=projectList.get(i).getTimeByDate(cal);
 			 if(t != null){
 				 confirmed=t.getConfirmed();
-				 if(confirmed == 1)
+				 if(confirmed == 0)
 					 return confirmed;
 			 }
+		 }
+		 temp/=projectList.size();
+		 if(temp==1){
+			 return temp;
 		 }
 		return confirmed;
 	 }
