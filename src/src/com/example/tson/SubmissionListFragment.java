@@ -172,7 +172,31 @@ public class SubmissionListFragment extends Fragment {
 					ActionBar actionBar = getActivity().getActionBar();
 					actionBar.removeAllTabs();
 					actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-					getActivity().setTitle("Home");					
+					getActivity().setTitle("Report");					
+					
+					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+					fragmentManager.beginTransaction()
+					.replace(R.id.frame_container, switchToFragment).commit();
+				}
+			});
+    		
+    		view.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+								
+					long dateDifference = -(Calendar.getInstance().getTimeInMillis() - currentItem.today.getTimeInMillis())/(1000*60*60*24);
+					
+					Fragment switchToFragment = new HomeFragment();
+					Bundle bundle = new Bundle();
+					bundle.putLong("dateDifference", dateDifference);
+					bundle.putString("previousFragment", "Submission");
+					switchToFragment.setArguments(bundle);
+					
+					ActionBar actionBar = getActivity().getActionBar();
+					actionBar.removeAllTabs();
+					actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+					getActivity().setTitle("Report");					
 					
 					FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 					fragmentManager.beginTransaction()
