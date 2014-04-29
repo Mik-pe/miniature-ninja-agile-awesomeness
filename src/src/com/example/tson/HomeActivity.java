@@ -4,59 +4,32 @@ package com.example.tson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import model.NavDrawerItem;
-
-import tson_utilities.Project;
-import tson_utilities.User;
-import adapter.NavDrawerListAdapter;
-import android.R.array;
-
-import java.util.Locale;
-
 import tson.sqlite.helper.DatabaseHelper;
-import tson_utilities.*;
-
-//IMPORT ANDROID
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
-import android.R.array;
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-//IMPORT ANDROID
-import android.widget.TimePicker;
-
-//IMPORT OTHER
-
-import android.app.Activity;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager.BackStackEntry;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+//IMPORT ANDROID
+//IMPORT ANDROID
+//IMPORT OTHER
 
 public class HomeActivity extends FragmentActivity
 {
@@ -177,17 +150,18 @@ public class HomeActivity extends FragmentActivity
 			getActionBar().setTitle(mDrawerTitle);
 			//calling onPrepareOptionsMenu() to hide action bar icons
 			invalidateOptionsMenu();
+			}
+		};
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+	
+		if (savedInstanceState == null) {
+			//on first time display view for first nav item
+			displayView(0);
 		}
-	};
-	mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-	if (savedInstanceState == null) {
-		//on first time display view for first nav item
-		displayView(0);
+	
 	}
 	
 	
-}
 	
 	/**
 	 * Getter of Calendar from the Homeactivity
@@ -245,14 +219,16 @@ public class HomeActivity extends FragmentActivity
 	/**
 	 * Diplaying fragment view for selected nav drawer list item
 	 * */
-		private void displayView(int position) {
+		private void displayView(final int position) {
 		//update the main content by replacing fragments
 		//PreviousFragment is nollstalld because otherwise skulle inte navigationen med backbutton work.
 		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
-		ab = getActionBar();
+		
+    	ab = getActionBar();
 		ab.removeAllTabs();
 		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+		
 		switch (position) {
 		case 0:
 			fragment = new HomeFragment();
@@ -281,6 +257,18 @@ public class HomeActivity extends FragmentActivity
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 			.replace(R.id.frame_container, fragment).commit();
+			
+			//.addToBackStack(Integer.toString(position))
+//			fragmentManager.addOnBackStackChangedListener(
+//			        new FragmentManager.OnBackStackChangedListener() {
+//			            public void onBackStackChanged() {
+//			                // Update your UI here.
+			            	//ab = getActionBar();
+			        		//ab.removeAllTabs();
+			        		//ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//			        		setTitle(navMenuTitles[position]);
+//			            }
+//			        });
 
 			//update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
@@ -292,6 +280,8 @@ public class HomeActivity extends FragmentActivity
 			Log.e("MainActivity", "Error in creating fragment");
 		}
 	}
+		
+	
 
 	@Override
 	public void setTitle(CharSequence title) {
