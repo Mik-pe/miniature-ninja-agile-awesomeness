@@ -32,7 +32,6 @@ public class StatisticsFragment extends Fragment{
 	 /***********************/
 	
 	ImageButton btnStart, btnEnd;
-	Button btnGo;
 	Calendar startDate;
 	Calendar endDate;
 	int i;
@@ -70,7 +69,6 @@ public class StatisticsFragment extends Fragment{
 		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStart);
 		  btnEnd = (ImageButton) statistics.findViewById(R.id.imageButtonEnd);
-		  btnGo = (Button) statistics.findViewById(R.id.goStatistics);
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
 		  projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
