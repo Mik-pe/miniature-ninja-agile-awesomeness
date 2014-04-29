@@ -176,6 +176,39 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     }//End OnCreate-function
 	
 	/**
+	 * This defines the status indicator in the home view. For example one date is confirmed
+	 */
+	public void createStatusLogo(){
+		
+		Typeface font = Typeface.createFromAsset(getResources().getAssets(), "fontawesome-webfont.ttf");
+		
+    	TextView icon_place_holder = (TextView)rootView.findViewById( R.id.confirmedIndicator );
+    	icon_place_holder.setVisibility(View.VISIBLE);
+    	icon_place_holder.setTypeface(font);
+    	
+    	int flag = user.isDateConfirmed(homeFragmentCalendar);
+    	// Date is confirmed        			
+    	if(flag == 1)
+    	{	
+    		icon_place_holder.setText(R.string.confirmed_icon);
+    		icon_place_holder.setTextColor(getResources().getColor(R.color.calender_green));
+    	}
+    	// Date is reported but not defined  
+    	else if(flag==0)
+    	{
+    		icon_place_holder.setText(R.string.not_confirmed_icon);
+    		icon_place_holder.setTextColor(getResources().getColor(R.color.combitech_orange));
+    	}
+    	// No report at all
+    	else
+    	{
+    		icon_place_holder.setText(R.string.not_reported_icon);
+    		icon_place_holder.setTextColor(getResources().getColor(R.color.calender_red));
+    	}
+	}
+	
+	
+	/**
 	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
 	 * Also adds the touch event handler to the projectListView, so it's scrollable.
 	 * @param c - calendar for the new date.
@@ -186,14 +219,20 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		
         dateText = (TextView) rootView.findViewById(R.id.projectNameTextView);
         nextDate = (ImageButton) rootView.findViewById(R.id.imageButton3);
+        
+        
+        // Write date and date name
         if( homeFragmentCalendar.get(Calendar.YEAR) == HomeActivity.getCal().get(Calendar.YEAR) && homeFragmentCalendar.get(Calendar.DAY_OF_YEAR) == HomeActivity.getCal().get(Calendar.DAY_OF_YEAR))
         {
+        	createStatusLogo(); // show status indicator
+        	
         	dateText.setText("Today");
         	nextDate.setAlpha((float)0.25);
         }
         else
         {
-
+        	createStatusLogo(); // show status indicator
+        	
         	dateText.setText(Html.fromHtml("<big>" + homeFragmentCalendar.get(Calendar.DAY_OF_MONTH)+"/"+(homeFragmentCalendar.get(Calendar.MONTH)+1) + "</big>" + "  -  " + "<small>" +  c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH) + "</center>" + "</small>" ));
         	nextDate.setAlpha((float)1.0);
         }
@@ -298,6 +337,11 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 				user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
 	   			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);	   			
 				projectAdapter.notifyDataSetChanged();
+				
+				//update status indicator
+				createStatusLogo();
+				
+				
 			}
 			
 			
@@ -363,15 +407,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	       				
 	       		}
 	       		//Create Submission fragment
-	    	   	Fragment fragment = new SubmissionFragment();
+	    	   	/*Fragment fragment = new SubmissionFragment();
 	        	if (fragment != null) 
 	        	{
 		 			FragmentManager fragmentManager = getFragmentManager();
 		 			fragmentManager.beginTransaction()
 		 			.replace(R.id.frame_container, fragment).commit();
 		 			getActivity().setTitle("Submissions");	
-		   	 	} 
-		   	}
+		   	 	}*/
+	        	createStatusLogo();
+		   	} 	
        });
 	   //Cancel button close the dialog and go back to home screen
 	   builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() 
@@ -422,7 +467,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 
     		TimeBlock t1 = currentProject.getTimeByDate(homeFragmentCalendar);
     		
-    		if(t1!=null){
+    		/*if(t1!=null){
     		if(t1.getConfirmed() == 1)
     		{
             	dateText.setTextColor(getResources().getColor(R.color.calender_green));
@@ -433,7 +478,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		}}
     		else{
     			dateText.setTextColor(getResources().getColor(R.color.combitech_grey));
-    		}
+    		}*/
     		
     		
     		try{
