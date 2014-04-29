@@ -263,10 +263,10 @@ public class HomeActivity extends FragmentActivity
 		case 3:
 			//fragment = new ExportFragment();
 			break;
-			/*case 4:
-			fragment = new PagesFragment();
+		case 4:
+			fragment = new SettingsFragment();
 			break;
-			case 5:
+			/*case 5:
 			fragment = new WhatsHotFragment();
 			break;*/
 
