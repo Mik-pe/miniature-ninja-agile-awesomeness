@@ -32,11 +32,15 @@
         
         <TextView
             android:id="@+id/weekText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="10dp"
+            android:layout_width="fill_parent"
+            android:layout_height="45dp"
+            
+            android:fontFamily="sans-serif"
+            android:textColor="#063A70"
+            android:textSize="32sp"
+            
+            android:background="#FFFFFF"
+            android:gravity="center"
             android:text=""
             android:textAppearance="?android:attr/textAppearanceLarge" />
         

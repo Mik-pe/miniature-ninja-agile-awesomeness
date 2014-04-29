@@ -78,18 +78,6 @@
             android:layout_height="1dp"
             android:layout_marginTop="50dp"
             android:background="@android:color/darker_gray" />
-        
-            <Button
-            android:id="@+id/goStatistics"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_marginBottom="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="@string/go_statistics"
-            android:textSize="32sp"
-            android:onClick = "showStatistics" />
 
 		    <ListView
 		        android:id="@+id/statistics_view"
