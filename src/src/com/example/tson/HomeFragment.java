@@ -337,6 +337,11 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 				user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
 	   			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);	   			
 				projectAdapter.notifyDataSetChanged();
+				
+				//update status indicator
+				createStatusLogo();
+				
+				
 			}
 			
 			
@@ -402,15 +407,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	       				
 	       		}
 	       		//Create Submission fragment
-	    	   	Fragment fragment = new SubmissionFragment();
+	    	   	/*Fragment fragment = new SubmissionFragment();
 	        	if (fragment != null) 
 	        	{
 		 			FragmentManager fragmentManager = getFragmentManager();
 		 			fragmentManager.beginTransaction()
 		 			.replace(R.id.frame_container, fragment).commit();
 		 			getActivity().setTitle("Submissions");	
-		   	 	} 
-		   	}
+		   	 	}*/
+	        	createStatusLogo();
+		   	} 	
        });
 	   //Cancel button close the dialog and go back to home screen
 	   builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() 
