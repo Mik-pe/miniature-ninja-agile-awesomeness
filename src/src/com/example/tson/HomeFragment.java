@@ -66,6 +66,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Button createProjectButton;
 	Button reportTimeButton; 
 	TextView projectTimeTextViewVar;
+	public static String previousFragment;
 	
 
 	TextView dateText;
@@ -102,11 +103,12 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
          * The homeFragmentCalendar has its' date changed
          */
         Bundle bundle = this.getArguments();
-        homeFragmentCalendar = Calendar.getInstance();
+        homeFragmentCalendar = (Calendar) HomeActivity.getCal().clone();
         int dateDifference = 0;
         try{
 	         dateDifference =(int) bundle.getLong("dateDifference");
 	         homeFragmentCalendar.add(Calendar.DAY_OF_YEAR, dateDifference);
+	         previousFragment = (String) bundle.getString("previousFragment");
         }catch(Exception e){Log.d("HerregudNull", "Nu blev det null!!!!");} 
         
         /**
@@ -464,6 +466,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		return view;
     	}
     }
+   
+   	
    /**
    * OnTouch for swiping between days on the home screen
    */
