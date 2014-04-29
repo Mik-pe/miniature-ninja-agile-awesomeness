@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Locale;
 
 import qustomstyle.QustomDialogBuilder;
-
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
@@ -24,6 +23,7 @@ import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -221,12 +221,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	}
 	
     /**
-     * ShowTimeDialog shows the time dialog when a textfield has been clicked.
-     * @param v - the view for the timedialog.
+     * ShowTimeDialog shows the TimePicker for reporting time
+     * @param v - the view for the time dialog
      */
+	
+	//Parameter controlling if OnClick action for TimPickerDialog is "cancel" or "Set", "Set"=false
+	boolean mIgnoreTimeSet = false;
+	
 	public void showTimeDialog(View v)
     {		
-		//calculates what page and position we are at
+		//Calculates what page and position we are at
 		holder = projectListView.getPositionForView(v);
     	
     	//Calculate what hour and minute that we are at when we click
@@ -245,28 +249,58 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     	/**
     	 * Show the TimePickerDialog
     	 */
-    	new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true).show();
+    	TimePickerDialog picker = new TimePickerDialog(getActivity(), timeSetListener,  newHour, newMin, true);
+    	picker.setTitle("Enter hours and minutes spent on this project:");
+    	picker.setButton(TimePickerDialog.BUTTON_POSITIVE, "Set", picker);
+    	picker.setButton(TimePickerDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() 
+	 	   {
+    			@Override
+	            public void onClick(DialogInterface dialog, int id) 
+	            {
+	            	//dialog.dismiss();
+	            	mIgnoreTimeSet = true;
+	            	Log.d("Picker", "Cancelled!");
+
+	          
+	            }
+	     });
+    	
+    	picker.show();
     }
 	
 	//
 	/**
-	 * Creates the Dialog with the right time from which click   
-	 * When you click Done in the dialog it will save it in the user and print the time out
+	 * Called when a button is clicked in the TimePickerDialog for reporting time in Home fragment
+	 * Author: Sofie & Malin
 	 */
     private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
+
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			hour=hourOfDay;
-			min=minute;
 			
-			// Update to see if timeblock already exists
-			//user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
-			user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
-   			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);
-
-			projectAdapter.notifyDataSetChanged();
-		}
-	};
+			//If Cancel button is clicked we do not want to save any data from time picker
+			if (mIgnoreTimeSet) 
+			{
+				mIgnoreTimeSet = false; 
+				return;
+				}
+			//If Set button is clicked we want to save data from time picker
+			else 
+			{
+				mIgnoreTimeSet = false;
+				hour=hourOfDay;
+				min=minute;
+				//picker.setTitle("Enter hours and minutes spent on this project:");						
+				// Update to see if timeblock already exists
+				//user.getProjects().get(holder).addTime(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH),hour, min);
+				user.getProjects().get(holder).addTime(homeFragmentCalendar, hour, min);
+	   			user.getProjects().get(holder).getTimeByDate(homeFragmentCalendar).setTimeBlock(homeFragmentCalendar.get(Calendar.YEAR), homeFragmentCalendar.get(Calendar.MONTH), homeFragmentCalendar.get(Calendar.DAY_OF_MONTH), hour, min);	   			
+				projectAdapter.notifyDataSetChanged();
+			}
+			
+			
+		}//End onTimeSet	
+	};//End timeSetListener
     
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -297,7 +331,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
    		builder.setTitle(R.string.title_confirm_time);
    		
    		//Add message
-   		builder.setMessage(R.string.confirm_dialog_message);
+   		//builder.setMessage(R.string.confirm_dialog_message);
    		
    		/*QustomDialogBuilder qBuilder = new QustomDialogBuilder(getActivity());
    		qBuilder.setTitle(R.string.title_confirm_time);
