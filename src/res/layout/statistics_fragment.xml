@@ -1,4 +1,3 @@
-
   <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
       android:id="@+id/scrollView1"
@@ -44,23 +43,26 @@
             android:id="@+id/add_line2"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
-            android:background="#DB8C0C" />
-        
+            android:background="#DB8C0C" />        
         </LinearLayout>
 
 <!-- Insert start Date -->
       <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content" 
-         android:layout_marginTop="20dp"
+         android:layout_marginTop="50dp"
+         android:paddingLeft="60dp"
+    	 android:paddingRight="60dp" 
          android:orientation="horizontal"
          android:gravity="center">
          
 		<EditText
-         	android:id="@+id/startTime"
+         	 android:id="@+id/startTime"
         	 android:layout_width="wrap_content"
         	 android:layout_marginLeft="5dp"
-        	 android:textSize="25sp"
+        	 android:textSize="30sp"
+             android:ems="15"
+             android:fontFamily="sans-serif-thin"
         	 android:layout_weight="1"
         	 android:layout_height="wrap_content"
         	 android:editable="false" >
@@ -82,6 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:layout_marginTop="20dp"
+            android:paddingLeft="60dp"
+    		android:paddingRight="60dp" 
             android:gravity="center"
             android:orientation="horizontal">
         
@@ -89,7 +93,9 @@
          		android:id="@+id/endTime"
         	 	android:layout_width="wrap_content"
         	 	android:layout_marginLeft="5dp"
-        	 	android:textSize="25sp"
+        	 	android:textSize="30sp"
+            	android:ems="15"
+            	android:fontFamily="sans-serif-thin"
         	 	android:layout_weight="1"
         		android:layout_height="wrap_content"
         		android:editable="false">
@@ -109,21 +115,17 @@
 
        <!-- List View of Bar Charts -->
        
-         <LinearLayout
+       <LinearLayout
          android:orientation="vertical"
          android:layout_width="match_parent"
-         android:layout_height="wrap_content" >
-     		
-       		    <View
-            android:id="@+id/aboveWeek"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#DB8C0C"
-             />
-       		    
-       		<View
+         android:layout_height="wrap_content"        
+         android:paddingLeft="60dp"
+    	android:paddingRight="60dp" 
+    	 >
+	    
+          <View
             android:id="@+id/view1"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="50dp"
             android:background="@android:color/darker_gray" />
@@ -131,58 +133,12 @@
 		    <ListView
 		        android:id="@+id/statistics_view"
 		        android:layout_width="match_parent"
-		        android:layout_height="256dp" >
-		    </ListView>
-		    
-
-        
-        <View
-            android:id="@+id/belowWeek"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#DB8C0C"
-             />
-        
-    	<TextView
-            android:id="@+id/submissionDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
- 
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="30sp" />
-    	
-    	 <TextView
-            android:id="@+id/weekText"
-            android:layout_width="fill_parent"
-            android:layout_height="45dp"
-            
-            
-            android:fontFamily="sans-serif"
-            android:textColor="#063A70"
-            android:textSize="32sp"
-            
-            android:background="#FFFFFF"
-            android:gravity="center"
-            android:text="Week text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-        
-        <TextView
-            android:id="@+id/workTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:clickable="true"
-            android:fontFamily="sans-serif-thin"
-            android:text="Medium Text"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="30sp" />
-		    
-</LinearLayout>
-            
-        
+		        android:layout_height="256dp"        
+		        android:layout_alignParentBottom="true"
+        		android:layout_centerHorizontal="true" >
+		    </ListView>   
+		</LinearLayout>
+             
 	</LinearLayout>
 </ScrollView>
  
