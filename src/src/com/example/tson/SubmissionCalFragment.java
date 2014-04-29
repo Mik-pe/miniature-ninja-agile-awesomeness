@@ -62,6 +62,7 @@ public class SubmissionCalFragment extends Fragment {
 					//Create a bundle to send the date to HomeFragment
 					Bundle bundle = new Bundle();
 					bundle.putLong("dateDifference", dateDifference);
+					bundle.putString("previousFragment", "Submission");
 					switchToFragment.setArguments(bundle);
 					
 					//Reset the actionBar

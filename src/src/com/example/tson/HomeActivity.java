@@ -211,10 +211,10 @@ public class HomeActivity extends FragmentActivity
 		}
 	}
 
-	@Override
+	/*@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.home, menu);
-		return true;}
+		return true;}*/
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -313,5 +313,23 @@ public class HomeActivity extends FragmentActivity
 		super.onConfigurationChanged(newConfig);
 		//Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	@Override
+	public void onBackPressed()
+	{
+		if(HomeFragment.previousFragment == "Submission")
+		{
+			Fragment fragment = new SubmissionFragment();
+			
+			FragmentManager fragmentManager = getSupportFragmentManager();
+			fragmentManager.beginTransaction()
+			.replace(R.id.frame_container, fragment).commit();
+			
+			HomeFragment.previousFragment = "";
+			
+		}
+		else
+			super.onBackPressed();
 	}
 }

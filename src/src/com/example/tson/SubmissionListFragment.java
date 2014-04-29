@@ -161,6 +161,7 @@ public class SubmissionListFragment extends Fragment {
 					Fragment switchToFragment = new HomeFragment();
 					Bundle bundle = new Bundle();
 					bundle.putLong("dateDifference", dateDifference);
+					bundle.putString("previousFragment", "Submission");
 					switchToFragment.setArguments(bundle);
 					
 					ActionBar actionBar = getActivity().getActionBar();
