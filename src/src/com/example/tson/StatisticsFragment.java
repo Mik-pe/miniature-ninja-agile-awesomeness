@@ -120,7 +120,6 @@ public class StatisticsFragment extends Fragment{
 	 			dialog.getDatePicker().setMaxDate(endDate.getTimeInMillis());
 	 			dialog.getDatePicker().setCalendarViewShown(false);
 	 			dialog.show();
-	 			//Log.d("i=0", ""+i);
 	 		}
 	 		else
 	 		{
@@ -163,9 +162,6 @@ public class StatisticsFragment extends Fragment{
 		 public void calculateStartTime(Calendar temp, int selectedYear,
 				    int selectedMonth, int selectedDay)
 		 {	
-			 int p = 0;
-			 p++;
-			 Log.d("hejsan", "" + p);
 			totalMinutes = 0;
 			for(int i=0;i<projectListStats.size();i++){
 				List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
@@ -183,12 +179,6 @@ public class StatisticsFragment extends Fragment{
 						  }
 						  
 					  }
-					  else if(compareDate == temp || compareDate == endDate)
-					  {
-						  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-						  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-					  }
-					  
 				  }
 			}
 			startTime.setText(selectedDay + " / " + (selectedMonth + 1) + " / "
