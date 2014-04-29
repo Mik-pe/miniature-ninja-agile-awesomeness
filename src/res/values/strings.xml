@@ -22,14 +22,18 @@
     <string name="title_confirm_time">Confirm reported time?</string>
     <string name="confirm_dialog_message">Have you reported all hours today?</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name="statistics_text"> Stats For This Month </string>
+    <string name ="statistics_text"> Choose Dynamic Time Span </string>
+    
     <string name="select_start">StartStat</string>
     <string name="select_end">EndStat</string>
     <string name="stat">Statistics</string>
     <string name="go_statistics">GO</string>
-    <string name="cancel_project_button">Back</string>
+    
+    <string name ="cancel_project_button">Back</string>
+    
     <string name="select_start_export">GO</string>
     <string name="select_end_export">GO</string>
+
     <string name="export">Export</string>
     <string name="monday">MON</string>
     <string name="tuesday">TUE</string>
