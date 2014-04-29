@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 /**
  * 
- * @author Ramin
+ * @author Ramin Assadi
  *
  */
 public class StatisticsFragment extends Fragment{
@@ -53,6 +53,10 @@ public class StatisticsFragment extends Fragment{
 	 /************************/
 	
 	public StatisticsFragment(){}
+	 /**
+	  * The onCreate function
+	  * @author Ramin Assadi
+	  */
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	         Bundle savedInstanceState) {
@@ -95,6 +99,7 @@ public class StatisticsFragment extends Fragment{
 	 
 	 	/**
 	 	 * When u click on btnStart or btnEnd u will jump in here and create a DatePickerDialog
+	 	 * @author Ramin Assadi
 	 	 * @param v Send in the View
 	 	 * @param theYear Get what year you have
 	 	 * @param theMonth Get what month you have
@@ -125,6 +130,7 @@ public class StatisticsFragment extends Fragment{
 	    
 	 	/**
 	 	 * When u click Done in the dialog it will save it in the user and print the time out 
+	 	 * @author Ramin Assadi
 	 	 */
 	 	private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() 
 	 	{
@@ -151,6 +157,7 @@ public class StatisticsFragment extends Fragment{
 		 
 		 /**
 		  * Calculates all the timeblocks that is in the timespand
+		  * @author Ramin Assadi
 		  * @param start The start date 
 		  * @param end The end date
 		  */
@@ -165,7 +172,7 @@ public class StatisticsFragment extends Fragment{
 					  Calendar compareDate = tb.get(j).getDate();
 					  // 0 if equals, -1 if the time of this calendar is before the other one,
 					  // 1 if the time of this calendar is after the other one.
-					  if(start.compareTo(compareDate) == -1 && end.compareTo(compareDate) == 1)
+					  if(start.before(compareDate) && end.after(compareDate))
 					  {
 						  if(user.isDateConfirmed(compareDate) == 1)
 						  {
@@ -201,9 +208,9 @@ public class StatisticsFragment extends Fragment{
 		    projectListView.setAdapter(statsAdapter);
 		 }
 		 
-		 
 		/**
 		 * Calculates if two dates are equal
+		 * @author Ramin Assadi
 		 */
 		public boolean isSameDay(Calendar cal1, Calendar cal2) {
 			    if (cal1 == null || cal2 == null)
@@ -215,6 +222,7 @@ public class StatisticsFragment extends Fragment{
 		
 		/**
 		 * Calculates the dp value to pixels
+		 * @author Ramin Assadi
 		 * @param dp The value of dp
 		 * @return Returns the converted pixel value
 		 */
@@ -225,7 +233,7 @@ public class StatisticsFragment extends Fragment{
 		
 		/**
 		 * Updates the view
-		 * @author Ramin
+		 * @author Tobias Johansson Ramnäs
 		 *
 		 */
 	    private class statsAdapter extends ArrayAdapter<Project>{
