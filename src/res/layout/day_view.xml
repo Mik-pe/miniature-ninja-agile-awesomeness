@@ -18,7 +18,7 @@
             android:background="@drawable/today" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/project_name"
             android:layout_width="@dimen/text_height_width"
             android:layout_height="@dimen/text_height_width"
             android:layout_centerInParent="true"

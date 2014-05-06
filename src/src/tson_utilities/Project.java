@@ -137,6 +137,11 @@ public class Project {
 			}
 		t.setDuration(h, m);
 	}
+	
+	public void setName(String newName)
+	{
+		name = newName;
+	}
 
 }
 

@@ -253,6 +253,14 @@
 
     </ExpandableListView>
 
+    <Button
+        android:id="@+id/manage_projects_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/expandableListView1"
+        android:text="Manage Projects" />
+
 </RelativeLayout>
 
 </LinearLayout>
