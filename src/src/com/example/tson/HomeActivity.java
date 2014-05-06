@@ -104,13 +104,12 @@ public class HomeActivity extends FragmentActivity
 	        user.addProject(projectList.get(i));
 	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
-<<<<<<< HEAD
-=======
+
 	        
-      
        
-    }//End onCreate-function
->>>>>>> 4bb18c4f7fe769c951f6bd9ab448d0c6d48c5a38
+		
+	
+
 	
     mTitle = mDrawerTitle = getTitle();
 
@@ -171,7 +170,7 @@ public class HomeActivity extends FragmentActivity
 			displayView(0);
 		}
 	
-	}
+	}//End onCreate-function
 	
 	
 	
