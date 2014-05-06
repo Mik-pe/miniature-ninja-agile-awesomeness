@@ -252,8 +252,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		   
 		    //updating row
 		    //Log.d("Set confirmed", "" + timeblock.getID());
-		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
+		    int u = db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
 		            new String[] { String.valueOf(timeblock.getID()) });
+		    Log.d("setConfirmedDB", "nr of rows updated: " + u + " with id: " + timeblock.getID());
+		    return u;
 	}
 	/**
 	 * Update a time block, only updates the time column for now.
@@ -296,9 +298,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int month = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MONTH));
 					int day = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_DAY));
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
+					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
 					int hours = (int)minutes/60;
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
+					t.setConfirmed(confirmed);
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}

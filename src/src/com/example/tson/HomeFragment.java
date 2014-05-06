@@ -394,16 +394,17 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		   	{   	        	   
 	       		//Change status on all reported timeblocks to Confirmed = true
 	       		//List<Project> projectList = (ArrayList<Project>) user.getProjects();
-	       		
+		   		Log.d("setConfirmed", "project list size: " + projectList.size());
 	       		for(int i=0; i<projectList.size(); i++)
 	       		{
 	       			Project p = projectList.get(i);
 
-	       					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
-	       					if(t!=null){
-	       						
-	       					t.setConfirmed(1);
-	       					db.setConfirmed(t);}
+   					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
+   					if(t!=null){
+   						Log.d("setConfirmed", "" + t);
+       					t.setConfirmed(1);
+       					db.setConfirmed(t);
+   					}
 	       				
 	       		}
 	       		//Create Submission fragment
