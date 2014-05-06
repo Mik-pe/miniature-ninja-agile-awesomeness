@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-
 import android.widget.Toast;
+
 
 //Google+ Stuff
 import com.google.android.gms.common.ConnectionResult;
@@ -41,6 +41,11 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		final Intent intent = new Intent(this, HomeActivity.class);
+        // Initializing google plus api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(Plus.API, null)
+                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 		
 		ImageButton btnSignIn = (ImageButton) findViewById(R.id.login_button);
 		btnSignIn.setOnClickListener(new View.OnClickListener() {
@@ -51,13 +56,12 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 			    * */
 			   @Override
 			   public void onClick(View v) {
-			       switch (v.getId()) {
-			       case R.id.login_button:
+			 
 			           // Signin button clicked
 			           	signInWithGplus();
-			   			startActivity(intent);
-			   			finish();
-			           break;
+			   			//startActivity(intent);
+			   			//finish();
+			   
 			       /*case R.id.btn_sign_out:
 			           // Signout button clicked
 			           signOutFromGplus();
@@ -67,7 +71,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 			           revokeGplusAccess();
 			           break;*/
 			       }
-			   }
+			   
 
 		});
 		
@@ -85,11 +89,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
         //btnSignOut.setOnClickListener(this);
         //btnRevokeAccess.setOnClickListener(this);
  
-        // Initializing google plus api client
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this).addApi(Plus.API, null)
-                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+
     	
     	
 	}
@@ -215,9 +215,12 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
     * */
    private void signInWithGplus() {
        if (!mGoogleApiClient.isConnecting()) {
+    	   
+    	   Log.d("Log if", "Hello Google");
            mSignInClicked = true;
            resolveSignInError();
        }
+      
    }
     
    /**
@@ -228,9 +231,11 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
            try {
                mIntentInProgress = true;
                mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
+               Log.d("Log outside if", "try");
            } catch (SendIntentException e) {
                mIntentInProgress = false;
                mGoogleApiClient.connect();
+               Log.d("Log outside if", "catch");
            }
        }
    }

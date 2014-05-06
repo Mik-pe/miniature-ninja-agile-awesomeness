@@ -15,11 +15,18 @@
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
 		
     <application
+        
+        
         android:allowBackup="true"
         android:fontFamily="sans-serif-thin"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        
+		<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- Home Screen Activity -->
         <activity
@@ -31,11 +38,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- When signed in activity -->
+        <activity
+            android:name="com.example.tson.HomeActivity"
+            android:label="@string/login_button" >
+        </activity>
 
 
-		<meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
         
         <!-- Create Project Activity -->
         <activity
