@@ -10,6 +10,10 @@
     <string name="today">Today</string>
     <string name="report_time">Confirm Time</string>
     <string name="add_text">Add Project</string>
+    <string name="send_email">Send email</string>
+    <string name="send_email_to_hint">To email</string>
+    <string name="send_email_subject_hint">Subject</string>
+    <string name="send_email_body_hint">Email body ...</string>
     <string name="create_text">Create</string>
     <string name="add_hint_text">Enter your project name</string>
     <string name="edit_text">Edit</string>
@@ -58,7 +62,7 @@
         <item>@drawable/ic_communities</item>
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>   
-	</array>
+	</array>
     -->
 
 
@@ -73,5 +77,6 @@
     <string name="title_activity_export_fragment">ExportFragment</string>
     <string name="title_activity_manage_projects">ManageProjectsActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_send_email">SendEmailActivity</string>
 
 </resources>
