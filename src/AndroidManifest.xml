@@ -17,7 +17,7 @@
 
         <!-- Home Screen Activity -->
         <activity
-            android:name="com.example.tson.HomeActivity"
+            android:name="com.example.tson.testStats"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,12 @@
             </intent-filter>
         </activity>
 
+        <!-- Create Project Activity -->
+        <activity
+            android:name="com.example.tson.HomeActivity"
+            android:label="@string/login_button" >
+        </activity>
+        
         <!-- Create Project Activity -->
         <activity
             android:name="com.example.tson.CreateProjectActivity"
