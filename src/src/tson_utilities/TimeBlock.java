@@ -49,6 +49,7 @@ public class TimeBlock
 		hours = theHours;
 		minutes = theMinutes;
 		confirmed = 0;
+		//Log.d("In time Block", "Confirmed" + Integer.toString(confirmed));
 		//ID = 0;
 	}
 	/**

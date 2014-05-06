@@ -46,7 +46,7 @@ public class User
 	 }
 	 
 	 /***********************
-	  *  	GETTTERS  		*/	
+	  *  	GETTERS  		*/	
 	 /***********************
 	  * 
 	  * Return list of projects
