@@ -41,6 +41,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		final Intent intent = new Intent(this, HomeActivity.class);
+		
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -58,9 +59,12 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 			   public void onClick(View v) {
 			 
 			           // Signin button clicked
+				   if(!mGoogleApiClient.isConnected()){
 			           	signInWithGplus();
-			   			//startActivity(intent);
-			   			//finish();
+			   			}
+				   getProfileInformation();
+				   startActivity(intent);
+		   			finish();
 			   
 			       /*case R.id.btn_sign_out:
 			           // Signout button clicked
@@ -183,20 +187,20 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
        //getProfileInformation();
     
        // Update the UI after signin
-       updateUI(true);
+       //updateUI(true);
     
    }
     
    @Override
    public void onConnectionSuspended(int arg0) {
        mGoogleApiClient.connect();
-       updateUI(false);
+       //updateUI(false);
    }
     
    /**
     * Updating the UI, showing/hiding buttons and profile layout
     * */
-   private void updateUI(boolean isSignedIn) {
+   /*private void updateUI(boolean isSignedIn) {
        if (isSignedIn) {
            btnSignIn.setVisibility(View.GONE);
            btnSignOut.setVisibility(View.VISIBLE);
@@ -208,7 +212,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
            btnRevokeAccess.setVisibility(View.GONE);
            llProfileLayout.setVisibility(View.GONE);
        }
-   }
+   }*/
    
    /**
     * Sign-in into google
@@ -219,6 +223,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
     	   Log.d("Log if", "Hello Google");
            mSignInClicked = true;
            resolveSignInError();
+           
        }
       
    }
@@ -242,13 +247,14 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    /**
     * Fetching user's information name, email, profile pic
     * */
-   /*private void getProfileInformation() {
+   private void getProfileInformation() {
        try {
            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                Person currentPerson = Plus.PeopleApi
                        .getCurrentPerson(mGoogleApiClient);
                String personName = currentPerson.getDisplayName();
-               String personPhotoUrl = currentPerson.getImage().getUrl();
+               Log.d("Name:", personName);
+               /*String personPhotoUrl = currentPerson.getImage().getUrl();
                String personGooglePlusProfile = currentPerson.getUrl();
                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
     
@@ -270,12 +276,13 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
     
            } else {
                Toast.makeText(getApplicationContext(),
-                       "Person information is null", Toast.LENGTH_LONG).show();
+                    "Person information is null", Toast.LENGTH_LONG).show(); */  
            }
        } catch (Exception e) {
            e.printStackTrace();
+           Log.d("Fail:", "Fail");
        }
-   }*/
+   }
     
    /**
     * Background Async task to load user profile picture from url
