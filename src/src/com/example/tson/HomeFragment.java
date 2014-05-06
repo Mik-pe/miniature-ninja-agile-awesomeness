@@ -114,7 +114,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         /**
          * Creates the onClick-function for the PREVIOUSDATE-image
          */
-        prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
+        prevDate = (ImageButton) rootView.findViewById(R.id.login_button);
         prevDate.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
