@@ -105,9 +105,17 @@ public class HomeActivity extends FragmentActivity
 	            //Log.d("Listing all times for a project", time.getTimeAsString());
         }
 	        
+	        Bundle extras = getIntent().getExtras();
+	        if (extras != null) {
+	            String personName = extras.getString("personName");
+	            Log.d("Name:", " Home" + personName);
+	        }
+	        
       
        
     }//End onCreate-function
+        
+
 	
     mTitle = mDrawerTitle = getTitle();
 
