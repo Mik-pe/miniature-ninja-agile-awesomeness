@@ -1,17 +1,25 @@
 package com.example.tson;
 import java.util.Calendar;
+import java.util.List;
+
+import tson_utilities.Project;
+import tson_utilities.User;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class ExportFragment extends Fragment{
 	
@@ -25,6 +33,13 @@ public class ExportFragment extends Fragment{
 	Calendar endDate;
 	int i;
 	EditText startTime, endTime;
+	TextView projectText;
+	ArrayAdapter<Project> projectAdapter;
+	public static User user = HomeActivity.user;
+	List<Project> projectListStats = user.getProjects();
+	ListView projectList;
+	
+	
 	
 	
 	 /***********************
@@ -39,6 +54,7 @@ public class ExportFragment extends Fragment{
 		 
 		  super.onCreate(savedInstanceState);
 		  View statistics = inflater.inflate(R.layout.export_fragment, container, false);
+		  projectList = (ListView) statistics.findViewById(R.id.export_list_view);
 		  startDate = Calendar.getInstance();
 		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStartExport);
@@ -68,12 +84,20 @@ public class ExportFragment extends Fragment{
 		  //onClick on btnGo
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					
+					Intent intent = new Intent(getActivity(), SendEmailActivity.class);
+					startActivity(intent);
+					
+					
 					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
 					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
 					Log.d("StartDifference", ""+daysSinceStartDate);
 					Log.d("EndDifference", ""+daysSinceEndDate);
 				}
 		  });
+		  
+		  projectAdapter = new projectAdapter();
+		  projectList.setAdapter(projectAdapter);
 		  
 		  return statistics;
 		 }
@@ -133,4 +157,20 @@ public class ExportFragment extends Fragment{
 				}
 	 		}
 		 };
+		 
+		 private class projectAdapter extends ArrayAdapter<Project>{
+				public projectAdapter() {
+					super(getActivity(), R.layout.statistics_listview_item, projectListStats);
+				}
+				
+				@Override
+				public View getView(int position, View view, ViewGroup parent){
+					if(view == null)
+						view = getActivity().getLayoutInflater().inflate(R.layout.project_list_export, parent, false);
+					projectText = (TextView) view.findViewById(R.id.projectNameTextView);
+					projectText.setText(user.getProjects().get(position).getName());
+						
+			        return view;
+				}
+		    }
 }

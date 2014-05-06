@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+
 import model.NavDrawerItem;
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
@@ -12,6 +14,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -26,7 +29,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+
 //IMPORT ANDROID
 //IMPORT ANDROID
 //IMPORT OTHER
@@ -77,9 +86,7 @@ public class HomeActivity extends FragmentActivity
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
-	{
-
-		
+	{		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
@@ -97,6 +104,13 @@ public class HomeActivity extends FragmentActivity
 	        user.addProject(projectList.get(i));
 	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
+<<<<<<< HEAD
+=======
+	        
+      
+       
+    }//End onCreate-function
+>>>>>>> 4bb18c4f7fe769c951f6bd9ab448d0c6d48c5a38
 	
     mTitle = mDrawerTitle = getTitle();
 
@@ -302,4 +316,6 @@ public class HomeActivity extends FragmentActivity
 		else
 			super.onBackPressed();
 	}
-}
+	
+	 
+}//End HomeActivity
