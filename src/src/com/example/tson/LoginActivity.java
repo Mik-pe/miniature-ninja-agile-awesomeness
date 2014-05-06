@@ -40,7 +40,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		final Intent intent = new Intent(this, HomeActivity.class);
+		
 		
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -62,9 +62,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 				   if(!mGoogleApiClient.isConnected()){
 			           	signInWithGplus();
 			   			}
-				   getProfileInformation();
-				   startActivity(intent);
-		   			finish();
+
 			   
 			       /*case R.id.btn_sign_out:
 			           // Signout button clicked
@@ -182,6 +180,9 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    public void onConnected(Bundle arg0) {
        mSignInClicked = false;
        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+       final Intent intent = new Intent(this, HomeActivity.class);
+       startActivity(intent);
+	   finish();
     
        // Get user's information
        //getProfileInformation();
