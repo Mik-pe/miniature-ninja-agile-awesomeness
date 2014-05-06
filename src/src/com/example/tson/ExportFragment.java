@@ -6,6 +6,7 @@ import tson_utilities.Project;
 import tson_utilities.User;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -83,6 +84,11 @@ public class ExportFragment extends Fragment{
 		  //onClick on btnGo
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					
+					Intent intent = new Intent(getActivity(), SendEmailActivity.class);
+					startActivity(intent);
+					
+					
 					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
 					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
 					Log.d("StartDifference", ""+daysSinceStartDate);

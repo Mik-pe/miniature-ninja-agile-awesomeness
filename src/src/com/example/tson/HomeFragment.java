@@ -208,6 +208,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	}
 	
 	
+	
+	
 	/**
 	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
 	 * Also adds the touch event handler to the projectListView, so it's scrollable.
@@ -259,6 +261,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
+        projectAdapter.notifyDataSetChanged();
 	}
 	
     /**
@@ -394,16 +397,17 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		   	{   	        	   
 	       		//Change status on all reported timeblocks to Confirmed = true
 	       		//List<Project> projectList = (ArrayList<Project>) user.getProjects();
-	       		
+		   		Log.d("setConfirmed", "project list size: " + projectList.size());
 	       		for(int i=0; i<projectList.size(); i++)
 	       		{
 	       			Project p = projectList.get(i);
 
-	       					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
-	       					if(t!=null){
-	       						
-	       					t.setConfirmed(1);
-	       					db.setConfirmed(t);}
+   					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
+   					if(t!=null){
+   						Log.d("setConfirmed", "" + t);
+       					t.setConfirmed(1);
+       					db.setConfirmed(t);
+   					}
 	       				
 	       		}
 	       		//Create Submission fragment

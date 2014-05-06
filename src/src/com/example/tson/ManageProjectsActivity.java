@@ -68,15 +68,7 @@ public class ManageProjectsActivity extends Activity {
 		    	finish();
 			}
 		});
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.manage_projects, menu);
-		return true;
-	}
-	
+	}	
 	
 	/**
 	 * Shows an alertDialog for textinput to change the name of a project, 
