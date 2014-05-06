@@ -7,9 +7,13 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-
-    <uses-permission android:name="android.permission.VIBRATE" />
-
+	<uses-permission android:name="android.permission.VIBRATE" />
+	
+    <!-- Google+ log in -->
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+		
     <application
         android:allowBackup="true"
         android:fontFamily="sans-serif-thin"
@@ -28,11 +32,10 @@
             </intent-filter>
         </activity>
 
-        <!-- When signed in activity -->
-        <activity
-            android:name="com.example.tson.HomeActivity"
-            android:label="@string/login_button" >
-        </activity>
+
+		<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         
         <!-- Create Project Activity -->
         <activity
@@ -65,15 +68,14 @@
             android:name="com.example.tson.ExportFragment"
             android:label="@string/title_activity_export_fragment" >
         </activity>
-
         <service
             android:name="com.example.tson.NotificationHandler"
-            android:exported="false" />
-
+            android:exported="false"/>
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
         </activity>
+
     </application>
 
 </manifest>
