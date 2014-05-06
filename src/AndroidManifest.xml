@@ -19,7 +19,7 @@
 
         <!-- Home Screen Activity -->
         <activity
-            android:name="com.example.tson.testStats"
+            android:name="com.example.tson.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Create Project Activity -->
+        <!-- When signed in activity -->
         <activity
             android:name="com.example.tson.HomeActivity"
             android:label="@string/login_button" >
@@ -73,10 +73,6 @@
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
-        </activity>
-        <activity
-            android:name="com.example.tson.LoginActivity"
-            android:label="@string/title_activity_login" >
         </activity>
     </application>
 
