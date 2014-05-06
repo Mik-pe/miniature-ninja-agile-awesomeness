@@ -40,7 +40,9 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		// Initializing google plus api client
+		
+		
+        // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API, null)
@@ -57,12 +59,10 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 			   public void onClick(View v) {
 			 
 			           // Signin button clicked
-				   if (!mGoogleApiClient.isConnected()) {
-					   signInWithGplus();
-				  		 }
+				   if(!mGoogleApiClient.isConnected()){
+			           	signInWithGplus();
+			   			}
 
-			   			//startActivity(intent);
-			   			//finish();
 			   
 			       /*case R.id.btn_sign_out:
 			           // Signout button clicked
@@ -193,8 +193,9 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 		   Log.d("myname", "is null");
 	   }
        final Intent intent = new Intent(this, HomeActivity.class);
-	   startActivity(intent);
+       startActivity(intent);
 	   finish();
+    
        // Get user's information
        //getProfileInformation();
     
@@ -235,6 +236,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
     	   Log.d("Log if", "Hello Google");
            mSignInClicked = true;
            resolveSignInError();
+           
        }
       
    }
@@ -258,13 +260,14 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    /**
     * Fetching user's information name, email, profile pic
     * */
-   /*private void getProfileInformation() {
+   private void getProfileInformation() {
        try {
            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                Person currentPerson = Plus.PeopleApi
                        .getCurrentPerson(mGoogleApiClient);
                String personName = currentPerson.getDisplayName();
-               String personPhotoUrl = currentPerson.getImage().getUrl();
+               Log.d("Name:", personName);
+               /*String personPhotoUrl = currentPerson.getImage().getUrl();
                String personGooglePlusProfile = currentPerson.getUrl();
                String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
     
@@ -286,12 +289,13 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
     
            } else {
                Toast.makeText(getApplicationContext(),
-                       "Person information is null", Toast.LENGTH_LONG).show();
+                    "Person information is null", Toast.LENGTH_LONG).show(); */  
            }
        } catch (Exception e) {
            e.printStackTrace();
+           Log.d("Fail:", "Fail");
        }
-   }*/
+   }
     
    /**
     * Background Async task to load user profile picture from url
