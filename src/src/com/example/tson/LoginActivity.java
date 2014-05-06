@@ -180,6 +180,17 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    public void onConnected(Bundle arg0) {
        mSignInClicked = false;
        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+       
+       if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+           Person currentPerson = Plus.PeopleApi
+                   .getCurrentPerson(mGoogleApiClient);
+           String personName = currentPerson.getDisplayName();
+           Log.d("myname", personName);
+	   }
+	   else{
+		   Log.d("myname", "is null");
+	   }
+       
        final Intent intent = new Intent(this, HomeActivity.class);
        startActivity(intent);
 	   finish();
