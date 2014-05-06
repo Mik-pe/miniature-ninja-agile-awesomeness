@@ -5,7 +5,6 @@
     android:layout_margin="20dp"
     android:orientation="vertical" >
 
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +74,6 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@drawable/oldman1" />
-
     </RelativeLayout>
 
     <TextView
@@ -97,170 +95,38 @@
             android:layout_marginTop="10dp"
             android:text="NOTIFICATIONS"
             android:textAppearance="?android:attr/textAppearanceLarge" />
-
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/combitech_blue" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_toRightOf="@+id/textView4"
-            android:ems="10" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="11dp"
-            android:text="Remind me of:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="17dp"
-            android:text="TIME"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_alignRight="@+id/dateButtonSetting"
-            android:layout_marginRight="15dp"
-            android:text="DATE"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Button
-            android:id="@+id/timeButtonSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText3"
-            android:layout_marginTop="53dp"
-            android:text="Button" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dateButtonSetting"
-            android:layout_alignLeft="@+id/textView7"
-            android:text="REPEAT EVERY DAY"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_marginRight="11dp"
-            android:layout_toLeftOf="@+id/checkBox1"
-            android:text="REPEAT EVERY WEEK"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView8"
-            android:layout_alignBottom="@+id/textView8"
-            android:layout_alignLeft="@+id/checkBox1" />
-
-        <Button
-            android:id="@+id/dateButtonSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/timeButtonSetting"
-            android:layout_alignBottom="@+id/timeButtonSetting"
-            android:layout_toRightOf="@+id/textView4"
-            android:text="Button" />
-
-        <CheckBox
-            android:id="@+id/checkBox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView7"
-            android:layout_alignBottom="@+id/textView7"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
-
-<LinearLayout
-    android:id="@+id/LinearLayout02"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginTop="20dp" >
-
-    <Button
-        android:id="@+id/addNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="ADD" >
-
-    </Button>
-
-    <Button
-        android:id="@+id/cancelNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="CANCEL" >
-
-    </Button>
-</LinearLayout>
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="40dp"
-        android:text="LOG OUT" />
-
-    <ExpandableListView
-        android:id="@+id/expandableListView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_marginTop="20dp" >
-
-    </ExpandableListView>
-
-    <Button
-        android:id="@+id/manage_projects_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/expandableListView1"
-        android:text="Manage Projects" />
-
-</RelativeLayout>
-
+    
+	<LinearLayout 
+	    android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+	    android:orientation="vertical"
+	    >
+	    <TextView
+	        android:id="@+id/TextView02"
+	        android:layout_width="fill_parent"
+	        android:layout_height="2dp"
+	        android:layout_marginTop="10dp"
+	        android:background="@color/combitech_blue" />
+	
+	    <ExpandableListView
+	        android:id="@+id/expandableListView1"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:layout_weight="0.91" >
+	    </ExpandableListView>
+	
+	    <Button
+	        android:id="@+id/manage_projects_button"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="Manage Projects" />
+	
+	    <Button
+	        android:id="@+id/button3"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:text="LOG OUT" />
+	</LinearLayout>
 </LinearLayout>

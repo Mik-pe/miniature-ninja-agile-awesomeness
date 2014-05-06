@@ -12,6 +12,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -36,6 +37,9 @@ public class HomeActivity extends FragmentActivity
 	 /***********************
 	  *  	VARIABLES		*/	
 	 /***********************/
+	
+	/**SHARED PREFERENCES*/
+	public static final String PREFS_NAME = "MyPrefsFile";
 	
 	int hour,min, newHour, newMin;
 	int holder = 0;
@@ -158,7 +162,6 @@ public class HomeActivity extends FragmentActivity
 			//on first time display view for first nav item
 			displayView(0);
 		}
-	
 	}
 	
 	

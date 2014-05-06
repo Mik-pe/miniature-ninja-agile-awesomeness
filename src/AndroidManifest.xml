@@ -57,14 +57,14 @@
             android:name="com.example.tson.ExportFragment"
             android:label="@string/title_activity_export_fragment" >
         </activity>
-        <service
-            android:name="com.example.tson.NotificationHandler"
-            android:exported="false"/>
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
         </activity>
-
+		<receiver 
+		    android:name="tson_utilities.NotificationHandler">
+		</receiver>
+		
     </application>
 
 </manifest>

@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 24;
+	private static final int DATABASE_VERSION = 25;
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
@@ -47,12 +47,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_PROJECT_NAME = "project_name";
 
 	//TIME BLOCKS TABLE
-	private static final String KEY_TIME_BLOCK_PROJECT_ID = "project_id";
-	private static final String KEY_TIME_BLOCK_YEAR = "year";
-	private static final String KEY_TIME_BLOCK_MONTH = "month";
-	private static final String KEY_TIME_BLOCK_DAY = "day";
-	private static final String KEY_TIME_BLOCK_MINUTES = "minutes";
-	private static final String KEY_TIME_BLOCK_CONFIRMED = "confirmed";
+	private static final String KEY_TIME_BLOCK_PROJECT_ID 	= "project_id";
+	private static final String KEY_TIME_BLOCK_YEAR 		= "year";
+	private static final String KEY_TIME_BLOCK_MONTH 		= "month";
+	private static final String KEY_TIME_BLOCK_DAY 			= "day";
+	private static final String KEY_TIME_BLOCK_MINUTES 		= "minutes";
+	private static final String KEY_TIME_BLOCK_CONFIRMED 	= "confirmed";
+	
+	//NOTIFICATION TABLE
+	private static final String KEY_NOTIFICATION_ID 		= "notification_id";
+	private static final String KEY_NOTIFICATION_TITLE 		= "notification_title";
+	private static final String KEY_NOTIFICATION_TEXT 		= "notification_text";
+	private static final String KEY_NOTIFICATION_WEEKDAY	= "notification_year";
+	private static final String KEY_NOTIFICATION_HOURS 		= "notification_hours";
+	private static final String KEY_NOTIFICATION_MINUTES 	= "notification_minutes";
+	private static final String KEY_NOTIFICATION_REPEATDAY	= "notification_id";
 	
 	// Table Create Statements
 	// Project table create statement

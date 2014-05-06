@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/combitech_blue" />
+
+
+        
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:orientation="horizontal"
+    android:id="@+id/RemindLinear">
+        <TextView
+            android:id="@+id/RemindMeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remind me of:"
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20sp" />
+        
+		<TextView
+            android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+            <requestFocus />
+        </TextView>
+        
+</LinearLayout>
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:id="@+id/TextLinear"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp">
+		<RelativeLayout
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent">
+    		
+        <TextView
+            android:id="@+id/TimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="17dp"
+            android:layout_alignParentLeft="true"
+            android:text="TIME"
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20sp" />
+        
+         <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:maxHeight="20dp"
+            android:maxWidth="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pen2" />
+
+         <TextView
+             android:id="@+id/TimeSetTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_toLeftOf="@+id/imageButton1"
+             android:layout_marginRight="10dp"
+             android:clickable="true"
+             android:fontFamily="sans-serif-thin"
+             android:text="--:--"
+             android:textAppearance="?android:attr/textAppearanceLarge"
+             android:textSize="20sp" />
+         </RelativeLayout>
+
+</LinearLayout>       
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" 
+    android:id="@+id/DateLinear"
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp">
+		<RelativeLayout
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent">        
+        <TextView
+            android:id="@+id/DateTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop= "15dp"
+            android:layout_marginLeft="17dp"
+            android:text="DATE"
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20sp" />
+                 <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:maxHeight="20dp"
+            android:maxWidth="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pen2" />
+
+         <TextView
+             android:id="@+id/DateSetTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_toLeftOf="@+id/imageButton2"
+             android:layout_marginRight="10dp"
+             android:clickable="true"
+             android:fontFamily="sans-serif-thin"
+             android:text="--:--"
+             android:textAppearance="?android:attr/textAppearanceLarge"
+             android:textSize="20sp" />
+         </RelativeLayout>
+
+</LinearLayout> 
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/RepeatLinear" 
+    android:orientation="horizontal"
+    android:layout_marginTop="15dp">
+		<RelativeLayout
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent">          		
+  		<TextView
+            android:id="@+id/RepeatTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop= "15dp"
+            android:layout_marginLeft="17dp"
+            android:text="REPEAT"
+            android:fontFamily="sans-serif-thin"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20sp" />
+  		         <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="#00FFFFFF"
+            android:clickable="true"
+            android:maxHeight="20dp"
+            android:maxWidth="20dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pen2" />
+
+         <TextView
+             android:id="@+id/RepeatSetTextView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_toLeftOf="@+id/imageButton3"
+             android:layout_marginRight="10dp"
+             android:clickable="true"
+             android:fontFamily="sans-serif-thin"
+             android:text="--:--"
+             android:textAppearance="?android:attr/textAppearanceLarge"
+             android:textSize="20sp" />
+          </RelativeLayout>
+
+</LinearLayout> 	
+	
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+		
+        <Button
+            android:id="@+id/cancelNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CANCEL" />
+        <Button
+            android:id="@+id/addNotification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SAVE" />
+
+
+    </LinearLayout>
+    
+    <TextView
+        android:id="@+id/Blue_Below"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/combitech_blue" />
+</LinearLayout>
