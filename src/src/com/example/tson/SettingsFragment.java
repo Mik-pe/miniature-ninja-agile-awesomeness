@@ -1,5 +1,6 @@
 package com.example.tson;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 public class SettingsFragment extends Fragment{
@@ -57,6 +59,7 @@ public class SettingsFragment extends Fragment{
 		 Button addNotification = (Button) settings.findViewById(R.id.addNotification);
 		 mServiceIntent = new Intent(getActivity(), NotificationHandler.class);
 		 
+		 ExpandableListView notificationsExpand = (ExpandableListView) settings.findViewById(R.id.expandableListView1);
 
 		 manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		 manageProjectsButton.setOnClickListener(new View.OnClickListener() {

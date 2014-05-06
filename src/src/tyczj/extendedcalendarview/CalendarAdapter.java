@@ -146,6 +146,8 @@ public class CalendarAdapter extends BaseAdapter{
 			//get todays date
 			Calendar thisDay = Calendar.getInstance();
 			
+			int isConfirmed = HomeActivity.user.isDateConfirmed(tempCal);
+			
 			
 			//----functionality for color coding the calendar----//
 			
@@ -160,32 +162,25 @@ public class CalendarAdapter extends BaseAdapter{
        			{
 	       			for(int i = 0; i < projectList.size(); i++)
 	           		{
-	           			Project p = projectList.get(i);
+	           			Project p = projectList.get(i);	          
 	           			
-	           			TimeBlock t = p.getTimeByDate(tempCal);
-	          
-	           			if(t != null)
+	           			if(isConfirmed==1) //coloring for confirmed timeblocks
 	           			{
-	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
-	           					break;
-	           				}       					
-	           				else //coloring for unconfirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
-	           					break;
-	           				}
-	           					
-	           			}
+	           				rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+	           				break;
+	           			}       					
+	           			else if(isConfirmed==0) //coloring for unconfirmed timeblocks
+	           			{
+	           				rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+	           				break;
+	           			}	           					
+	           			
 	           			else //coloring for past blocks with unreported time
 	           			{
 	           				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
 	           			}
 	           		}
        			}
-       			else //coloring for past blocks with unreported time
-       				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
        		}
        		//-----------end of color coding functionality of the calendar-------------//
        		

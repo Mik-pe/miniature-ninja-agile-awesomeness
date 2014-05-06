@@ -7,24 +7,34 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.INTERNET" />
-	
-	
-	
-	
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- can be useful for attachments -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Google+ log in -->
+    <uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+		
+
     <application
         android:allowBackup="true"
         android:fontFamily="sans-serif-thin"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
+        
+		<meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <!-- Home Screen Activity -->
         <activity
-            android:name="com.example.tson.HomeActivity"
+            android:name="com.example.tson.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +42,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- When signed in activity -->
+        <activity
+            android:name="com.example.tson.HomeActivity"
+            android:label="@string/login_button" >
+        </activity>
 
+        
         <!-- Create Project Activity -->
         <activity
             android:name="com.example.tson.CreateProjectActivity"
@@ -70,6 +87,11 @@
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
+        </activity>
+
+        <activity
+            android:name="com.example.tson.SendEmailActivity"
+            android:label="@string/title_activity_send_email" >
         </activity>
 
     </application>

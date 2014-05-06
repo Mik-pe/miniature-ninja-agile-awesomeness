@@ -1,15 +1,13 @@
 package com.example.tson;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
+import android.R;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -21,10 +19,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class ExportFragment extends Fragment{
 	
@@ -38,8 +39,14 @@ public class ExportFragment extends Fragment{
 	Calendar endDate;
 	int i;
 	EditText startTime, endTime;
+
 	public static User user = HomeActivity.user;
-	List<Project> projectList = user.getProjects();
+
+	TextView projectText;
+	ArrayAdapter<Project> projectAdapter;
+	List<Project> projectListStats = user.getProjects();
+	ListView projectList;
+	
 	
 	
 	 /***********************
@@ -54,6 +61,7 @@ public class ExportFragment extends Fragment{
 		 
 		  super.onCreate(savedInstanceState);
 		  View statistics = inflater.inflate(R.layout.export_fragment, container, false);
+		  projectList = (ListView) statistics.findViewById(R.id.export_list_view);
 		  startDate = Calendar.getInstance();
 		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStartExport);
@@ -83,6 +91,11 @@ public class ExportFragment extends Fragment{
 		  //onClick on btnGo
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
+					
+					Intent intent = new Intent(getActivity(), SendEmailActivity.class);
+					startActivity(intent);
+					
+					
 					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
 					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
 					Log.d("StartDifference", ""+daysSinceStartDate);
@@ -95,6 +108,9 @@ public class ExportFragment extends Fragment{
 					
 				}
 		  });
+		  
+		  projectAdapter = new projectAdapter();
+		  projectList.setAdapter(projectAdapter);
 		  
 		  return statistics;
 		 }
@@ -113,9 +129,9 @@ public class ExportFragment extends Fragment{
 	 		String outputString = "Projectname, Year, Month, Day, Hours, Min," + "\n";
 	 		
 	 		//Loops through all projects and adds all timeblocks in the timespan to the outputString
-	 		for(int i=0;i<projectList.size();i++)
+	 		for(int i=0;i<projectListStats.size();i++)
 			{
-				List<TimeBlock> tb = projectList.get(i).getSubmissionList();
+				List<TimeBlock> tb = projectListStats.get(i).getSubmissionList();
 				  for(int j=0; j < tb.size(); j++)
 				  {
 					  Calendar timeblockDate = tb.get(j).getDate();
@@ -124,7 +140,7 @@ public class ExportFragment extends Fragment{
 					  {
 						  if(user.isDateConfirmed(timeblockDate) == 1)
 						  {
-							  outputString += projectList.get(i).getName() + ", ";
+							  outputString += projectListStats.get(i).getName() + ", ";
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.YEAR)) + ", ";
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.MONTH)+1) + ", ";
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.DAY_OF_MONTH)) + ", ";
@@ -246,4 +262,20 @@ public class ExportFragment extends Fragment{
 				}
 	 		}
 		 };
+		 
+		 private class projectAdapter extends ArrayAdapter<Project>{
+				public projectAdapter() {
+					super(getActivity(), R.layout.statistics_listview_item, projectListStats);
+				}
+				
+				@Override
+				public View getView(int position, View view, ViewGroup parent){
+					if(view == null)
+						view = getActivity().getLayoutInflater().inflate(R.layout.project_list_export, parent, false);
+					projectText = (TextView) view.findViewById(R.id.projectNameTextView);
+					projectText.setText(user.getProjects().get(position).getName());
+						
+			        return view;
+				}
+		    }
 }
