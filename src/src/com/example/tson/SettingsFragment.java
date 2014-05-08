@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -55,7 +56,7 @@ public class SettingsFragment extends Fragment{
 	notificationAdapter notiAdapter;
 	int holder = 0;
 	int hour, min, newHour, newMin;
-	ExpandableListView notificationListView;
+	ListView notificationListView;
 	/**SHARED PREFERENCES*/
 	public static final String PREFS_NAME = "MyPrefsFile";
 	 /***********************
@@ -75,14 +76,14 @@ public class SettingsFragment extends Fragment{
 		 notificationCal = Calendar.getInstance();
 		 meName.setText(HomeActivity.user.getName());
 		 
-		 notificationListView = (ExpandableListView) settings.findViewById(R.id.expandableListView1);
+		 notificationListView = (ListView) settings.findViewById(R.id.notificationListView);
 		 /**
 		  * Static defaultnotifications, not saved internally
 		  */
 		 notificationList = new ArrayList<MyNotification>();
-		 notificationList.add(new MyNotification("TsonSays", "Hej", nrOfNotifications));
+		 notificationList.add(new MyNotification("TsonSays", "Hej", nrOfNotifications, 1, 1));
 		 nrOfNotifications++;
-		 notificationList.add(new MyNotification("HEHSEHSDG", "REMSEFINDF", nrOfNotifications));
+		 notificationList.add(new MyNotification("HEHSEHSDG", "REMSEFINDF", nrOfNotifications, 1, 1));
 		 
 		 
 		 manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
@@ -96,7 +97,7 @@ public class SettingsFragment extends Fragment{
 		});
 
 
-		 notiAdapter = new notificationAdapter(getActivity(), notificationList);
+		 notiAdapter = new notificationAdapter();
 		 notificationListView.setAdapter(notiAdapter);
 		 return settings;
 	}
@@ -180,42 +181,20 @@ public class SettingsFragment extends Fragment{
 		}//End onTimeSet	
 	};//End timeSetListener
 	
-    private class notificationAdapter extends BaseExpandableListAdapter {
-    	private Context context;
-    	private List<MyNotification> notificationList;
-    	private List<String> myHeader = new ArrayList<String>();
+    private class notificationAdapter extends ArrayAdapter<MyNotification> {
     	
-		public notificationAdapter(Context c, List<MyNotification> nL) {
-			context = c;
-			notificationList = nL;
-			if(!notificationList.isEmpty())
-				for(int i=0;i<notificationList.size(); i++){
-					myHeader.add(notificationList.get(i).getNotificationTitle());
-				}
+    	public notificationAdapter() {
+    		super(getActivity(), R.layout.settings_notification_item, notificationList);
 		}
 
-
-		@Override
-		public Object getChild(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
-			return this.notificationList.get(groupPosition);
-		}
-
-		@Override
-		public long getChildId(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
-			return childPosition;
-		}
-
-		@Override
-		public View getChildView(int groupPosition, int childPosition,
-				boolean isLastChild, View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			if(convertView == null)
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
+    	@Override
+    	public View getView(int position, View view, ViewGroup parent)
+    	{
+			if(view == null)
+				view = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
 			
-			 notificationEditText = (TextView) convertView.findViewById(R.id.editText3);
-			 notificationEditText.setHint(notificationList.get(groupPosition).getNotificationText());
+			 notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
+			 notificationEditText.setText(notificationList.get(position).getNotificationTitle());
 			 notificationEditText.setOnClickListener(new View.OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -224,101 +203,26 @@ public class SettingsFragment extends Fragment{
 				}
 			 });
 			 
-			 timeTextView = (TextView) convertView.findViewById(R.id.TimeSetTextView);
-			 LinearLayout timeLayout = (LinearLayout) convertView.findViewById(R.id.TextLinear);
-			 timeLayout.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					showTimeDialog(v);
-				}
-			});
-			 Button addNotification = (Button) convertView.findViewById(R.id.addNotification);
-			 addNotification.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// TODO Auto-generated method stub
-						String notificationText = notificationEditText.getText().toString();
-						
-						notificationCal = Calendar.getInstance();
-						notificationCal.add(Calendar.SECOND, 5);
-						
-						Intent mServiceIntent = new Intent(getActivity(), NotificationHandler.class);
-						mServiceIntent.putExtra("title", "Tson says:");
-						if(notificationText != "")
-							mServiceIntent.putExtra("text", notificationText);
-						else
-							mServiceIntent.putExtra("text", "Default Reminder");
-						
-						mServiceIntent.putExtra("nrOfNots", nrOfNotifications);
-						mServiceIntent.putExtra("timeUntilNextDate", (notificationCal.getTimeInMillis()-Calendar.getInstance().getTimeInMillis()));
-						mServiceIntent.putExtra("calendarDefinition", Calendar.SECOND);
-						mServiceIntent.putExtra("calendarValue", 5);
+			 Button addNotification = (Button) view.findViewById(R.id.addNotification);
+			 
+			 if(position != notificationList.size()-1)
+			 {
+				 addNotification.setVisibility(Button.GONE);
+			 }
+			 else{
+				 addNotification.setVisibility(Button.VISIBLE);
+				 addNotification.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
+							startActivity(intent);
+						}
+					 });	 
+			 }
+	        return view;
+    	}
 
-						PendingIntent pendingIntent = PendingIntent.getBroadcast(getActivity(), nrOfNotifications, mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-						nrOfNotifications++;
-						
-						AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-						alarmManager.set(AlarmManager.RTC_WAKEUP, notificationCal.getTimeInMillis(), pendingIntent);
-							
-						
-					}
-				 });
-				 
-	        return convertView;
-		}
-
-		@Override
-		public int getChildrenCount(int groupPosition) {
-			// TODO Auto-generated method stub
-			return 1;
-		}
-
-		@Override
-		public Object getGroup(int groupPosition) {
-			// TODO Auto-generated method stub
-			return this.myHeader.get(groupPosition);
-		}
-
-		@Override
-		public int getGroupCount() {
-			// TODO Auto-generated method stub
-			return myHeader.size();
-		}
-
-		@Override
-		public long getGroupId(int groupPosition) {
-			// TODO Auto-generated method stub
-			return groupPosition;
-		}
-
-		@Override
-		public View getGroupView(int groupPosition, boolean isExpanded,
-				View convertView, ViewGroup parent) {
-			// TODO Auto-generated method stub
-			String headerTitle = (String) getGroup(groupPosition);
-	        if (convertView == null) {
-	            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	            convertView = infalInflater.inflate(R.layout.settings_notification_group, null);
-	        }
-	        TextView text = (TextView) convertView.findViewById(R.id.notificationTitle);
-	        text.setText(myHeader.get(groupPosition));
-	        isExpanded = false;
-	        return convertView;
-		}
-
-		@Override
-		public boolean hasStableIds() {
-			// TODO Auto-generated method stub
-			return false;
-		}
-
-		@Override
-		public boolean isChildSelectable(int groupPosition, int childPosition) {
-			// TODO Auto-generated method stub
-			return false;
-		}
     }
     
     

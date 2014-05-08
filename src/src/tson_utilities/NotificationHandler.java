@@ -1,6 +1,8 @@
 package tson_utilities;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import com.example.tson.HomeActivity;
 import com.example.tson.R;
@@ -33,6 +35,9 @@ public class NotificationHandler extends BroadcastReceiver
 	long timeUntilNextDate;
 	int calendarDefinition;
 	int calendarValue;
+	int nextWeekDay;
+	List<Integer> repeatList;
+	
 	
 	 /***********************
 	  *  	OTHERS			*/	
@@ -49,35 +54,74 @@ public class NotificationHandler extends BroadcastReceiver
 		nrOfNots = arg1.getIntExtra("nrOfNots", 0);
 		timeUntilNextDate = arg1.getLongExtra("timeUntilNextDate", 0);
 		calendarDefinition = arg1.getIntExtra("calendarDefinition", 0);
+		
+		//TODO
 		calendarValue = arg1.getIntExtra("calendarValue", 0);
+		repeatList = arg1.getIntegerArrayListExtra("repeatList");
 		
-		
-		Intent mServiceIntent = new Intent(arg0, NotificationHandler.class);
+
+			
+		Log.d("logging", "HERE");
 		/**
-		 * Values of the class are put in to keep them until the next call.
+		 * if repeatList is empty, the notification should not be repeated
 		 */
-		mServiceIntent.putExtra("title", "Tson says:");
-		if(notificationText != "")
-			mServiceIntent.putExtra("text", notificationText);
-		else
-			mServiceIntent.putExtra("text", "Default Reminder");
+		if(!repeatList.isEmpty())
+		{
+			Calendar notificationCalendar = Calendar.getInstance();
+			
+			Intent mServiceIntent = new Intent(arg0, NotificationHandler.class);
+			/**
+			 * Values of the class are put in to keep them until the next call.
+			 */
+			mServiceIntent.putExtra("title", notificationTitle);
+			if(notificationText != "")
+				mServiceIntent.putExtra("text", notificationText);
+			else
+				mServiceIntent.putExtra("text", "Default Reminder");
+			
+			mServiceIntent.putExtra("nrOfNots", nrOfNots);
+			mServiceIntent.putExtra("timeUntilNextDate", (timeUntilNextDate));
+			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
+			mServiceIntent.putExtra("calendarValue",calendarValue);
+			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
+			
+			nextWeekDay = repeatList.get(0);
+			for(int i=0;i<repeatList.size();i++)
+			{
+				if(notificationCalendar.get(Calendar.DAY_OF_WEEK)<(repeatList.get(i)+1))
+				{
+					nextWeekDay = repeatList.get(i);
+					i = repeatList.size();
+				}
+				Log.d("logging", "HERE"+nextWeekDay+notificationCalendar.get(Calendar.DAY_OF_WEEK));
+			}
+			if(nextWeekDay != 7)
+				nextWeekDay++;
+			else
+				nextWeekDay = 1;
+			
+			if(nextWeekDay < notificationCalendar.get(Calendar.DAY_OF_WEEK)){
+				nextWeekDay = (7-notificationCalendar.get(Calendar.DAY_OF_WEEK))+nextWeekDay;
+			}
+			else
+			{
+				nextWeekDay = nextWeekDay-notificationCalendar.get(Calendar.DAY_OF_WEEK);
+				if(nextWeekDay == 0)
+				{
+					nextWeekDay = 7;
+				}
+			}
+			Log.d("logging", "HERE"+nextWeekDay);
+			notificationCalendar.add(calendarDefinition, nextWeekDay);
+			/**
+			 * getBroadcast will queue the pendingIntent for this handler
+			 * AlarmManager will be set inside the function for recursive calls.
+			 */
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(arg0, nrOfNots, mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			AlarmManager alarmManager = (AlarmManager)arg0.getSystemService(Context.ALARM_SERVICE);
+			alarmManager.set(AlarmManager.RTC_WAKEUP, notificationCalendar.getTimeInMillis(), pendingIntent);			
+		}		
 		
-		mServiceIntent.putExtra("nrOfNots", nrOfNots);
-		mServiceIntent.putExtra("timeUntilNextDate", (timeUntilNextDate));
-		mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
-		mServiceIntent.putExtra("calendarValue",calendarValue);
-		
-		
-		Calendar notificationCalendar = Calendar.getInstance();
-		notificationCalendar.add(calendarDefinition, calendarValue);
-		
-		/**
-		 * getBroadcast will queue the pendingIntent for this handler
-		 * AlarmManager will be set inside the function for recursive calls.
-		 */
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(arg0, nrOfNots, mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		AlarmManager alarmManager = (AlarmManager)arg0.getSystemService(Context.ALARM_SERVICE);
-		alarmManager.set(AlarmManager.RTC_WAKEUP, notificationCalendar.getTimeInMillis(), pendingIntent);
 		showNotification(arg0);
 	}
 	

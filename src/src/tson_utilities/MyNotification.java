@@ -1,4 +1,8 @@
 package tson_utilities;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 
  * @author mikpe201 & malky217
@@ -13,16 +17,21 @@ public class MyNotification {
 	 /***********************/
 	private String notificationTitle;
 	private String notificationText;
+	private int notificationHour;
+	private int notificationMinute;
+	private List<Integer> notificationRepeat;
 	private int notificationID;
 	
 	/***********************
 	  *  	CONSTRUCTOR		*/	
 	 /***********************/
-	public MyNotification(String title, String text, int id) 
+	public MyNotification(String title, String text, int id, int hour, int min) 
 	{
 		setNotificationID(id);
 		setNotificationText(text);
 		setNotificationTitle(title);
+		setNotificationHour(hour);
+		setNotificationMinute(min);
 	}
 	/***********************
 	  *  	OTHER		*/	
@@ -48,6 +57,17 @@ public class MyNotification {
 		this.notificationTitle = notificationTitle;
 	}
 	
+	public void setNotificationRepeat(List<Integer> notificationRepeat) {
+		this.notificationRepeat = notificationRepeat;
+	}
+	
+	public void setNotificationMinute(int notificationMinute) {
+		this.notificationMinute = notificationMinute;
+	}
+
+	public void setNotificationHour(int notificationHour) {
+		this.notificationHour = notificationHour;
+	}
 	/***********************
 	  *  	GETTERS		*/	
 	 /***********************/
@@ -65,6 +85,19 @@ public class MyNotification {
 	public String getNotificationTitle() 
 	{
 		return notificationTitle;
+	}
+
+
+	public List<Integer> getNotificationRepeat() {
+		return notificationRepeat;
+	}
+
+	public int getNotificationMinute() {
+		return notificationMinute;
+	}
+
+	public int getNotificationHour() {
+		return notificationHour;
 	}
 
 }

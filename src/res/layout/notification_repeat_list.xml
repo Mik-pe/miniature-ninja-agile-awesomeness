@@ -3,15 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/notificationTitle"
+    
+	<LinearLayout android:id="@+id/repeat_layout_id"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+    </LinearLayout>
+    
+    <Button 
+        android:id="@+id/repeatButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
-        android:text="Large Text"
-        android:fontFamily="sans-serif-thin"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
-
+        android:text="OK"/>
+    "
 </LinearLayout>

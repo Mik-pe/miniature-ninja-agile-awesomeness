@@ -36,7 +36,7 @@ public class CreateProjectActivity extends Activity {
 		}
 	}
 	
-	//Hej!
+	//Hej! HEJHEEEJ!!! :DD:D:D:D:DDD
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 

@@ -83,7 +83,7 @@ public class HomeActivity extends FragmentActivity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+		Calendar.getInstance().setFirstDayOfWeek(Calendar.MONDAY);
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
         db = new DatabaseHelper(getApplicationContext());
