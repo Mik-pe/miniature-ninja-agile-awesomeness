@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import tson_utilities.User;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import android.support.v4.app.Fragment;
@@ -76,7 +78,7 @@ public class SettingsFragment extends Fragment{
 		 
 		 notificationCal = Calendar.getInstance();
 		 meName = (TextView) settings.findViewById(R.id.meName);		 
-		 meName.setText(HomeActivity.user.getName());
+		 meName.setText(User.getInstance().getName());
 		 
 		 Button addNotification = (Button) settings.findViewById(R.id.addNotification);
 		 mServiceIntent = new Intent(getActivity(), NotificationHandler.class);

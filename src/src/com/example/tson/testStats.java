@@ -38,7 +38,7 @@ public class testStats extends Activity {
 	ArrayAdapter<Project> statsAdapter;
 	ListView projectListView;
 	private View test;
-	public static User user = HomeActivity.user;
+	public static User user = User.getInstance();
 	Button loginBtn;
 	
 	List<Project> projeWctListStats = user.getProjects();

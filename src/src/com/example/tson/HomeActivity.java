@@ -59,7 +59,9 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	public User user = null;
+	
+	
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -93,10 +95,14 @@ public class HomeActivity extends FragmentActivity
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 	    db = new DatabaseHelper(getApplicationContext());
-	    db.getAllProjects();
+	    if(user == null){
+	    	Log.d("User insertion", "USER IS NULL CREATE NEW");
+	    	user = db.createUser("some-email", "Rutger", "picture_href");
+	    }
+	    db.getAllProjects(user);
 	    db.getAllTimeBlocks();
 	    db.logTimeblocks();
-	    projectList = db.getAllProjects();
+	    projectList = db.getAllProjects(user);
 	    user.getProjects().clear();
 		
         for (int i = 0; i < projectList.size(); i++)

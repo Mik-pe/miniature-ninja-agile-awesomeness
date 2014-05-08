@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
+import tson_utilities.User;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.Time;
@@ -138,7 +139,7 @@ public class CalendarAdapter extends BaseAdapter{
 			Day day = dayList.get(position);
 			
 			//List of projects
-			List<Project> projectList = (ArrayList<Project>) HomeActivity.user.getProjects();
+			List<Project> projectList = (ArrayList<Project>) User.getInstance().getProjects();
 			
 			//Create a calendarObject of the day which is currently being printed
 			Calendar tempCal = Calendar.getInstance();
@@ -146,7 +147,7 @@ public class CalendarAdapter extends BaseAdapter{
 			//get todays date
 			Calendar thisDay = Calendar.getInstance();
 			
-			int isConfirmed = HomeActivity.user.isDateConfirmed(tempCal);
+			int isConfirmed = User.getInstance().isDateConfirmed(tempCal);
 			
 			
 			//----functionality for color coding the calendar----//

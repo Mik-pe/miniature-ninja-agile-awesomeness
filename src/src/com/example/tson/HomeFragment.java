@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Calendar homeFragmentCalendar;
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
 	
 	/***********************

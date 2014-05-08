@@ -37,7 +37,7 @@ public class ManageProjectsActivity extends Activity {
 	  *  	VARIABLES		*/	
 	 /***********************/
 	
-	List<Project> projectList = HomeActivity.user.getProjects();
+	List<Project> projectList = User.getInstance().getProjects();
 	ListView manageProjectsList;
 	ManageProjectListAdapter projectAdapter;
 	DatabaseHelper db = HomeActivity.db;

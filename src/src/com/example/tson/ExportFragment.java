@@ -7,7 +7,6 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
-import android.R;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +39,7 @@ public class ExportFragment extends Fragment{
 	int i;
 	EditText startTime, endTime;
 
-	public static User user = HomeActivity.user;
+	public static User user = User.getInstance();
 
 	TextView projectText;
 	ArrayAdapter<Project> projectAdapter;
