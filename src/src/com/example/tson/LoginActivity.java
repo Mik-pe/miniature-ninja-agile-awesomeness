@@ -1,9 +1,12 @@
 package com.example.tson;
 
+import tson_utilities.User;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.model.people.Person;
@@ -49,7 +53,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 	/*******************************************************************************************
 	  *  Google+ Log in		
 	  * Tutuorial: http://www.androidhive.info/2014/02/android-login-with-google-plus-account-1/
-	  * Authors: Anton, Sofie, Per
+	  * Authors: Anton, Sofie, Pär
 	 /********************************************************************************************/
 	
 	private static final int RC_SIGN_IN = 0;
@@ -131,6 +135,9 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
            personPhotoUrl = personPhotoUrl.substring(0,
                    personPhotoUrl.length() - 2)
                    + PROFILE_PIC_SIZE;
+           
+           //Store account information in db
+           //User user = new User(email, personName, "");
            
            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0); // 0 - for private mode
            Editor editor = pref.edit();

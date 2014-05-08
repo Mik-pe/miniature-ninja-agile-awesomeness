@@ -14,6 +14,8 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.SharedPreferences;
+
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -26,6 +28,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +49,9 @@ public class HomeActivity extends FragmentActivity
 	  *  	VARIABLES		*/	
 	 /***********************/
 	
+	/**SHARED PREFERENCES*/
+	public static final String PREFS_NAME = "MyPrefsFile";
+	
 	int hour,min, newHour, newMin;
 	int holder = 0;
 	static final int TIME_DIALOG_ID=0;
@@ -59,7 +65,14 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	public User user = null;
+
+	
+	 //Fetch Google+ data for input
+	 /*SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+	 String personName = pref.getString("personName", null); // getting String
+	 String email = pref.getString("email", null);*/
+
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -89,14 +102,26 @@ public class HomeActivity extends FragmentActivity
 	{		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+		Calendar.getInstance().setFirstDayOfWeek(Calendar.MONDAY);
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 	    db = new DatabaseHelper(getApplicationContext());
-	    db.getAllProjects();
+	    
+	    if(user == null){
+	    	
+			 //Fetch Google+ data for input
+			 SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+			 String personName = pref.getString("personName", null); // getting String
+			 String personPhotoUrl = pref.getString("personPhotoUrl", null);
+			 String email = pref.getString("email", null);
+	    	
+	    	Log.d("User insertion", "USER IS NULL CREATE NEW");
+	    	user = db.createUser(email, personName, personPhotoUrl);
+	    }
+	    db.getAllProjects(user);
 	    db.getAllTimeBlocks();
 	    db.logTimeblocks();
-	    projectList = db.getAllProjects();
+	    projectList = db.getAllProjects(user);
 	    user.getProjects().clear();
 		
         for (int i = 0; i < projectList.size(); i++)
@@ -144,7 +169,7 @@ public class HomeActivity extends FragmentActivity
 
 	//enabling action bar app icon and behaving it as toggle button
 	getActionBar().setDisplayHomeAsUpEnabled(true);
-	getActionBar().setHomeButtonEnabled(true);	
+	getActionBar().setHomeButtonEnabled(true);
 
 	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 			R.drawable.ic_drawer, //nav menu toggle icon
@@ -169,10 +194,9 @@ public class HomeActivity extends FragmentActivity
 			//on first time display view for first nav item
 			displayView(0);
 		}
+
 	
 	}//End onCreate-function
-	
-	
 	
 	/**
 	 * Getter of Calendar from the Homeactivity

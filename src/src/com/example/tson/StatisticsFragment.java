@@ -44,7 +44,7 @@ public class StatisticsFragment extends Fragment{
 	EditText startTime, endTime;
 	ListView projectListView;
 	ArrayAdapter<Project> statsAdapter;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectListStats = user.getProjects();
 	double[] projectMinutes = new double[projectListStats.size()];
 	

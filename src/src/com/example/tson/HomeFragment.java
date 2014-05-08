@@ -18,6 +18,7 @@ import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -30,11 +31,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -67,7 +74,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Button reportTimeButton; 
 	TextView projectTimeTextViewVar;
 	public static String previousFragment;
-	
+	MenuItem createProject;
+	public static Boolean firstTime = true;
 
 	TextView dateText;
 	ImageButton prevDate;
@@ -76,7 +84,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Calendar homeFragmentCalendar;
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
 	
 	/***********************
@@ -94,10 +102,30 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        
+		rootView = inflater.inflate(R.layout.fragment_home, container, false);
+		
+		if(projectList.isEmpty()/* && firstTime==true*/)
+		{
+			//firstTime = false;
+			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
+			dialog.setContentView(R.layout.empty_project_view);
+			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
+			dialog.show();
+			firstTimeButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+					
+				}
+			});
+		    
+		}
+		
+        ActionBar actionCreate = getActivity().getActionBar();
+        actionCreate.show();
+        setHasOptionsMenu(true);
         /**
          * Bundle contains the date difference from submission.
          * The homeFragmentCalendar has its' date changed
@@ -144,19 +172,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         });
         
         //Declaration of buttons on home screen
-        createProjectButton = (Button) rootView.findViewById(R.id.create_project_button);
         reportTimeButton = (Button) rootView.findViewById(R.id.report_time);
-        
-        /**
-         * PopUp for "Create Project" button
-         */
-        createProjectButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-				startActivity(intent);
-			}
-		});
 
         /**
          * PopUp for "Confirm Time" button
@@ -172,8 +188,29 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         rootView.setOnTouchListener(this);
         newDate(homeFragmentCalendar); 
         return rootView;
-        
     }//End OnCreate-function
+	
+	/**
+     * Plus sign in top right-corner
+     */
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{	
+		inflater.inflate(R.menu.create_project, menu);
+		
+        createProject = (MenuItem) menu.findItem(R.id.createProjectItem);
+        createProject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
+	}
+	
 	
 	/**
 	 * This defines the status indicator in the home view. For example one date is confirmed
@@ -374,7 +411,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
    	public void showReportDialog(View v)
     {
    		//AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
    		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    		//Add title
    		builder.setTitle(R.string.title_confirm_time);

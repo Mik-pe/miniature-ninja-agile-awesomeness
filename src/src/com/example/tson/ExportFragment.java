@@ -43,7 +43,7 @@ public class ExportFragment extends Fragment{
 	CheckBox checked;
 	
 
-	public static User user = HomeActivity.user;
+	public static User user = User.getInstance();
 
 	TextView projectText;
 	ArrayAdapter<Project> projectAdapter;
@@ -74,8 +74,7 @@ public class ExportFragment extends Fragment{
 		  btnGo = (Button) export.findViewById(R.id.export);
 		  startTime = (EditText) export.findViewById(R.id.startTimeExport);
 		  endTime = (EditText) export.findViewById(R.id.endTimeExport);
-		  
-		  
+
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -125,7 +124,6 @@ public class ExportFragment extends Fragment{
 	 	/**
 	 	 * A function that examines the projectlist, picks all timeblocks within start and end-date,
 	 	 * prints it to a csv-file and gives the user the ability to send it via an external email-app
-	 	 * 
 	 	 * @author Albin Törnqvist & Ramin Assadi
 	 	 * @param start
 	 	 * @param end

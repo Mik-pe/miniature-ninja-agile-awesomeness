@@ -110,11 +110,19 @@
             android:layout_marginRight="30dp"
             android:background="@color/combitech_light_grey" />
 
+
+        <Button
+            android:id="@+id/attach_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attach file" />
+        
         <Button
             android:id="@+id/send_email_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button" />
+            android:text="Send email" />       
+
     </LinearLayout>
 
 </FrameLayout>
