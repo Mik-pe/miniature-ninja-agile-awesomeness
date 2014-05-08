@@ -389,7 +389,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
    	public void showReportDialog(View v)
     {
    		//AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
    		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    		//Add title
    		builder.setTitle(R.string.title_confirm_time);
