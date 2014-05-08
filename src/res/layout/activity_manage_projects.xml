@@ -33,16 +33,34 @@
         android:layout_height="2dp"
         android:background="#DB8C0C" />
 
-    <ListView
-        android:id="@+id/manage_project_list"
-        android:layout_width="match_parent"
-        android:layout_height="528dp" >
-    </ListView>
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="fill_parent"
-        android:layout_height="77dp"
-        android:text="Back" />
+    
+            <ListView
+            android:id="@+id/manage_project_list"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:paddingTop="40dp"
+	 		android:paddingBottom="50dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp" >
+
+        </ListView>
+
+        
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop ="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:text="Back" 
+            android:textSize="32sp" />
+    
 
 </LinearLayout>

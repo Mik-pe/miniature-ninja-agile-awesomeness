@@ -129,7 +129,7 @@ public class ManageProjectsActivity extends Activity {
     		TextView projectName = (TextView) view.findViewById(R.id.project_name);
     		projectName.setText(currentProject.getName());
     		
-    		Button editButton = (Button) view.findViewById(R.id.edit_button);
+    		ImageButton editButton = (ImageButton) view.findViewById(R.id.edit_button);
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -137,6 +137,7 @@ public class ManageProjectsActivity extends Activity {
 					showInputDialog(currentProject);					
 				}
 			});
+
     		
     		return view;
     	}
