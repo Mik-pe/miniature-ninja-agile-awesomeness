@@ -27,6 +27,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -151,7 +152,7 @@ public class HomeActivity extends FragmentActivity
 
 	//enabling action bar app icon and behaving it as toggle button
 	getActionBar().setDisplayHomeAsUpEnabled(true);
-	getActionBar().setHomeButtonEnabled(true);	
+	getActionBar().setHomeButtonEnabled(true);
 
 	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 			R.drawable.ic_drawer, //nav menu toggle icon
@@ -178,8 +179,6 @@ public class HomeActivity extends FragmentActivity
 		}
 	
 	}//End onCreate-function
-	
-	
 	
 	/**
 	 * Getter of Calendar from the Homeactivity

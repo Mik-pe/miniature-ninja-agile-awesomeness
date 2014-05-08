@@ -7,7 +7,6 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
-//import android.R;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -119,7 +118,7 @@ public class ExportFragment extends Fragment{
 	 	 * A function that examines the projectlist, picks all timeblocks within start and end-date,
 	 	 * prints it to a csv-file and gives the user the ability to send it via an external email-app
 	 	 * 
-	 	 * @author Albin Törnqvist
+	 	 * @author Albin Tornqvist
 	 	 * @param start
 	 	 * @param end
 	 	 */
