@@ -14,6 +14,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * ManageProjectActivity Class - Activity accessed from settings. 
@@ -36,6 +39,7 @@ public class ManageProjectsActivity extends Activity {
 	/***********************
 	  *  	VARIABLES		*/	
 	 /***********************/
+	MenuItem createProject;
 	
 	List<Project> projectList = HomeActivity.user.getProjects();
 	ListView manageProjectsList;
@@ -68,7 +72,27 @@ public class ManageProjectsActivity extends Activity {
 		    	finish();
 			}
 		});
-	}	
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{	
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.create_project, menu);
+		
+        createProject = (MenuItem) menu.findItem(R.id.createProjectItem);
+        createProject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent intent = new Intent(getApplicationContext(), CreateProjectActivity.class);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
+        return true;
+	}
 	
 	/**
 	 * Shows an alertDialog for textinput to change the name of a project, 
@@ -137,7 +161,15 @@ public class ManageProjectsActivity extends Activity {
 					showInputDialog(currentProject);					
 				}
 			});
-
+    		
+    		ImageButton archiveButton = (ImageButton) view.findViewById(R.id.archive_button);
+    		archiveButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(getApplicationContext(), "This will archive the project in the future!", Toast.LENGTH_LONG).show();					
+				}
+			});
     		
     		return view;
     	}
