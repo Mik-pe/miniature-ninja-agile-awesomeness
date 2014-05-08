@@ -9,6 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- can be useful for attachments -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
@@ -18,7 +19,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
-		
+
 
     <application
         android:allowBackup="true"
@@ -81,18 +82,25 @@
             android:name="com.example.tson.ExportFragment"
             android:label="@string/title_activity_export_fragment" >
         </activity>
-        <service
-            android:name="com.example.tson.NotificationHandler"
-            android:exported="false"/>
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
+        </activity>
+
+        <receiver android:name="tson_utilities.NotificationHandler" >
+        </receiver>
+
+        <activity
+            android:name="com.example.tson.CreateNotificationActivity"
+            android:label="@string/title_activity_create_notification"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
 
         <activity
             android:name="com.example.tson.SendEmailActivity"
             android:label="@string/title_activity_send_email" >
         </activity>
+
 
     </application>
 

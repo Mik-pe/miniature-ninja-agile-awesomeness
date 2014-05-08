@@ -5,6 +5,7 @@
     android:layout_margin="20dp"
     android:orientation="vertical" >
 
+ 
  <!-- Google+ Account Info -->
  
  <RelativeLayout
@@ -46,9 +47,9 @@
 			android:padding="4dp"
             android:layout_marginRight="70dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 
-</RelativeLayout>
 
   <!-- Notifications Section -->
     
@@ -60,11 +61,11 @@
          <View
             android:id="@+id/add_line3"
             android:layout_width="fill_parent"
-            android:layout_height="2dp"
+            android:layout_height="2dp" 
             android:layout_marginTop="20dp"
             android:background="#DB8C0C"/>
-	
-        <TextView
+         
+         <TextView
             android:id="@+id/notifications"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,23 +75,28 @@
             android:fontFamily="sans-serif-thin"
             android:text="Notifications"
             android:textSize="32sp" />
-        
-        <View
+         
+         <View
             android:id="@+id/add_line2"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
             android:background="#DB8C0C" />
-</LinearLayout>
+         
+    </LinearLayout>
+    
+	
 
-        <ListView
-            android:id="@+id/projectListView"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:paddingTop="10dp"
-	 		android:paddingBottom="50dp"
-            android:paddingLeft="70dp"
-            android:paddingRight="70dp" >
-        </ListView>
+	
+	    <ListView
+	        android:id="@+id/notificationListView"
+	        android:layout_width="match_parent"
+	        android:layout_height="180dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="50dp"
+	        android:layout_marginLeft="70dp"
+	        android:layout_marginRight="70dp" >
+	    </ListView>
+
         
         <Button
             android:id="@+id/addNotification"
