@@ -14,6 +14,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -59,6 +61,12 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
+	
+	 //Fetch Google+ data for input
+	 /*SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+	 String personName = pref.getString("personName", null); // getting String
+	 String email = pref.getString("email", null);*/
+	 
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 	
 	private DrawerLayout mDrawerLayout;
@@ -144,7 +152,7 @@ public class HomeActivity extends FragmentActivity
 
 	//enabling action bar app icon and behaving it as toggle button
 	getActionBar().setDisplayHomeAsUpEnabled(true);
-	getActionBar().setHomeButtonEnabled(true);	
+	getActionBar().setHomeButtonEnabled(true);
 
 	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 			R.drawable.ic_drawer, //nav menu toggle icon
@@ -171,8 +179,6 @@ public class HomeActivity extends FragmentActivity
 		}
 	
 	}//End onCreate-function
-	
-	
 	
 	/**
 	 * Getter of Calendar from the Homeactivity
