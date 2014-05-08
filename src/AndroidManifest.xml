@@ -7,16 +7,20 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
-	<uses-permission android:name="android.permission.VIBRATE" />
-	
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- can be useful for attachments -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <!-- Google+ log in -->
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
 		
+
     <application
-        
-        
         android:allowBackup="true"
         android:fontFamily="sans-serif-thin"
         android:icon="@drawable/ic_launcher"
@@ -44,7 +48,6 @@
             android:name="com.example.tson.HomeActivity"
             android:label="@string/login_button" >
         </activity>
-
 
         
         <!-- Create Project Activity -->
@@ -84,6 +87,11 @@
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
             android:label="@string/title_activity_manage_projects" >
+        </activity>
+
+        <activity
+            android:name="com.example.tson.SendEmailActivity"
+            android:label="@string/title_activity_send_email" >
         </activity>
 
     </application>

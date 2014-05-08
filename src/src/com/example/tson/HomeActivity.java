@@ -77,10 +77,13 @@ public class HomeActivity extends FragmentActivity
 	//private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	
+	
 
 	 /***********************
 	  *  	OTHERS			*/	
 	 /************************/
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -90,24 +93,24 @@ public class HomeActivity extends FragmentActivity
 		
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
-        db = new DatabaseHelper(getApplicationContext());
-        db.getAllProjects();
-        db.getAllTimeBlocks();
-        db.logTimeblocks();
-        projectList = db.getAllProjects();
-        user.getProjects().clear();
+	    db = new DatabaseHelper(getApplicationContext());
+	    db.getAllProjects();
+	    db.getAllTimeBlocks();
+	    db.logTimeblocks();
+	    projectList = db.getAllProjects();
+	    user.getProjects().clear();
+		
         for (int i = 0; i < projectList.size(); i++)
         {
 	        user.addProject(projectList.get(i));
-	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	
-	        List<TimeBlock> temp = db.getTimeBlocksByProject(user.getProjects().get(i));
-	        //Log.d("Listing all tprojects", projectList.get(i).getName() + "");
-	        for (TimeBlock time : temp) {
-	            //Log.d("Listing all times for a project", time.getTimeAsString());
+	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
+
 	        
        
-    }//End onCreate-function
+		
+	
+
 	
     mTitle = mDrawerTitle = getTitle();
 
@@ -168,7 +171,7 @@ public class HomeActivity extends FragmentActivity
 			displayView(0);
 		}
 	
-	}
+	}//End onCreate-function
 	
 	/**
 	 * Getter of Calendar from the Homeactivity
@@ -192,11 +195,6 @@ public class HomeActivity extends FragmentActivity
 			displayView(position);
 		}
 	}
-
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;}*/
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -252,9 +250,6 @@ public class HomeActivity extends FragmentActivity
 		case 4:
 			fragment = new SettingsFragment();
 			break;
-			/*case 5:
-			fragment = new WhatsHotFragment();
-			break;*/
 
 		default:
 			break;
@@ -264,18 +259,6 @@ public class HomeActivity extends FragmentActivity
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 			.replace(R.id.frame_container, fragment).commit();
-			
-			//.addToBackStack(Integer.toString(position))
-//			fragmentManager.addOnBackStackChangedListener(
-//			        new FragmentManager.OnBackStackChangedListener() {
-//			            public void onBackStackChanged() {
-//			                // Update your UI here.
-			            	//ab = getActionBar();
-			        		//ab.removeAllTabs();
-			        		//ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//			        		setTitle(navMenuTitles[position]);
-//			            }
-//			        });
 
 			//update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
@@ -286,8 +269,7 @@ public class HomeActivity extends FragmentActivity
 			//error in creating fragment
 			Log.e("MainActivity", "Error in creating fragment");
 		}
-	}
-		
+	}		
 	
 
 	@Override
