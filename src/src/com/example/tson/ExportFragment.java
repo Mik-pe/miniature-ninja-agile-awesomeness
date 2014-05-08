@@ -7,7 +7,7 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
-import android.R;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
