@@ -54,7 +54,6 @@ public class User
 		 return instance;
 	 }
 	 
-	 
 	  /** 
 	  * Return list of projects
 	  * @return
@@ -87,6 +86,15 @@ public class User
 	 {
 		 return email;
 	 }
+	 /**
+	  * 
+	  * @return user's picture url
+	  */
+	 public String getPicURL()
+	 {
+		 return picURL;
+	 }
+	 
 	 /**
 	  * Send in cal object and get number of reported minutes for that date
 	  * @param cal

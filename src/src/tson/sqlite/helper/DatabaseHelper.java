@@ -1,5 +1,5 @@
 /**
- * @author Par Eriksson
+ * @author Pär Eriksson
  * A database helper class that takes care of all interaction with the SQLite database
  */
 package tson.sqlite.helper;
@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 29;
+	private static final int DATABASE_VERSION = 31;
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	private static final String CREATE_TABLE_USER = "CREATE TABLE " 
 			+ TABLE_USER + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USER_EMAIL
-			+ " TEXT," + KEY_USER_PICTURE + " TEXT" + ")";
+			+ " TEXT," + KEY_USER_NAME + " TEXT," + KEY_USER_PICTURE + " TEXT" + ")";
 	
 	// Project table create statement
 	private static final String CREATE_TABLE_PROJECT = "CREATE TABLE "
@@ -120,8 +120,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			values.put(KEY_USER_NAME, name);
 			values.put(KEY_USER_PICTURE, picURL);
 			//insert row
-			user = User.getInstance();
+			
 			user_id = db.insert(TABLE_USER, null, values);
+			user = User.getInstance();
 			Log.d("User insertion", "found no user by email :" + user_id);
 			user.setId(user_id);
 			user.setEmail(email);

@@ -5,262 +5,164 @@
     android:layout_margin="20dp"
     android:orientation="vertical" >
 
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <TextView
-            android:id="@+id/meName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ME"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/meTopBar"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/combitech_blue" />
-
-    <RelativeLayout
+ <!-- Google+ Account Info -->
+ 
+ <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView2"
+      
+		 <TextView
+            android:id="@+id/meName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/editText1"
-            android:layout_alignBottom="@+id/editText1"
-            android:layout_alignParentLeft="true"
-            android:text="NAME:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView3"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+         
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Sofie Lindblom"
+            android:textSize="30sp" />
+		 
+       	<TextView
+            android:id="@+id/meEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText1"
-            android:layout_marginBottom="10dp"
-            android:text="EMAIL:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/textEmailSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView3"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignLeft="@+id/editText1"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textView3"
-            android:ems="10" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/meName"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="John@gmail.com"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+         	android:background="#B72D64"
+			android:padding="4dp"
+            android:layout_marginRight="70dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            />
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/combitech_blue" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <TextView
-            android:id="@+id/TextView03"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="NOTIFICATIONS"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/TextView02"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/combitech_blue" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_toRightOf="@+id/textView4"
-            android:ems="10" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="11dp"
-            android:text="Remind me of:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="17dp"
-            android:text="TIME"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_alignRight="@+id/dateButtonSetting"
-            android:layout_marginRight="15dp"
-            android:text="DATE"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <Button
-            android:id="@+id/timeButtonSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText3"
-            android:layout_marginTop="53dp"
-            android:text="Button" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dateButtonSetting"
-            android:layout_alignLeft="@+id/textView7"
-            android:text="REPEAT EVERY DAY"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/dateButtonSetting"
-            android:layout_marginRight="11dp"
-            android:layout_toLeftOf="@+id/checkBox1"
-            android:text="REPEAT EVERY WEEK"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView8"
-            android:layout_alignBottom="@+id/textView8"
-            android:layout_alignLeft="@+id/checkBox1" />
-
-        <Button
-            android:id="@+id/dateButtonSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/timeButtonSetting"
-            android:layout_alignBottom="@+id/timeButtonSetting"
-            android:layout_toRightOf="@+id/textView4"
-            android:text="Button" />
-
-        <CheckBox
-            android:id="@+id/checkBox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView7"
-            android:layout_alignBottom="@+id/textView7"
-            android:layout_alignParentRight="true" />
-
-    </RelativeLayout>
-
-<LinearLayout
-    android:id="@+id/LinearLayout02"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_marginTop="20dp" >
-
-    <Button
-        android:id="@+id/addNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="ADD" >
-
-    </Button>
-
-    <Button
-        android:id="@+id/cancelNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="CANCEL" >
-
-    </Button>
-</LinearLayout>
-
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginTop="40dp"
-        android:text="LOG OUT" />
-
-    <ExpandableListView
-        android:id="@+id/expandableListView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_marginTop="20dp" >
-
-    </ExpandableListView>
-
-    <Button
-        android:id="@+id/manage_projects_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/expandableListView1"
-        android:text="Manage Projects" />
+            android:layout_centerVertical="true"/>
 
 </RelativeLayout>
+
+  <!-- Notifications Section -->
+    
+<LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+         <View
+            android:id="@+id/add_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            android:background="#DB8C0C"/>
+	
+        <TextView
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Notifications"
+            android:textSize="32sp" />
+        
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
+</LinearLayout>
+
+        <ListView
+            android:id="@+id/projectListView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:paddingTop="10dp"
+	 		android:paddingBottom="50dp"
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp" >
+        </ListView>
+        
+        <Button
+            android:id="@+id/addNotification"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:minWidth="55dp"
+            android:text="Add +" 
+            android:textSize="32sp" />
+         
+<!-- Additonal Section -->
+         
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+         <View
+            android:id="@+id/add_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            android:background="#DB8C0C"/>
+	
+        <TextView
+            android:id="@+id/Additional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Additional"
+            android:textSize="32sp" />
+        
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
+</LinearLayout>
+
+        <Button
+            android:id="@+id/manage_projects_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+             android:layout_marginTop ="25dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:minWidth="55dp"
+            android:text="Manage Projects"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/log_out_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop ="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:text="Log Out"
+            android:textSize="32sp" />
 
 </LinearLayout>
