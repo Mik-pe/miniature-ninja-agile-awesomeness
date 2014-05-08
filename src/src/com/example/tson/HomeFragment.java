@@ -208,6 +208,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	}
 	
 	
+	
+	
 	/**
 	 * newDate updates the view. Should be called when a change has been made to the date in homeFragment.
 	 * Also adds the touch event handler to the projectListView, so it's scrollable.
@@ -259,6 +261,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
+        projectAdapter.notifyDataSetChanged();
 	}
 	
     /**

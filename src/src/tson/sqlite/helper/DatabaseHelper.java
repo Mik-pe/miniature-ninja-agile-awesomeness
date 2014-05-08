@@ -274,11 +274,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		    //String strFilter = "year=" + timeblock.getYear() 
 		   
 		    //updating row
-		    //Log.d("Set confirmed", "" + timeblock.getID());
-		    int u = db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
+		    Log.d("Set confirmed", "" + timeblock.getID() + " confirmed -> " + timeblock.getConfirmed());
+		    return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?",
 		            new String[] { String.valueOf(timeblock.getID()) });
-		    Log.d("setConfirmedDB", "nr of rows updated: " + u + " with id: " + timeblock.getID());
-		    return u;
+	
 	}
 	/**
 	 * Update a time block, only updates the time column for now.
@@ -323,8 +322,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
 					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
 					int hours = (int)minutes/60;
+					long id = c.getLong(c.getColumnIndex(KEY_ID));
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
+					t.setID(id);
 					t.setConfirmed(confirmed);
 					timeblocks.add(t);
 				}while (c.moveToNext());
@@ -357,10 +358,11 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					int minutes = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_MINUTES));
 					int hours = minutes/60;
 					int confirmed = c.getInt(c.getColumnIndex(KEY_TIME_BLOCK_CONFIRMED));
-					
+					long id = c.getLong(c.getColumnIndex(KEY_ID));
 					minutes = minutes-hours*60;
 					TimeBlock t = new TimeBlock(year, month, day, hours, minutes);
 					t.setConfirmed(confirmed);
+					t.setID(id);
 					timeblocks.add(t);
 				}while (c.moveToNext());
 			}
