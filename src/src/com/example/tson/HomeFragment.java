@@ -37,8 +37,11 @@ import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -72,6 +75,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	TextView projectTimeTextViewVar;
 	public static String previousFragment;
 	MenuItem createProject;
+	public static Boolean firstTime = true;
 
 	TextView dateText;
 	ImageButton prevDate;
@@ -99,8 +103,26 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-        
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
+		
+		if(projectList.isEmpty()/* && firstTime==true*/)
+		{
+			//firstTime = false;
+			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
+			dialog.setContentView(R.layout.empty_project_view);
+			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
+			dialog.show();
+			firstTimeButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					dialog.dismiss();
+					
+				}
+			});
+		    
+		}
+		
         ActionBar actionCreate = getActivity().getActionBar();
         actionCreate.show();
         setHasOptionsMenu(true);
