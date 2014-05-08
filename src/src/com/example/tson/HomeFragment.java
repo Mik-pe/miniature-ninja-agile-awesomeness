@@ -18,6 +18,7 @@ import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Html;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
@@ -30,6 +31,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +71,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Button reportTimeButton; 
 	TextView projectTimeTextViewVar;
 	public static String previousFragment;
-	
+	MenuItem createProject;
 
 	TextView dateText;
 	ImageButton prevDate;
@@ -76,7 +80,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Calendar homeFragmentCalendar;
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
 	
 	/***********************
@@ -94,10 +98,12 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-		
 		super.onCreate(savedInstanceState);
-        rootView = inflater.inflate(R.layout.fragment_home, container, false);
         
+		rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        ActionBar actionCreate = getActivity().getActionBar();
+        actionCreate.show();
+        setHasOptionsMenu(true);
         /**
          * Bundle contains the date difference from submission.
          * The homeFragmentCalendar has its' date changed
@@ -114,7 +120,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         /**
          * Creates the onClick-function for the PREVIOUSDATE-image
          */
-        prevDate = (ImageButton) rootView.findViewById(R.id.imageButton2);
+        prevDate = (ImageButton) rootView.findViewById(R.id.login_button);
         prevDate.setOnClickListener(new View.OnClickListener() {
         	@Override
         	public void onClick(View v) {
@@ -144,19 +150,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         });
         
         //Declaration of buttons on home screen
-        createProjectButton = (Button) rootView.findViewById(R.id.create_project_button);
         reportTimeButton = (Button) rootView.findViewById(R.id.report_time);
-        
-        /**
-         * PopUp for "Create Project" button
-         */
-        createProjectButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-				startActivity(intent);
-			}
-		});
 
         /**
          * PopUp for "Confirm Time" button
@@ -172,8 +166,29 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         rootView.setOnTouchListener(this);
         newDate(homeFragmentCalendar); 
         return rootView;
-        
     }//End OnCreate-function
+	
+	/**
+     * Plus sign in top right-corner
+     */
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+	{	
+		inflater.inflate(R.menu.create_project, menu);
+		
+        createProject = (MenuItem) menu.findItem(R.id.createProjectItem);
+        createProject.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
+				startActivity(intent);
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
+	}
+	
 	
 	/**
 	 * This defines the status indicator in the home view. For example one date is confirmed
@@ -206,6 +221,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     		icon_place_holder.setTextColor(getResources().getColor(R.color.calender_red));
     	}
 	}
+	
+	
 	
 	
 	/**
@@ -259,6 +276,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         projectAdapter = new ProjectListAdapter();
         
         projectListView.setAdapter(projectAdapter);
+        projectAdapter.notifyDataSetChanged();
 	}
 	
     /**
@@ -371,7 +389,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
    	public void showReportDialog(View v)
     {
    		//AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
    		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    		//Add title
    		builder.setTitle(R.string.title_confirm_time);
@@ -394,16 +412,17 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		   	{   	        	   
 	       		//Change status on all reported timeblocks to Confirmed = true
 	       		//List<Project> projectList = (ArrayList<Project>) user.getProjects();
-	       		
+		   		Log.d("setConfirmed", "project list size: " + projectList.size());
 	       		for(int i=0; i<projectList.size(); i++)
 	       		{
 	       			Project p = projectList.get(i);
 
-	       					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
-	       					if(t!=null){
-	       						
-	       					t.setConfirmed(1);
-	       					db.setConfirmed(t);}
+   					TimeBlock t = p.getTimeByDate(homeFragmentCalendar);
+   					if(t!=null){
+   						Log.d("setConfirmed", "" + t);
+       					t.setConfirmed(1);
+       					db.setConfirmed(t);
+   					}
 	       				
 	       		}
 	       		//Create Submission fragment

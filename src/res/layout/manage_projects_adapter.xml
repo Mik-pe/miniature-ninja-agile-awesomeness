@@ -10,27 +10,45 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="sans-serif-thin"
         android:text="Large Text"
+        android:textSize="30sp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
+    <ImageButton
         android:id="@+id/edit_button"
-        style="?android:attr/buttonStyleSmall"
+        android:clickable="true"
+        android:src="@drawable/ic_pen2" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
+        android:paddingTop="5dp"
+        android:background="#00FFFFFF"
         android:layout_marginRight="70dp"
-        android:text="Edit" />
+        android:scaleType="fitCenter"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/archive_button"
-        style="?android:attr/buttonStyleSmall"
+        android:clickable="true"
+       	android:src="@drawable/ic_archive2" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="Archive" />
+        android:layout_alignParentTop="@+id/manage_project_list"
+        android:layout_alignParentBottom="@+id/manage_project_list"
+        android:background="#00FFFFFF"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitCenter" />
 
 </RelativeLayout>
+
+
+
+     
+

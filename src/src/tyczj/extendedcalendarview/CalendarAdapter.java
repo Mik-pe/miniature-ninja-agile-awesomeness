@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
+import tson_utilities.User;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.format.Time;
@@ -138,13 +139,15 @@ public class CalendarAdapter extends BaseAdapter{
 			Day day = dayList.get(position);
 			
 			//List of projects
-			List<Project> projectList = (ArrayList<Project>) HomeActivity.user.getProjects();
+			List<Project> projectList = (ArrayList<Project>) User.getInstance().getProjects();
 			
 			//Create a calendarObject of the day which is currently being printed
 			Calendar tempCal = Calendar.getInstance();
 			tempCal.set(day.getYear(), day.getMonth(), day.getDay());
 			//get todays date
 			Calendar thisDay = Calendar.getInstance();
+			
+			int isConfirmed = User.getInstance().isDateConfirmed(tempCal);
 			
 			
 			//----functionality for color coding the calendar----//
@@ -160,32 +163,25 @@ public class CalendarAdapter extends BaseAdapter{
        			{
 	       			for(int i = 0; i < projectList.size(); i++)
 	           		{
-	           			Project p = projectList.get(i);
+	           			Project p = projectList.get(i);	          
 	           			
-	           			TimeBlock t = p.getTimeByDate(tempCal);
-	          
-	           			if(t != null)
+	           			if(isConfirmed==1) //coloring for confirmed timeblocks
 	           			{
-	           				if(t.getConfirmed()==1) //coloring for confirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
-	           					break;
-	           				}       					
-	           				else //coloring for unconfirmed timeblocks
-	           				{
-	           					rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
-	           					break;
-	           				}
-	           					
-	           			}
+	           				rl.setBackgroundColor(Color.rgb(145, 218, 149));//green
+	           				break;
+	           			}       					
+	           			else if(isConfirmed==0) //coloring for unconfirmed timeblocks
+	           			{
+	           				rl.setBackgroundColor(Color.rgb(246, 241, 171)); //yellow       					
+	           				break;
+	           			}	           					
+	           			
 	           			else //coloring for past blocks with unreported time
 	           			{
 	           				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
 	           			}
 	           		}
        			}
-       			else //coloring for past blocks with unreported time
-       				rl.setBackgroundColor(Color.rgb(229, 229, 229)); //dark gray
        		}
        		//-----------end of color coding functionality of the calendar-------------//
        		

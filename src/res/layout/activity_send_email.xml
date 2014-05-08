@@ -1,0 +1,128 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tson.SendEmailActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <View
+            android:id="@+id/email_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="50dp"
+            android:background="#DB8C0C" />
+
+        <TextView
+            android:id="@+id/email_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/send_email"
+            android:textSize="32sp" />
+
+        <View
+            android:id="@+id/email_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
+
+        <EditText
+            android:id="@+id/email_to_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="20dp"
+            android:background="#00FFFFFF"
+            android:ems="15"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/send_email_to_hint"
+            android:textColorLink="@color/counter_text_bg"
+            android:textSize="30sp" />
+
+        <View
+            android:id="@+id/email_line4"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:background="@color/combitech_light_grey" />
+
+        <EditText
+            android:id="@+id/email_subject_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="0dp"
+            android:background="#00FFFFFF"
+            android:ems="15"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/send_email_subject_hint"
+            android:textColorLink="@color/counter_text_bg"
+            android:textSize="30sp" />
+
+        <View
+            android:id="@+id/email_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:background="@color/combitech_light_grey" />
+
+        <EditText
+            android:id="@+id/email_content_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="0dp"
+            android:background="#00FFFFFF"
+            android:ems="15"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/send_email_body_hint"
+            android:textColorLink="@color/counter_text_bg"
+            android:textSize="30sp" />
+
+        <View
+            android:id="@+id/email_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@color/combitech_light_grey" />
+
+
+        <Button
+            android:id="@+id/attach_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Attach file" />
+        
+        <Button
+            android:id="@+id/send_email_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send email" />       
+
+    </LinearLayout>
+
+</FrameLayout>

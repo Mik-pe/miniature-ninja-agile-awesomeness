@@ -1,132 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="20dp"
     android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
-
-        <TextView
-            android:id="@+id/meName"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ME"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/meTopBar"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/combitech_blue" />
-
-    <RelativeLayout
+ 
+ <!-- Google+ Account Info -->
+ 
+ <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView2"
+      
+		 <TextView
+            android:id="@+id/meName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/editText1"
-            android:layout_alignBottom="@+id/editText1"
-            android:layout_alignParentLeft="true"
-            android:text="NAME:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:id="@+id/textView3"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+         
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Sofie Lindblom"
+            android:textSize="30sp" />
+		 
+       	<TextView
+            android:id="@+id/meEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/editText1"
-            android:layout_marginBottom="10dp"
-            android:text="EMAIL:"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/textEmailSetting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/textView3"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignLeft="@+id/editText1"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/textView3"
-            android:ems="10" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@+id/meName"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="John@gmail.com"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="70dp"
-            android:layout_height="60dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+         	android:background="#B72D64"
+			android:padding="4dp"
+            android:layout_marginRight="70dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/oldman1" />
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/combitech_blue" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" >
+  <!-- Notifications Section -->
+    
+<LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/TextView03"
+         <View
+            android:id="@+id/add_line3"
             android:layout_width="fill_parent"
+            android:layout_height="2dp" 
+            android:layout_marginTop="20dp"
+            android:background="#DB8C0C"/>
+         
+         <TextView
+            android:id="@+id/notifications"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="NOTIFICATIONS"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Notifications"
+            android:textSize="32sp" />
+         
+         <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
+         
     </LinearLayout>
     
-	<LinearLayout 
-	    android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-	    android:orientation="vertical"
-	    >
-	    <TextView
-	        android:id="@+id/TextView02"
-	        android:layout_width="fill_parent"
-	        android:layout_height="2dp"
-	        android:layout_marginTop="10dp"
-	        android:background="@color/combitech_blue" />
+	
+
 	
 	    <ListView
 	        android:id="@+id/notificationListView"
 	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="20dp"
-	        android:layout_weight="0.91" >
+	        android:layout_height="180dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginBottom="50dp"
+	        android:layout_marginLeft="70dp"
+	        android:layout_marginRight="70dp" >
 	    </ListView>
+
+        
+        <Button
+            android:id="@+id/addNotification"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:minWidth="55dp"
+            android:text="Add +" 
+            android:textSize="32sp" />
+         
+<!-- Additonal Section -->
+         
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+         <View
+            android:id="@+id/add_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="20dp"
+            android:background="#DB8C0C"/>
 	
-	    <Button
-	        android:id="@+id/manage_projects_button"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="Manage Projects" />
-	
-	    <Button
-	        android:id="@+id/button3"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="LOG OUT" />
-	</LinearLayout>
+        <TextView
+            android:id="@+id/Additional"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Additional"
+            android:textSize="32sp" />
+        
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />
+</LinearLayout>
+
+        <Button
+            android:id="@+id/manage_projects_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+             android:layout_marginTop ="25dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:minWidth="55dp"
+            android:text="Manage Projects"
+            android:textSize="32sp" />
+
+        <Button
+            android:id="@+id/log_out_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop ="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:text="Log Out"
+            android:textSize="32sp" />
+
 </LinearLayout>

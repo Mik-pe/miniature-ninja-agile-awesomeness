@@ -24,6 +24,8 @@ public class CreateProjectActivity extends Activity {
 	
 	public HomeActivity homeActivity = new HomeActivity();
 	DatabaseHelper db = homeActivity.db;
+	public User user = User.getInstance();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +37,7 @@ public class CreateProjectActivity extends Activity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 	}
+
 	
 	//Hej! HEJHEEEJ!!! :DD:D:D:D:DDD
 	@Override
@@ -44,6 +47,7 @@ public class CreateProjectActivity extends Activity {
 		getMenuInflater().inflate(R.menu.create_project, menu);
 		return true;
 	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -65,8 +69,8 @@ public class CreateProjectActivity extends Activity {
     
         Project p1 = new Project(projectName);
         
-		homeActivity.user.addProject(p1);
-		db.createProject(p1);
+        user.addProject(p1);
+		db.createProject(p1, user);
 
 		Toast.makeText(getApplicationContext(), projectName + " has been added to your list!", Toast.LENGTH_SHORT).show();
 		

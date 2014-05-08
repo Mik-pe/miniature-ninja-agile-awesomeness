@@ -44,7 +44,7 @@ public class StatisticsFragment extends Fragment{
 	EditText startTime, endTime;
 	ListView projectListView;
 	ArrayAdapter<Project> statsAdapter;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectListStats = user.getProjects();
 	double[] projectMinutes = new double[projectListStats.size()];
 	
@@ -170,8 +170,7 @@ public class StatisticsFragment extends Fragment{
 				  for(int j=0;j < tb.size(); j++)
 				  {
 					  Calendar compareDate = tb.get(j).getDate();
-					  // 0 if equals, -1 if the time of this calendar is before the other one,
-					  // 1 if the time of this calendar is after the other one.
+				
 					  if((start.before(compareDate) || isSameDay(start, compareDate)) && end.after(compareDate))
 					  {
 						  if(user.isDateConfirmed(compareDate) == 1)
@@ -180,12 +179,7 @@ public class StatisticsFragment extends Fragment{
 							  projectMinutes[i] += tb.get(j).getTimeInMinutes();									  
 						  }
 					  }
-					  //Also checks if the two dates are equal
-					  else if(isSameDay(start, compareDate) && isSameDay(end, compareDate))
-					  {
-						  totalMinutes = totalMinutes + tb.get(j).getTimeInMinutes();
-						  projectMinutes[i] += tb.get(j).getTimeInMinutes();
-					  }
+
 				  }
 			}
 			

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+
 import model.NavDrawerItem;
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
@@ -13,6 +15,8 @@ import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+
+import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -24,10 +28,17 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+
 //IMPORT ANDROID
 //IMPORT ANDROID
 //IMPORT OTHER
@@ -54,7 +65,14 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	public User user = null;
+
+	
+	 //Fetch Google+ data for input
+	 /*SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+	 String personName = pref.getString("personName", null); // getting String
+	 String email = pref.getString("email", null);*/
+
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -71,38 +89,52 @@ public class HomeActivity extends FragmentActivity
 	//private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	
+	
 
 	 /***********************
 	  *  	OTHERS			*/	
 	 /************************/
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
-	{
-
-		
+	{		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		Calendar.getInstance().setFirstDayOfWeek(Calendar.MONDAY);
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
-        db = new DatabaseHelper(getApplicationContext());
-        db.getAllProjects();
-        db.getAllTimeBlocks();
-        db.logTimeblocks();
-        projectList = db.getAllProjects();
-        user.getProjects().clear();
+	    db = new DatabaseHelper(getApplicationContext());
+	    
+	    if(user == null){
+	    	
+			 //Fetch Google+ data for input
+			 SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+			 String personName = pref.getString("personName", null); // getting String
+			 String personPhotoUrl = pref.getString("personPhotoUrl", null);
+			 String email = pref.getString("email", null);
+	    	
+	    	Log.d("User insertion", "USER IS NULL CREATE NEW");
+	    	user = db.createUser(email, personName, personPhotoUrl);
+	    }
+	    db.getAllProjects(user);
+	    db.getAllTimeBlocks();
+	    db.logTimeblocks();
+	    projectList = db.getAllProjects(user);
+	    user.getProjects().clear();
+		
         for (int i = 0; i < projectList.size(); i++)
         {
 	        user.addProject(projectList.get(i));
-	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	
-	        List<TimeBlock> temp = db.getTimeBlocksByProject(user.getProjects().get(i));
-	        //Log.d("Listing all tprojects", projectList.get(i).getName() + "");
-	        for (TimeBlock time : temp) {
-	            //Log.d("Listing all times for a project", time.getTimeAsString());
+	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
+
+	        
        
-    }//End onCreate-function
+		
+	
+
 	
     mTitle = mDrawerTitle = getTitle();
 
@@ -137,7 +169,7 @@ public class HomeActivity extends FragmentActivity
 
 	//enabling action bar app icon and behaving it as toggle button
 	getActionBar().setDisplayHomeAsUpEnabled(true);
-	getActionBar().setHomeButtonEnabled(true);	
+	getActionBar().setHomeButtonEnabled(true);
 
 	mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 			R.drawable.ic_drawer, //nav menu toggle icon
@@ -162,9 +194,9 @@ public class HomeActivity extends FragmentActivity
 			//on first time display view for first nav item
 			displayView(0);
 		}
-	}
+
 	
-	
+	}//End onCreate-function
 	
 	/**
 	 * Getter of Calendar from the Homeactivity
@@ -188,11 +220,6 @@ public class HomeActivity extends FragmentActivity
 			displayView(position);
 		}
 	}
-
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;}*/
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -248,9 +275,6 @@ public class HomeActivity extends FragmentActivity
 		case 4:
 			fragment = new SettingsFragment();
 			break;
-			/*case 5:
-			fragment = new WhatsHotFragment();
-			break;*/
 
 		default:
 			break;
@@ -260,18 +284,6 @@ public class HomeActivity extends FragmentActivity
 			FragmentManager fragmentManager = getSupportFragmentManager();
 			fragmentManager.beginTransaction()
 			.replace(R.id.frame_container, fragment).commit();
-			
-			//.addToBackStack(Integer.toString(position))
-//			fragmentManager.addOnBackStackChangedListener(
-//			        new FragmentManager.OnBackStackChangedListener() {
-//			            public void onBackStackChanged() {
-//			                // Update your UI here.
-			            	//ab = getActionBar();
-			        		//ab.removeAllTabs();
-			        		//ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//			        		setTitle(navMenuTitles[position]);
-//			            }
-//			        });
 
 			//update selected item and title, then close the drawer
 			mDrawerList.setItemChecked(position, true);
@@ -282,8 +294,7 @@ public class HomeActivity extends FragmentActivity
 			//error in creating fragment
 			Log.e("MainActivity", "Error in creating fragment");
 		}
-	}
-		
+	}		
 	
 
 	@Override
@@ -328,4 +339,6 @@ public class HomeActivity extends FragmentActivity
 		else
 			super.onBackPressed();
 	}
-}
+	
+	 
+}//End HomeActivity

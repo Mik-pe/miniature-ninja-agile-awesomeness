@@ -8,23 +8,18 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import tson_utilities.Project;
-import tson_utilities.TimeBlock;
-import android.R.layout;
+import tson_utilities.User;
+
 import android.app.ActionBar;
-import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -52,7 +47,7 @@ public class SubmissionListFragment extends Fragment {
 		
 		for(int i=0;i<30;i++)
 		{
-			subList.add(new SubmissionDayListItem(today,HomeActivity.user.getTimeByDate(today), HomeActivity.user.isDateConfirmed(today)));
+			subList.add(new SubmissionDayListItem(today,User.getInstance().getTimeByDate(today), User.getInstance().isDateConfirmed(today)));
 			today.add(Calendar.DAY_OF_YEAR, -1);
 		}
 		

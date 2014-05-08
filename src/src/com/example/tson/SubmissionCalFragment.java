@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import tson_utilities.Project;
+import tson_utilities.User;
 import tyczj.extendedcalendarview.Day;
 import tyczj.extendedcalendarview.ExtendedCalendarView;
 import tyczj.extendedcalendarview.ExtendedCalendarView.OnDayClickListener;
@@ -17,8 +18,6 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-
 
 public class SubmissionCalFragment extends Fragment {
 	
@@ -26,7 +25,7 @@ public class SubmissionCalFragment extends Fragment {
 	/************************
 	  *  	VARIABLES		*/	
 	 /***********************/
-	List<Project> projectList = HomeActivity.user.getProjects();
+	List<Project> projectList = User.getInstance().getProjects();
 	
 	ExtendedCalendarView cal;
 		

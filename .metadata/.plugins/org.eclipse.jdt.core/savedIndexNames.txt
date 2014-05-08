@@ -1,7 +1,2 @@
-INDEX VERSION 1.126+C:\Users\Anton\Documents\GitHub\miniature-ninja-agile-awesomeness\.metadata\.plugins\org.eclipse.jdt.core
+INDEX VERSION 1.126+D:\miniature-ninja-agile-awesomeness\.metadata\.plugins\org.eclipse.jdt.core
 1808438454.index
-1319190652.index
-3997262964.index
-723829773.index
-2478925142.index
-1591613574.index
