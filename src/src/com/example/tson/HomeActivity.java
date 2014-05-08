@@ -14,6 +14,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -59,6 +60,12 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
+	
+	 //Fetch Google+ data for input
+	 /*SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+	 String personName = pref.getString("personName", null); // getting String
+	 String email = pref.getString("email", null);*/
+	 
 	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
 	
 	private DrawerLayout mDrawerLayout;

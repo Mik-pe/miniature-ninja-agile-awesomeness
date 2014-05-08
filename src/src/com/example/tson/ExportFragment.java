@@ -7,7 +7,7 @@ import java.util.List;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
-import android.R;
+//import android.R;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -68,7 +68,7 @@ public class ExportFragment extends Fragment{
 		  btnEnd = (ImageButton) statistics.findViewById(R.id.imageButtonEndExport);
 		  btnGo = (Button) statistics.findViewById(R.id.export);
 		  startTime = (EditText) statistics.findViewById(R.id.startTimeExport);
-		  endTime = (EditText) statistics.findViewById(R.id.endTimeExport);
+		  endTime = (EditText) statistics.findViewById(R.id.format2);
 		  
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
