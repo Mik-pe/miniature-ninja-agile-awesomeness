@@ -8,6 +8,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import tson_utilities.User;
+
 import android.app.ActionBar;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -45,7 +47,7 @@ public class SubmissionListFragment extends Fragment {
 		
 		for(int i=0;i<30;i++)
 		{
-			subList.add(new SubmissionDayListItem(today,HomeActivity.user.getTimeByDate(today), HomeActivity.user.isDateConfirmed(today)));
+			subList.add(new SubmissionDayListItem(today,User.getInstance().getTimeByDate(today), User.getInstance().isDateConfirmed(today)));
 			today.add(Calendar.DAY_OF_YEAR, -1);
 		}
 		

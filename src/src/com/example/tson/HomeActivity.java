@@ -14,6 +14,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -60,7 +61,14 @@ public class HomeActivity extends FragmentActivity
 	//DATABASE
 	public static DatabaseHelper db;
 	List<Project> projectList;
-	public static User user = new User("sdf@sdf.com", "Bosse", "b1337");
+	public User user = null;
+
+	
+	 //Fetch Google+ data for input
+	 /*SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+	 String personName = pref.getString("personName", null); // getting String
+	 String email = pref.getString("email", null);*/
+
 	
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -94,10 +102,22 @@ public class HomeActivity extends FragmentActivity
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 	    db = new DatabaseHelper(getApplicationContext());
-	    db.getAllProjects();
+	    
+	    if(user == null){
+	    	
+			 //Fetch Google+ data for input
+			 SharedPreferences pref =  getApplicationContext().getSharedPreferences("MyPref", 0);
+			 String personName = pref.getString("personName", null); // getting String
+			 String personPhotoUrl = pref.getString("personPhotoUrl", null);
+			 String email = pref.getString("email", null);
+	    	
+	    	Log.d("User insertion", "USER IS NULL CREATE NEW");
+	    	user = db.createUser(email, personName, personPhotoUrl);
+	    }
+	    db.getAllProjects(user);
 	    db.getAllTimeBlocks();
 	    db.logTimeblocks();
-	    projectList = db.getAllProjects();
+	    projectList = db.getAllProjects(user);
 	    user.getProjects().clear();
 		
         for (int i = 0; i < projectList.size(); i++)

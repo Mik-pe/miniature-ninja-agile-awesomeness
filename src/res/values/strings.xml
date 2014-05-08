@@ -43,6 +43,7 @@
     <string name="saturday">SAT</string>
     <string name="sunday">SUN</string>
     <string name="login_button">Tson</string>
+    <string name="meName">Me</string>
 
     <!-- Menu items -->
     <string-array name="nav_drawer_items">

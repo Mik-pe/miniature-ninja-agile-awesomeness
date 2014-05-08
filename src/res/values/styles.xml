@@ -117,7 +117,7 @@
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_combitechstyle</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Combitechstyle</item>
         
-         <item name="android:alertDialogStyle">@style/CustomDialogTheme</item>
+         <!--  item name="android:alertDialogStyle">@style/CustomDialogTheme</item -->
                 <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Combitechstyle.Widget</item>
        <!-- <item name="android:actionBarStyle">@style/ActionBar</item>

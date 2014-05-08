@@ -25,6 +25,7 @@ public class Project {
 	
 	private String name;
 	private List<TimeBlock> submissionList = new ArrayList<TimeBlock>();
+	private long id;
 	
 	 /***********************
 	  *  	CONSTRUCTORS 	*/	
@@ -79,6 +80,14 @@ public class Project {
 		}
 		
 	}
+	/**
+	 * Set an id correspondent to its id in the database
+	 * @param id_
+	 */
+	public void setId(long id_)
+	{
+		this.id = id_;
+	}
 	
 	public void setSubmissionList(List<TimeBlock> list)
 	{
@@ -121,7 +130,15 @@ public class Project {
 	{
 		return this.submissionList;
 	}
-
+	
+	/**
+	 * Get id of object
+	 * @return <long> id
+	 */
+	public long getId()
+	{
+		return this.id;
+	}
 	
 	//TODO
 	public void editTime(Calendar cal,int h, int m)

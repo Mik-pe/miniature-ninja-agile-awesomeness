@@ -1,5 +1,5 @@
 /**
- * @author Par Eriksson
+ * @author Pär Eriksson
  * A database helper class that takes care of all interaction with the SQLite database
  */
 package tson.sqlite.helper;
@@ -13,9 +13,8 @@ import tson_utilities.TimeBlock;
 
 import java.util.Calendar;
 import tson_utilities.Project;
-
-
 import tson_utilities.TimeBlock;
+import tson_utilities.User;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -31,20 +30,27 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String LOG = "DatabaseHelper";
 	
 	//Database Version
-	private static final int DATABASE_VERSION = 24;
+	private static final int DATABASE_VERSION = 31;
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
 	
 	//Table Names
+	private static final String TABLE_USER = "users";
 	private static final String TABLE_PROJECT = "projects";
 	private static final String TABLE_TIME_BLOCK = "time_blocks";
 	
 	// Common column names
 	private static final String KEY_ID = "id";	
 	
+	//USERS Table
+	private static final String KEY_USER_EMAIL = "email";
+	private static final String KEY_USER_NAME = "name";
+	private static final String KEY_USER_PICTURE = "picture";
+	
 	//PROJECTS Table
 	private static final String KEY_PROJECT_NAME = "project_name";
+	private static final String KEY_PROJECT_USER_ID = "user_id";
 
 	//TIME BLOCKS TABLE
 	private static final String KEY_TIME_BLOCK_PROJECT_ID = "project_id";
@@ -55,10 +61,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_TIME_BLOCK_CONFIRMED = "confirmed";
 	
 	// Table Create Statements
+	
+	private static final String CREATE_TABLE_USER = "CREATE TABLE " 
+			+ TABLE_USER + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USER_EMAIL
+			+ " TEXT," + KEY_USER_NAME + " TEXT," + KEY_USER_PICTURE + " TEXT" + ")";
+	
 	// Project table create statement
 	private static final String CREATE_TABLE_PROJECT = "CREATE TABLE "
-			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_NAME
-			+ " TEXT" + ")";
+			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_USER_ID +" INTEGER,"
+			+KEY_PROJECT_NAME+ " TEXT" + ")";
 
 	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
@@ -71,9 +82,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		db.execSQL(CREATE_TABLE_USER);
 		db.execSQL(CREATE_TABLE_PROJECT);
-
 		db.execSQL(CREATE_TABLE_TIME_BLOCK);
+		
 		//IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	}
 
@@ -81,8 +93,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 		Log.d("UPGRADE DATABASE", "!!!!");
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
-		
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME_BLOCK);
 		// IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	
@@ -91,9 +103,66 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	
+	//========================================================
+	// USER ==================================================
+	//========================================================
 	
+	public User createUser(String email, String name, String picURL){
+		Log.d("User insertion", "INNEEEEE");
+		
+		
+		User user = getUserByEmail(email);
+		long user_id;
+		if(user == null) {
+			SQLiteDatabase db = this.getWritableDatabase();
+			ContentValues values = new ContentValues();
+			values.put(KEY_USER_EMAIL, email);
+			values.put(KEY_USER_NAME, name);
+			values.put(KEY_USER_PICTURE, picURL);
+			//insert row
+			
+			user_id = db.insert(TABLE_USER, null, values);
+			user = User.getInstance();
+			Log.d("User insertion", "found no user by email :" + user_id);
+			user.setId(user_id);
+			user.setEmail(email);
+		}
+		//assigning tags to project	
+
+		user.setName(name);
+		user.setPictureURL(picURL);
+		return user;		
+	}
 	
-	
+	public User getUserByEmail(String email){
+		SQLiteDatabase db = this.getReadableDatabase();
+		
+		String selectQuery = "SELECT * FROM " + TABLE_USER + " WHERE "
+				+ KEY_USER_EMAIL + " = " + "'" + email + "'";
+		//Log.e(LOG, selectQuery);
+		Log.e("User insertion", "getUserByEmail:   " + selectQuery);
+		Cursor c = db.rawQuery(selectQuery, null);
+			
+		if(c != null)
+			c.moveToFirst();
+		
+		if(c.getCount()==0){
+			Log.d("User insertion", "getUserByEmail ---> user not found, CREATE!");
+			return null;
+		}
+		
+		Log.d("User insertion", "cursor " + c.getCount());	
+		
+		//Set all attributes before returning it
+		// Create a project out of the row name
+		User user = User.getInstance();
+		user.setEmail(c.getString(c.getColumnIndex(KEY_USER_EMAIL)));
+		user.setId(c.getLong(c.getColumnIndex(KEY_ID)));
+		
+		Log.d("User insertion", "getUserByEmail   ->" +User.getInstance().getEmail() + "   with id = " + User.getInstance().getID());
+		
+		return user;	
+	}
 	
 	
 	
@@ -108,16 +177,21 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 * @param tag_ids - the tags, e.g. name.
 	 * @return - returns the id of the row.
 	 */
-	public long createProject(Project project)
+	public long createProject(Project project, User user)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		
+		
+		
 		ContentValues values = new ContentValues();
 		values.put(KEY_PROJECT_NAME, project.getName());
+		values.put(KEY_PROJECT_USER_ID, user.getID());
 		
 		//insert row
 		long project_id = db.insert(TABLE_PROJECT, null, values);
-		
+		Log.d("User insertion create" ,"createProject-> userID: " + user.getID()+" projectId: " + project_id);
+		//Set project id (THIS IS IMPORTANT)
+		project.setId(project_id);
 		//assigning tags to project	
 		return project_id;		
 	}
@@ -139,7 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// This will be send as a parameter to db.update
 		Log.d("Kommer vi hit", "TJENARE!");
 		
-		String[] args = new String[]{String.valueOf(getProjectId(p.getName()))};
+		String[] args = new String[]{String.valueOf(p.getId())};
 		//Update row
 		return db.update(TABLE_PROJECT, values, KEY_ID + " = ?",
 				args);
@@ -171,14 +245,16 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	/**
 	 * Select all projects.
+	 * @param user - a User instance
 	 * @return List<Project> 
 	 */
-	public List<Project> getAllProjects()
+	public List<Project> getAllProjects(User user)
 	{
 		List<Project> projects = new ArrayList<Project>();
-		String selectQuery = "SELECT * FROM " + TABLE_PROJECT;
+		String selectQuery = "SELECT * FROM " + TABLE_PROJECT + " WHERE "
+				 + KEY_PROJECT_USER_ID + " = " + user.getID();
 		
-		//Log.e(LOG, selectQuery);
+		Log.e("User insertion", "getAllProjects:   " + selectQuery);
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(selectQuery, null);
 		
@@ -188,7 +264,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			do
 			{
 				Project p = getProject(c.getInt(c.getColumnIndex(KEY_ID)));
-				
+				p.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+				Log.d("User insertion", "Getting project " + p.getName() + " for mail " + user.getEmail() + " rowcount: " + p.getId());
 				// Add to the projects list that will be returned
 				projects.add(p);
 			}while (c.moveToNext());
@@ -198,13 +275,15 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	/**
 	 * Get the id of a project by it's name (which should be unique).
 	 * @param project_name - String.
+	 * @param user - User, get project by name need to be dependent on the user as well.
 	 * @return auto incremented id from the database.
 	 */
-	public long getProjectId(String project_name){
+	public long getProjectId(String project_name, User user){
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		String selectQuery = "SELECT "+ "*" + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + "'" + project_name + "'";
+		String selectQuery = "SELECT "+ "*" + " FROM " + TABLE_PROJECT + " WHERE " + KEY_PROJECT_NAME + " = " + "'" + project_name + "'" + " AND " + KEY_PROJECT_USER_ID + " = " + user.getID();
 		Cursor c = db.rawQuery(selectQuery, null);
+		Log.e("User insertion", "getProjectId:   " + selectQuery);
 		//Log.e(LOG, c.toString());
 		if(c != null)
 			c.moveToFirst();
@@ -246,7 +325,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		Calendar d = timeblock.getDate();
 		
 		ContentValues values = new ContentValues();
-		values.put(KEY_TIME_BLOCK_PROJECT_ID, getProjectId(project.getName()));
+		values.put(KEY_TIME_BLOCK_PROJECT_ID, project.getId());
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
 		values.put(KEY_TIME_BLOCK_YEAR, d.get(Calendar.YEAR));
 		values.put(KEY_TIME_BLOCK_MONTH, d.get(Calendar.MONTH));
@@ -256,6 +335,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//insert row
 		long timeblock_id = db.insert(TABLE_TIME_BLOCK, null, values);
 		timeblock.setID(timeblock_id);
+		Log.d("User insertion", "createTimeBlock ->  timeblock_id" + timeblock_id + "  projectid " + project.getId());
 		logTimeblocks();
 		return timeblock_id;
 		
@@ -291,7 +371,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_TIME_BLOCK_MINUTES, timeblock.getTimeInMinutes());
 		
 		// This will be send as a parameter to db.update
-		String[] args = new String[]{String.valueOf(getProjectId(p.getName())), String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
+		String[] args = new String[]{String.valueOf(p.getId()), String.valueOf(timeblock.getYear()), String.valueOf(timeblock.getMonth()), String.valueOf(timeblock.getDay())};
 		//Update row
 		return db.update(TABLE_TIME_BLOCK, values, KEY_TIME_BLOCK_PROJECT_ID + " = ?" + " AND " +KEY_TIME_BLOCK_YEAR + " = ?" + " AND " + KEY_TIME_BLOCK_MONTH + " = ?" + " AND " + KEY_TIME_BLOCK_DAY + " = ?",
 				args);
@@ -340,9 +420,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	 */
 	public List<TimeBlock> getTimeBlocksByProject(Project p)
 	{
-		long pid = getProjectId(p.getName());
+		long pid = p.getId();
 		String selectQuery = "SELECT * FROM " + TABLE_TIME_BLOCK + " WHERE "+ KEY_TIME_BLOCK_PROJECT_ID + " = " + pid;
-		//Log.e(LOG, selectQuery);
+		Log.e("User insertion", selectQuery);
 		List<TimeBlock> timeblocks = new ArrayList<TimeBlock>();
 		
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -364,6 +444,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					t.setConfirmed(confirmed);
 					t.setID(id);
 					timeblocks.add(t);
+					Log.d("User insertion", "getTimeBlocksByProject ->  timeblock_id " + id + "  projectid " + p.getId());
 				}while (c.moveToNext());
 			}
 			return timeblocks;

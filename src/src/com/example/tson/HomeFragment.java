@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	Calendar homeFragmentCalendar;
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
-	public static User user = HomeActivity.user;
+	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
 	
 	/***********************
@@ -411,7 +411,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
    	public void showReportDialog(View v)
     {
    		//AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.CustomDialogTheme);
+   		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
    		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    		//Add title
    		builder.setTitle(R.string.title_confirm_time);

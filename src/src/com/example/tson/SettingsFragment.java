@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import tson_utilities.User;
+
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import android.support.v4.app.Fragment;
@@ -42,11 +44,13 @@ public class SettingsFragment extends Fragment{
 	 /***********************/
 	View settings;
 	TextView meName;
+	TextView meEmail;
 	EditText notificationEditText;
 	Calendar notificationCal;
 	Intent mServiceIntent;
 	PendingIntent pendingIntent;
 	Button manageProjectsButton;
+	User user = User.getInstance();
 	
 	 /***********************
 	  *  	OTHERS			*/	
@@ -61,46 +65,38 @@ public class SettingsFragment extends Fragment{
 		 super.onCreate(savedInstanceState);
 		 settings = inflater.inflate(R.layout.settings_fragment, container, false);
 		 getActivity();
-		 
-		 //Fetch Google+ data for input
-		 SharedPreferences pref =  getActivity().getApplicationContext().getSharedPreferences("MyPref", 0);
-		 String personName = pref.getString("personName", null); // getting String
-		 String personPhotoUrl = pref.getString("personPhotoUrl", null);
-		 String email = pref.getString("email", null);
-		 
-		 ImageView imgProfilePic = (ImageView) settings.findViewById(R.id.imageView1);
-		 new LoadProfileImage(imgProfilePic).execute(personPhotoUrl);
-		 Log.d("Settings", personName);
-		 Log.d("email", email);
-		 Log.d("personPhotoUrl", personPhotoUrl);
-		 
 		 notificationCal = Calendar.getInstance();
-		 meName = (TextView) settings.findViewById(R.id.meName);		 
-		 meName.setText(HomeActivity.user.getName());
 		 
+
+		 
+		 //Set account info in Settings
+		 ImageView imgProfilePic = (ImageView) settings.findViewById(R.id.imageView1);
+		 new LoadProfileImage(imgProfilePic).execute(user.getPicURL());		 
+		 meName = (TextView) settings.findViewById(R.id.meName);		 
+		 meName.setText(user.getName()); 
+		 meEmail = (TextView) settings.findViewById(R.id.meEmail);		 
+		 meEmail.setText(user.getEmail());
+		 
+		 //Buttons
 		 Button addNotification = (Button) settings.findViewById(R.id.addNotification);
 		 mServiceIntent = new Intent(getActivity(), NotificationHandler.class);
-		 
-
-		 ExpandableListView notificationsExpand = (ExpandableListView) settings.findViewById(R.id.expandableListView1);
-
 
 		 manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
-		 manageProjectsButton.setOnClickListener(new View.OnClickListener() {
-			
+		 
+		 manageProjectsButton.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), ManageProjectsActivity.class);
 				startActivity(intent);				
 			}
-		});
+		}); 
 		 
 		 addNotification.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				
-				notificationEditText = (EditText) settings.findViewById(R.id.editText3);
+				//notificationEditText = (EditText) settings.findViewById(R.id.editText3);
 				Editable notificationText = notificationEditText.getText();
 				notificationCal.add(Calendar.SECOND, 5);
 				mServiceIntent.putExtra("title", "Tson says:");
@@ -112,36 +108,34 @@ public class SettingsFragment extends Fragment{
 		 });
 		 
 		 return settings;
-	}
+	}//End OnCreate
 	
-	   /**
-	    * Background Async task to load user profile picture from url
-	    * */
-	   private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
-	       ImageView bmImage;
-	    
-	       public LoadProfileImage(ImageView bmImage) {
-	           this.bmImage = bmImage;
-	       }
-	    
-	       protected Bitmap doInBackground(String... urls) {
-	           String urldisplay = urls[0];
-	           Bitmap mIcon11 = null;
-	           try {
-	               InputStream in = new java.net.URL(urldisplay).openStream();
-	               mIcon11 = BitmapFactory.decodeStream(in);
-	           } catch (Exception e) {
-	               Log.e("Error", e.getMessage());
-	               e.printStackTrace();
-	           }
-	           return mIcon11;
-	       }
-	    
-	       protected void onPostExecute(Bitmap result) {
-	           bmImage.setImageBitmap(result);
-	       }
-	   }
+   /**
+    * Background Async task to load user profile picture from url
+    * */
+   private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
+       ImageView bmImage;
+    
+       public LoadProfileImage(ImageView bmImage) {
+           this.bmImage = bmImage;
+       }
+    
+       protected Bitmap doInBackground(String... urls) {
+           String urldisplay = urls[0];
+           Bitmap mIcon11 = null;
+           try {
+               InputStream in = new java.net.URL(urldisplay).openStream();
+               mIcon11 = BitmapFactory.decodeStream(in);
+           } catch (Exception e) {
+               Log.e("Error", e.getMessage());
+               e.printStackTrace();
+           }
+           return mIcon11;
+       }
+    
+       protected void onPostExecute(Bitmap result) {
+           bmImage.setImageBitmap(result);
+       }
+   }
 	
-	
-
 }
