@@ -34,10 +34,4 @@
       android:layout_marginTop="10dp"
       android:background="@color/combitech_blue" />
 
-   <Button
-       android:id="@+id/addNotification"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:text="Add +" />
-
 </LinearLayout>
