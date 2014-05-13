@@ -39,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TABLE_USER = "users";
 	private static final String TABLE_PROJECT = "projects";
 	private static final String TABLE_TIME_BLOCK = "time_blocks";
+	private static final String TABLE_NOTIFICATION = "notifications";
 	
 	// Common column names
 	private static final String KEY_ID = "id";	
@@ -60,6 +61,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_TIME_BLOCK_MINUTES = "minutes";
 	private static final String KEY_TIME_BLOCK_CONFIRMED = "confirmed";
 	
+	// NOTIFICATIONS TABLE
+	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
+	private static final String KEY_NOTIFICATION_TITLE = "title";
+	private static final String KEY_NOTIFICATION_TEXT = "text";
+	private static final String KEY_NOTIFICATION_HOUR = "hour";
+	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	//flags for the day of the week (ugly! should be normalized)
+	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
+	
+	
+	
+
+	
 	// Table Create Statements
 	
 	private static final String CREATE_TABLE_USER = "CREATE TABLE " 
@@ -75,6 +89,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
 			+ KEY_TIME_BLOCK_MONTH + " INTEGER," + KEY_TIME_BLOCK_DAY + " INTEGER," + KEY_TIME_BLOCK_MINUTES + " INTEGER,"  + KEY_TIME_BLOCK_CONFIRMED + " INTEGER"  +")";
 	
+	private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE "
+			+ TABLE_NOTIFICATION + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOTIFICATION_USER_ID + " INTEGER,"
+			+ KEY_NOTIFICATION_TITLE + " TEXT," + KEY_NOTIFICATION_TEXT + " TEXT," + KEY_NOTIFICATION_HOUR + " INTEGER,"
+			+ KEY_NOTIFICATION_MINUTE + " INTEGER," + KEY_NOTIFICATION_WEEK_DAYS + " INTEGER" + ")";
+	
+	
 	public DatabaseHelper(Context context)
 	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -85,6 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		db.execSQL(CREATE_TABLE_USER);
 		db.execSQL(CREATE_TABLE_PROJECT);
 		db.execSQL(CREATE_TABLE_TIME_BLOCK);
+		db.execSQL(CREATE_TABLE_NOTIFICATION);
 		
 		//IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	}
@@ -96,6 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME_BLOCK);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
 		// IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	
 		//Create new tables
@@ -449,6 +471,57 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 			return timeblocks;
 	}
+	
+	//========================================================
+	// NOTIFICATOIN ==========================================
+	//========================================================
+	
+	
+	//title
+	//text
+	//timme
+	//minut
+	// days of week (bool)
+	
+	
+	
+	
+	
+	//TODOOOOOOO
+	
+	/*
+	 * 
+	 * 	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
+	private static final String KEY_NOTIFICATION_TITLE = "title";
+	private static final String KEY_NOTIFICATION_TEXT = "text";
+	private static final String KEY_NOTIFICATION_HOUR = "hour";
+	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	//flags for the day of the week (ugly! should be normalized)
+	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
+	 */
+	public long createNotification(String title, String text, int hour, int minute, List<Integer> selectedDays)
+	{
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		//String temp = Arrays.toString(int[])
+		int temp=0;
+		for(int i = 0; i< selectedDays.size(); i++)
+		{
+			temp += selectedDays.get(i)*10^(selectedDays.size()-i-1);
+		}
+		
+		Log.d("CreateNotification", " "+temp);
+		
+		
+		ContentValues values = new ContentValues();
+
+				
+		//insert row
+
+		return 0;
+	}
+	
+	
 	
 	/**
 	 * A log time function, not fully implemented.
