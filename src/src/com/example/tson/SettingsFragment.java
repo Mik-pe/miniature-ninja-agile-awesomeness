@@ -15,6 +15,7 @@ import tson_utilities.Project;
 import tson_utilities.User;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -77,6 +78,7 @@ public class SettingsFragment extends Fragment{
 	Calendar notificationCal;
 	Button manageProjectsButton;
 	Button addNotificationButton;
+	Button logoutButton;
 
 	int nrOfNotifications;
 	List<MyNotification> notificationList;
@@ -89,7 +91,12 @@ public class SettingsFragment extends Fragment{
 
 	User user = User.getInstance();
 	
+	
+	/*
+	 * Googleshit
+	 */
 
+	private GoogleApiClient client;
 	 /***********************
 	  *  	OTHERS			*/	
 	 /************************/
@@ -105,7 +112,11 @@ public class SettingsFragment extends Fragment{
 		getActivity();
 		notificationCal = Calendar.getInstance();
 		
-		
+		client = LoginActivity.getmGoogleApiClient();
+		if (client.isConnected()) {
+	           Log.d("try", "connected1");
+	       }
+
 		
 		//Set account info in Settings
 		ImageView imgProfilePic = (ImageView) settings.findViewById(R.id.imageView1);
@@ -118,10 +129,24 @@ public class SettingsFragment extends Fragment{
 		/**
 		* Static defaultnotifications, not saved internally
 		*/
-		notificationList = new ArrayList<MyNotification>();	
-	
+		MyNotification someNotification = new MyNotification("Tson", "notification", 0, 6, 22);
+		List<Integer> repeatList = new ArrayList<Integer>();
+		repeatList.add(1);
+		repeatList.add(7);
+		someNotification.setNotificationRepeat(repeatList);
+		
+		notificationList = new ArrayList<MyNotification>();
+		/**
+		 * TODO: user.getNotifications()....
+		 */
+		notificationList.add(someNotification);
+		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+
+		
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
+		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
 		manageProjectsButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -136,6 +161,16 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
 				startActivity(intent);
+			}
+		});
+		
+		logoutButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("try", "logout pressed");
+				signOutFromGplus();
+				
 			}
 		});
 		
@@ -171,30 +206,38 @@ public class SettingsFragment extends Fragment{
        }
    }
    
-	public void showInputDialog(final TextView e)
-	{
-		final EditText newNameInput = new EditText(getActivity());
-	if(e.getText().toString() == "")
-		newNameInput.setHint(e.getHint().toString());
-	else
-		newNameInput.setHint(e.getText().toString());
+   /**
+    * Sign-out from google
+    * */
+   private void signOutFromGplus() {
+	   Log.d("try", "insignout1");
+       if (client.isConnected()) {
+    	   Log.d("try", "insignout2");
+           Plus.AccountApi.clearDefaultAccount(client);
+           client.disconnect();
+           client.connect();
+       }
+   }
 
-	new AlertDialog.Builder(getActivity())
-	.setTitle("Set new reminder!")
-	.setMessage("Set a remindertext!")
-	.setView(newNameInput)
-	.setPositiveButton("Set name!", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		e.setText( newNameInput.getText().toString());
+   /**
+    * Revoking access from google
+    * */
+ /*  private void revokeGplusAccess() {
+       if (client.isConnected()) {
+           Plus.AccountApi.clearDefaultAccount(client);
+           Plus.AccountApi.revokeAccessAndDisconnect(client)
+                   .setResultCallback(new ResultCallback<Status>() {
+                       @Override
+                       public void onResult(Status arg0) {
+                           Log.e(TAG, "User access revoked!");
+                           client.connect();
+                           updateUI(false);
+                       }
 
-		}
-		})
-		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		}
-		})
-		.show();
-	}
+                   });
+       }
+   }*/
+   
 	boolean mIgnoreTimeSet = false;
 	public void showTimeDialog(View v)
    {	
@@ -264,11 +307,19 @@ public class SettingsFragment extends Fragment{
 	
 	notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
 	notificationEditText.setText(notificationList.get(position).getNotificationTitle());
+	final int posi = position;
 	notificationEditText.setOnClickListener(new View.OnClickListener(){
 		@Override
 		public void onClick(View v) {
-			//TODO Auto-generated method stub
-			showInputDialog( notificationEditText);
+			Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
+			intent.putExtra("notificationTitle"	, notificationList.get(posi).getNotificationTitle());
+			intent.putExtra("notificationText"	, notificationList.get(posi).getNotificationText());
+			intent.putExtra("notificationHour"	, notificationList.get(posi).getNotificationHour());
+			intent.putExtra("notificationMinute", notificationList.get(posi).getNotificationMinute());
+			intent.putExtra("notificationID"	, notificationList.get(posi).getNotificationID());
+			intent.putIntegerArrayListExtra("notificationRepeat", (ArrayList<Integer>) notificationList.get(posi).getNotificationRepeat());
+			
+			startActivity(intent);
 		}
 	});
 	return view;

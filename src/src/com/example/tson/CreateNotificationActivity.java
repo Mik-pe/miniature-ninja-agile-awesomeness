@@ -45,7 +45,7 @@ public class CreateNotificationActivity extends Activity {
 	Button backButton;
 	Calendar c;
 	Button createButton;
-	int hour, minute;
+	int hour, minute, ID;
 	String title;
 	String text;
 	MyNotification thisNotification;
@@ -56,11 +56,46 @@ public class CreateNotificationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_notification);
 		c = Calendar.getInstance();
-		repeatList = new ArrayList<Integer>();
-		thisNotification = new MyNotification(title, text, 0, hour, minute);
 		
-		setCurrentTimeOnView();
+		Bundle extras = getIntent().getExtras();
 		repeatTextView = (TextView) this.findViewById(R.id.notification_repeat_days);
+		/**
+		 * If extras isn't null, the activity should start in edit-mode
+		 */
+		if(extras != null)
+		{
+			title = extras.getString("notificationTitle");
+			text = extras.getString("notificationText");
+			hour =  extras.getInt("notificationHour");
+			minute = extras.getInt("notificationMinute");
+			ID = extras.getInt("notificationID");
+			repeatList =  extras.getIntegerArrayList("notificationRepeat");
+			
+			notificationTitle = (TextView) findViewById(R.id.notification_title_editText);
+			notificationText = (TextView) findViewById(R.id.notification_text_editText);
+			
+			notificationTitle.setText(title);
+			notificationText.setText(text);
+			
+			thisNotification = new MyNotification(title, text, ID, hour, minute);
+			setOldTimeOnView();
+			if(!repeatList.isEmpty())
+			{
+				String days = "";
+				Calendar Weekdays = Calendar.getInstance();
+				for(int i=0;i<repeatList.size();i++)
+				{
+					Weekdays.set(Calendar.DAY_OF_WEEK, (repeatList.get(i)+1)%7);
+					days += Weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+", ";
+				}
+				repeatTextView.setText(days);
+			}
+		}
+		else{
+			repeatList = new ArrayList<Integer>();
+			thisNotification = new MyNotification(title, text, ID, hour, minute);
+			setCurrentTimeOnView();
+		}
 	}
 
 	@Override
@@ -81,6 +116,14 @@ public class CreateNotificationActivity extends Activity {
 		timeTextView.setText(hour+ ":" +minute);
 		thisNotification.setNotificationHour(hour);
 		thisNotification.setNotificationMinute(minute);
+	}
+	
+	public void setOldTimeOnView()
+	{
+		timeTextView = (TextView) this.findViewById(R.id.notification_time_set);
+		
+		picker = new TimePickerDialog(this, timePickerListener, hour, minute, true);
+		timeTextView.setText(hour+ ":" +minute);
 	}
 	
 
@@ -115,6 +158,7 @@ public class CreateNotificationActivity extends Activity {
 		
 		/**
 		 * If repeatList has values, the notification should repeat.
+		 * Else, it should only notify today.
 		 */
 		if(!repeatList.isEmpty())
 		{
@@ -140,6 +184,10 @@ public class CreateNotificationActivity extends Activity {
 		else{
 			nextWeekDay = c.get(Calendar.DAY_OF_WEEK);
 		}
+		
+		/**
+		 * Calculate how many days it is until next notification goes off
+		 */
 		if(nextWeekDay < c.get(Calendar.DAY_OF_WEEK)){
 			nextWeekDay = (7-c.get(Calendar.DAY_OF_WEEK))+nextWeekDay;
 		}
@@ -148,8 +196,12 @@ public class CreateNotificationActivity extends Activity {
 			nextWeekDay = nextWeekDay-c.get(Calendar.DAY_OF_WEEK);
 		}
 		
+		/**
+		 * Add the remaining days until next notification.
+		 */
 		c.add(Calendar.DAY_OF_WEEK, nextWeekDay);
 
+		
 		Intent mServiceIntent = new Intent(this, NotificationHandler.class);
 		mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
 		if(thisNotification.getNotificationText() != "")

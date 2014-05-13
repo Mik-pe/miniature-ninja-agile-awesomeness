@@ -1,3 +1,7 @@
+/**
+ * @author John Hollen
+ * An activity for creating new projects
+ */
 package com.example.tson;
 
 import com.example.tson.HomeActivity;
@@ -16,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.os.Build;
@@ -38,16 +43,6 @@ public class CreateProjectActivity extends Activity {
 		}
 	}
 
-	
-	//Hej! HEJHEEEJ!!! :DD:D:D:D:DDD
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.create_project, menu);
-		return true;
-	}
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -66,8 +61,16 @@ public class CreateProjectActivity extends Activity {
 		EditText projectNameEditText = (EditText) findViewById(R.id.project_name_editText);
 		String projectName = projectNameEditText.getText().toString();
 
-    
-        Project p1 = new Project(projectName);
+		CheckBox internalTimeCheck = (CheckBox) findViewById(R.id.isInternalCheck);
+		
+		//The entered project name
+		Project p1 = new Project(projectName);
+		p1.setInternalTime(0); 
+		
+		//Check the checkbox if it is checked and act accordingly
+		if(internalTimeCheck.isChecked())
+			p1.setInternalTime(1);
+			      
         
         user.addProject(p1);
 		db.createProject(p1, user);
@@ -78,7 +81,7 @@ public class CreateProjectActivity extends Activity {
     	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //set flag on intent to clear history stack of all activities
     	
     	startActivity(intent);
-    	finish(); //finish this activity, remove from history	
+    	finish(); //finish this activity, remove from history
        	
 	}
 	/**
