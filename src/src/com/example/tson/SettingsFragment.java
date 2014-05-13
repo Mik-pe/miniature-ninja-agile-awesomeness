@@ -116,11 +116,8 @@ public class SettingsFragment extends Fragment{
 		if (!client.isConnected()) {
 			LoginActivity.firstTime = false;
 			client.connect();
-			Log.d("try", "connecting");
 	       }
-		else{
-			Log.d("try", "connected");
-		}
+
 
 		
 		//Set account info in Settings
@@ -174,7 +171,6 @@ public class SettingsFragment extends Fragment{
 		logoutButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//Log.d("try", "logout pressed");
 				showLogoutDialog(v);
 			}
 		});
@@ -182,7 +178,6 @@ public class SettingsFragment extends Fragment{
 		revokeButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//Log.d("try", "logout pressed");
 				showRevokeDialog(v);
 			}
 		});
@@ -224,9 +219,7 @@ public class SettingsFragment extends Fragment{
     * Sign-out from google
     * */
    private void signOutFromGplus() {
-	   //Log.d("try", "insignout1");
        if (client.isConnected()) {
-    	 //  Log.d("try", "insignout2");
            Plus.AccountApi.clearDefaultAccount(client);
            client.disconnect();
            client.connect();
@@ -299,7 +292,6 @@ public class SettingsFragment extends Fragment{
 		    // User clicked OK button - Go to submission page       
 		   	public void onClick(DialogInterface dialog, int id) 
 		   	{   	        	   
-				Log.d("try","revoking");
 				revokeGplusAccess();
 				Intent intent = new Intent(getActivity(), LoginActivity.class);
 				startActivity(intent);
