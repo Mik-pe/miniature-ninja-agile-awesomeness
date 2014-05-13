@@ -19,7 +19,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
 	<uses-permission android:name="android.permission.USE_CREDENTIALS" />
+	
 
+   
+	
 
     <application
         android:allowBackup="true"
@@ -36,7 +39,9 @@
         <!-- Home Screen Activity -->
         <activity
             android:name="com.example.tson.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,20 +52,25 @@
         <!-- When signed in activity -->
         <activity
             android:name="com.example.tson.HomeActivity"
-            android:label="@string/login_button" >
+            android:label="@string/login_button" 
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait">
         </activity>
 
         
         <!-- Create Project Activity -->
         <activity
             android:name="com.example.tson.CreateProjectActivity"
-            android:label="@string/create_project_button" >
+            android:label="@string/create_project_button" 
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait">
         </activity>
 
         <!-- submission activity -->
         <activity
             android:name="com.example.tson.SubmissionListFragment"
-            android:label="@string/title_activity_sub_list" >
+            android:label="@string/title_activity_sub_list" 
+            >
         </activity>
         <activity
             android:name="com.example.tson.Adapter"
