@@ -9,6 +9,7 @@ import java.util.Locale;
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
 import tson_utilities.Project;
+import tson_utilities.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -50,6 +51,7 @@ public class CreateNotificationActivity extends Activity {
 	String text;
 	MyNotification thisNotification;
 	List<Integer> repeatList;
+	boolean isEdit = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		if(extras != null)
 		{
+			isEdit = true;
 			title = extras.getString("notificationTitle");
 			text = extras.getString("notificationText");
 			hour =  extras.getInt("notificationHour");
 			minute = extras.getInt("notificationMinute");
-			ID = extras.getInt("notificationID");
+			ID = (int) extras.getLong("notificationID");
 			
 			if(extras.getIntegerArrayList("notificationRepeat") != null)
 				repeatList =  extras.getIntegerArrayList("notificationRepeat");
@@ -168,7 +171,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		Collections.sort(repeatList);
 		thisNotification.setNotificationRepeat(repeatList);
-		thisNotification.addNotification();
+		Log.d("id in create", "id: "+thisNotification.getNotificationID());
+		if(!isEdit)
+			thisNotification.addNotification();
+		else
+			thisNotification.updateNotification();
+		
 		/**
 		 * If repeatList has values, the notification should repeat.
 		 * Else, it should only notify today.
@@ -234,7 +242,7 @@ public class CreateNotificationActivity extends Activity {
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
-		
+		User.getInstance().updateNotificationList();
 		finish();
 	}
 	
