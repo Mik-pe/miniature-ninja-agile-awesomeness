@@ -56,7 +56,7 @@ public class CreateNotificationActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_notification);
 		c = Calendar.getInstance();
-		
+		repeatList = new ArrayList<Integer>();
 		Bundle extras = getIntent().getExtras();
 		repeatTextView = (TextView) this.findViewById(R.id.notification_repeat_days);
 
@@ -70,7 +70,9 @@ public class CreateNotificationActivity extends Activity {
 			hour =  extras.getInt("notificationHour");
 			minute = extras.getInt("notificationMinute");
 			ID = extras.getInt("notificationID");
-			repeatList =  extras.getIntegerArrayList("notificationRepeat");
+			
+			if(extras.getIntegerArrayList("notificationRepeat") != null)
+				repeatList =  extras.getIntegerArrayList("notificationRepeat");
 			
 			notificationTitle = (TextView) findViewById(R.id.notification_title_editText);
 			notificationText = (TextView) findViewById(R.id.notification_text_editText);
@@ -93,7 +95,6 @@ public class CreateNotificationActivity extends Activity {
 			}
 		}
 		else{
-			repeatList = new ArrayList<Integer>();
 			thisNotification = new MyNotification(title, text, ID, hour, minute);
 			setCurrentTimeOnView();
 		}
