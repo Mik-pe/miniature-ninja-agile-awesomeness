@@ -10,10 +10,14 @@ import java.util.List;
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
 import tson_utilities.Project;
+import tson_utilities.TimeBlock;
+
 import tson_utilities.User;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -38,6 +42,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -48,6 +53,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -77,6 +83,7 @@ public class SettingsFragment extends Fragment{
 	Button manageProjectsButton;
 	Button addNotificationButton;
 	Button logoutButton;
+	Button revokeButton;
 
 	int nrOfNotifications;
 	List<MyNotification> notificationList;
@@ -89,10 +96,6 @@ public class SettingsFragment extends Fragment{
 
 	User user = User.getInstance();
 	
-	
-	/*
-	 * Googleshit
-	 */
 
 	private GoogleApiClient client;
 	 /***********************
@@ -107,13 +110,15 @@ public class SettingsFragment extends Fragment{
 	{	
 		super.onCreate(savedInstanceState);
 		settings = inflater.inflate(R.layout.settings_fragment, container, false);
-		getActivity();
+		//getActivity();
 		notificationCal = Calendar.getInstance();
 		
 		client = LoginActivity.getmGoogleApiClient();
-		if (client.isConnected()) {
-	           Log.d("try", "connected1");
+		if (!client.isConnected()) {
+			LoginActivity.firstTime = false;
+			client.connect();
 	       }
+
 
 		
 		//Set account info in Settings
@@ -125,15 +130,27 @@ public class SettingsFragment extends Fragment{
 		meEmail.setText(user.getEmail());
 		notificationListView = (ListView) settings.findViewById(R.id.notificationListView);
 		
-		notificationListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*notificationList.size()));
 		/**
 		* Static defaultnotifications, not saved internally
 		*/
-		notificationList = new ArrayList<MyNotification>();	
-	
+		MyNotification someNotification = new MyNotification("Tson", "notification", 0, 6, 22);
+		List<Integer> repeatList = new ArrayList<Integer>();
+		repeatList.add(1);
+		repeatList.add(7);
+		someNotification.setNotificationRepeat(repeatList);
+		
+		notificationList = User.getInstance().getNotificationList();
+		notificationListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(65)*notificationList.size()));
+//		notificationList.add(someNotification);
+//		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+//		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+//
+//		
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
+		revokeButton = (Button) settings.findViewById(R.id.revoke_access_button);
+		
 		manageProjectsButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -152,14 +169,19 @@ public class SettingsFragment extends Fragment{
 		});
 		
 		logoutButton.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
-				Log.d("try", "logout pressed");
-				signOutFromGplus();
-				
+				showLogoutDialog(v);
 			}
 		});
+		
+		revokeButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showRevokeDialog(v);
+			}
+		});
+		
 		
 	notiAdapter = new notificationAdapter();
 	notificationListView.setAdapter(notiAdapter);
@@ -208,9 +230,7 @@ public class SettingsFragment extends Fragment{
     * Sign-out from google
     * */
    private void signOutFromGplus() {
-	   Log.d("try", "insignout1");
        if (client.isConnected()) {
-    	   Log.d("try", "insignout2");
            Plus.AccountApi.clearDefaultAccount(client);
            client.disconnect();
            client.connect();
@@ -220,100 +240,90 @@ public class SettingsFragment extends Fragment{
    /**
     * Revoking access from google
     * */
- /*  private void revokeGplusAccess() {
+   private void revokeGplusAccess() {
        if (client.isConnected()) {
            Plus.AccountApi.clearDefaultAccount(client);
            Plus.AccountApi.revokeAccessAndDisconnect(client)
                    .setResultCallback(new ResultCallback<Status>() {
                        @Override
                        public void onResult(Status arg0) {
-                           Log.e(TAG, "User access revoked!");
+                           Log.e("try", "User access revoked!");
                            client.connect();
-                           updateUI(false);
                        }
 
                    });
        }
-   }*/
-   
-	public void showInputDialog(final TextView e)
-	{
-		final EditText newNameInput = new EditText(getActivity());
-	if(e.getText().toString() == "")
-		newNameInput.setHint(e.getHint().toString());
-	else
-		newNameInput.setHint(e.getText().toString());
-
-	new AlertDialog.Builder(getActivity())
-	.setTitle("Set new reminder!")
-	.setMessage("Set a remindertext!")
-	.setView(newNameInput)
-	.setPositiveButton("Set name!", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		e.setText( newNameInput.getText().toString());
-
-		}
-		})
-		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		}
-		})
-		.show();
-	}
-	boolean mIgnoreTimeSet = false;
-	public void showTimeDialog(View v)
-   {	
-	//Calculates what page and position we are at
-	holder = notificationListView.getPositionForView(v);
-   
-
-    /**
-     * Show the TimePickerDialog
-	*/
-    TimePickerDialog picker = new TimePickerDialog(getActivity(), timeSetListener, newHour, newMin, true);
-    picker.setTitle("Enter hours and minutes spent on this project:");
-    picker.setButton(TimePickerDialog.BUTTON_POSITIVE, "Set", picker);
-    picker.setButton(TimePickerDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener()
-	{
-	    @Override
-	    public void onClick(DialogInterface dialog, int id)
-	    {
-	    	//dialog.dismiss();
-	    	mIgnoreTimeSet = true;
-	    	Log.d("Picker", "Cancelled!");
-	
-	
-	    }
-	});
-   
-    picker.show();
    }
+   
+   public void showLogoutDialog(View v)
+   {
+  		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+  		//Add title
+  		builder.setTitle(R.string.title_logout);
+  		
+  		
+  		//Add the buttons 		
+  		builder.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() 
+	   	{	   	
+		    // User clicked OK button - Go to submission page       
+		   	public void onClick(DialogInterface dialog, int id) 
+		   	{   	        	   
+				signOutFromGplus();
+				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				startActivity(intent);
+		   	} 	
+      });
+	   //Cancel button close the dialog and go back to settings screen
+	   builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() 
+	   {
+          public void onClick(DialogInterface dialog, int id) 
+          {
+              
+          }
+	   });
+	   
+		
+	   	// Create the AlertDialog
+	   	AlertDialog dialog = builder.create();
+	   	dialog.show();
+	   	
+   }//End Dialog confirm reported time
+   
 
-
-   private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			
-			//If Cancel button is clicked we do not want to save any data from time picker
-			if (mIgnoreTimeSet)
-			{
-				mIgnoreTimeSet = false;
-				return;
-			}
-			//If Set button is clicked we want to save data from time picker
-			else
-			{
-				mIgnoreTimeSet = false;
-				hour=hourOfDay;
-				min=minute;
-				
-				timeTextView.setText(hour+" h : "+min+" m");
-			}
-
-
-			}//End onTimeSet
-   	};//End timeSetListener
+   public void showRevokeDialog(View v)
+   {
+  		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+  		//Add title
+  		builder.setTitle(R.string.title_revoke);
+  		
+  		
+  		//Add the buttons 		
+  		builder.setPositiveButton(R.string.confirm_button, new DialogInterface.OnClickListener() 
+	   	{	   	
+		    // User clicked OK button - Go to submission page       
+		   	public void onClick(DialogInterface dialog, int id) 
+		   	{   	        	   
+				revokeGplusAccess();
+				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				startActivity(intent);
+		   	} 	
+      });
+	   //Cancel button close the dialog and go back to settings screen
+	   builder.setNegativeButton(R.string.cancel_button, new DialogInterface.OnClickListener() 
+	   {
+          public void onClick(DialogInterface dialog, int id) 
+          {
+              
+          }
+	   });
+	   
+		
+	   	// Create the AlertDialog
+	   	AlertDialog dialog = builder.create();
+	   	dialog.show();
+	   	
+   }//End Dialog confirm reported time
+   
 
    private class notificationAdapter extends ArrayAdapter<MyNotification> {
    
@@ -326,17 +336,25 @@ public class SettingsFragment extends Fragment{
     {
 	if(view == null)
 		view = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
-	
-	
+
 	notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
 	notificationEditText.setText(notificationList.get(position).getNotificationTitle());
+	final int posi = position;
 	notificationEditText.setOnClickListener(new View.OnClickListener(){
 		@Override
 		public void onClick(View v) {
-			//TODO Auto-generated method stub
-			showInputDialog( notificationEditText);
+			Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
+			intent.putExtra("notificationTitle"	, notificationList.get(posi).getNotificationTitle());
+			intent.putExtra("notificationText"	, notificationList.get(posi).getNotificationText());
+			intent.putExtra("notificationHour"	, notificationList.get(posi).getNotificationHour());
+			intent.putExtra("notificationMinute", notificationList.get(posi).getNotificationMinute());
+			intent.putExtra("notificationID"	, notificationList.get(posi).getNotificationID());
+			intent.putIntegerArrayListExtra("notificationRepeat", (ArrayList<Integer>) notificationList.get(posi).getNotificationRepeat());
+			
+			startActivity(intent);
 		}
 	});
+
 	return view;
     }
 

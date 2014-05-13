@@ -9,6 +9,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 
 import model.NavDrawerItem;
 import tson.sqlite.helper.DatabaseHelper;
+import tson_utilities.MyNotification;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
@@ -90,6 +91,8 @@ public class HomeActivity extends FragmentActivity
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	
+
+	
 	
 
 	 /***********************
@@ -123,19 +126,16 @@ public class HomeActivity extends FragmentActivity
 	    db.logTimeblocks();
 	    projectList = db.getAllProjects(user);
 	    user.getProjects().clear();
+	    
+	    List<MyNotification> notificationList = db.getNotifications();
+	    user.setNotificationList(notificationList);
 		
         for (int i = 0; i < projectList.size(); i++)
         {
 	        user.addProject(projectList.get(i));
 	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
-
-	        
-       
-		
-	
-
-	
+        
     mTitle = mDrawerTitle = getTitle();
 
 	//load slide menu items
@@ -178,7 +178,7 @@ public class HomeActivity extends FragmentActivity
 			) {
 		public void onDrawerClosed(View view) {
 			getActionBar().setTitle(mTitle);
-			//calling onPrepareOptionsMenu() to show action bar icons
+			//calling onPrepareOptionsMenu() to show action bar icon
 			invalidateOptionsMenu();
 		}
 
@@ -217,7 +217,9 @@ public class HomeActivity extends FragmentActivity
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			//display view for selected nav drawer item
+			
 			displayView(position);
+			
 		}
 	}
 	
@@ -254,10 +256,6 @@ public class HomeActivity extends FragmentActivity
 		//PreviousFragment is nollstalld because otherwise skulle inte navigationen med backbutton work.
 		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
-		
-    	ab = getActionBar();
-		ab.removeAllTabs();
-		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		
 		switch (position) {
 		case 0:

@@ -29,16 +29,24 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-				
+
+		firstTime = true;
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API, null)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+        
+		if(mGoogleApiClient.isConnected()){
+			Log.d("try","the client is connected, firsttime=false");
+			firstTime = false;
+	   		}
 		
 		ImageButton btnSignIn = (ImageButton) findViewById(R.id.login_button);
 		btnSignIn.setOnClickListener(new View.OnClickListener() {
-
+		  
+				
+			
 	   @Override
 	   public void onClick(View v) {
 	 
@@ -61,6 +69,8 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    private static final int PROFILE_PIC_SIZE = 400;
    // Google client to interact with Google API
    private static GoogleApiClient mGoogleApiClient;
+   
+   public static Boolean firstTime;
 
    /**
     * A flag indicating that a PendingIntent is in progress and prevents us
@@ -147,16 +157,19 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
            editor.commit(); // commit changes
            
            //Print to HomeActivity
+           if(firstTime){
            personName = personName + " is connected!";
            Toast.makeText(this, personName, Toast.LENGTH_LONG).show();
+           }
 	   }
 	   else{
 		   Log.d("myname", "is null");
 	   }
-   
+       if(firstTime){
        final Intent intent = new Intent(this, HomeActivity.class);
        startActivity(intent);
-	   finish();    
+	   finish();
+       }
    }
     
    @Override

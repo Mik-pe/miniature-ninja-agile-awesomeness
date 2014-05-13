@@ -28,7 +28,7 @@
         android:maxWidth="20dp"
         android:paddingTop="5dp"
         android:background="#00FFFFFF"
-        android:layout_marginRight="70dp"
+        android:layout_marginRight="10dp"
         android:scaleType="fitCenter"/>
 
 

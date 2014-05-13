@@ -31,7 +31,7 @@ public class NotificationHandler extends BroadcastReceiver
 	 /***********************/
 	String notificationTitle;
 	String notificationText;
-	int nrOfNots;
+	int notificationID;
 	long timeUntilNextDate;
 	int calendarDefinition;
 	int calendarValue;
@@ -51,7 +51,7 @@ public class NotificationHandler extends BroadcastReceiver
 	public void onReceive(Context arg0, Intent arg1) {
 		notificationTitle = arg1.getStringExtra("title");
 		notificationText = arg1.getStringExtra("text");
-		nrOfNots = arg1.getIntExtra("nrOfNots", 0);
+		notificationID = (int) arg1.getLongExtra("nrOfNots", 0);
 		timeUntilNextDate = arg1.getLongExtra("timeUntilNextDate", 0);
 		calendarDefinition = arg1.getIntExtra("calendarDefinition", 0);
 		
@@ -79,12 +79,13 @@ public class NotificationHandler extends BroadcastReceiver
 			else
 				mServiceIntent.putExtra("text", "Default Reminder");
 			
-			mServiceIntent.putExtra("nrOfNots", nrOfNots);
+			mServiceIntent.putExtra("nrOfNots", notificationID);
 			mServiceIntent.putExtra("timeUntilNextDate", (timeUntilNextDate));
 			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
 			mServiceIntent.putExtra("calendarValue",calendarValue);
 			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
 			
+		
 			nextWeekDay = repeatList.get(0);
 			for(int i=0;i<repeatList.size();i++)
 			{
@@ -117,7 +118,7 @@ public class NotificationHandler extends BroadcastReceiver
 			 * getBroadcast will queue the pendingIntent for this handler
 			 * AlarmManager will be set inside the function for recursive calls.
 			 */
-			PendingIntent pendingIntent = PendingIntent.getBroadcast(arg0, nrOfNots, mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			PendingIntent pendingIntent = PendingIntent.getBroadcast(arg0, notificationID, mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 			AlarmManager alarmManager = (AlarmManager)arg0.getSystemService(Context.ALARM_SERVICE);
 			alarmManager.set(AlarmManager.RTC_WAKEUP, notificationCalendar.getTimeInMillis(), pendingIntent);			
 		}		
@@ -141,7 +142,7 @@ public class NotificationHandler extends BroadcastReceiver
 		mBuilder.setContentText(notificationText);
 		mBuilder.setVibrate(vibraPattern);
 		mBuilder.setDefaults(Notification.DEFAULT_SOUND);
-		mBuilder.setContentIntent(PendingIntent.getActivity(context, nrOfNots, intent, 0));
+		mBuilder.setContentIntent(PendingIntent.getActivity(context, notificationID, intent, 0));
 		mBuilder.setAutoCancel(true);
 		
 		
