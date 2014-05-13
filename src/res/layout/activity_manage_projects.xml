@@ -24,7 +24,7 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-thin"
-        android:text="Archive or Edit Projects"
+        android:text="Edit Projects"
         android:textSize="32sp" />
 
     <View
@@ -52,7 +52,7 @@
             android:id="@+id/backButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop ="30dp"
+            android:layout_marginTop ="180dp"
             android:layout_marginBottom="30dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
