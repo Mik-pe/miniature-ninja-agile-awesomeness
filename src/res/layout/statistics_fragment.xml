@@ -121,6 +121,7 @@
          android:layout_height="wrap_content"        
          android:paddingLeft="60dp"
     	android:paddingRight="60dp" 
+    	android:paddingTop="20dp"
     	 >
 	    
           <View

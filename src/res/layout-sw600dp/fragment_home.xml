@@ -1,9 +1,10 @@
 <ScrollView
-               xmlns:android="http://schemas.android.com/apk/res/android"
-   		 xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/scrollView1"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
     <LinearLayout
    		android:id="@+id/rl"
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:gravity="center">
 
             <ImageButton
@@ -69,7 +70,7 @@
             android:id="@+id/view1"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="50dp"
             android:background="#DB8C0C"
              />
 	
@@ -78,8 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/project"
             android:textSize="32sp" />
@@ -96,8 +97,8 @@
             android:layout_height="300dp"
             android:paddingTop="40dp"
 	 		android:paddingBottom="50dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp" >
+            android:paddingLeft="70dp"
+            android:paddingRight="70dp" >
 
         </ListView>
 
@@ -109,8 +110,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop ="30dp"
             android:layout_marginBottom="30dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
