@@ -185,9 +185,6 @@ public class HomeActivity extends FragmentActivity
 		public void onDrawerOpened(View drawerView) {
 			getActionBar().setTitle(mDrawerTitle);
 			//calling onPrepareOptionsMenu() to hide action bar icons
-			ab = getActionBar();
-			ab.removeAllTabs();
-			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 			invalidateOptionsMenu();
 			}
 		};
