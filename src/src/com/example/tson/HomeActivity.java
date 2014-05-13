@@ -257,10 +257,6 @@ public class HomeActivity extends FragmentActivity
 		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
 		
-    	ab = getActionBar();
-		ab.removeAllTabs();
-		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		
 		switch (position) {
 		case 0:
 			fragment = new HomeFragment();
