@@ -10,6 +10,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     // Tab Titles
     private String tabtitles[] = new String[] { "List", "Calendar"};
     Context context;
+    Fragment submissionList;
+    Fragment submissionCal;
  
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -26,13 +28,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
  
             // Open FragmentTab1.java
         case 0:
-            Fragment submissionList = new SubmissionListFragment();
+            submissionList = new SubmissionListFragment();
             return submissionList;
  
             // Open FragmentTab2.java
         case 1:
-            Fragment submissionCal = new SubmissionCalFragment();
-            return submissionCal;        
+            submissionCal = new SubmissionCalFragment();
+            return submissionCal;
+        
         }
         return null;
     }
