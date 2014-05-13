@@ -544,7 +544,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NOTIFICATION_USER_ID, User.getInstance().getID());
-		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationTitle());
 		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
 		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
 		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());

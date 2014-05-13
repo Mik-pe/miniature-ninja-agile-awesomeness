@@ -164,11 +164,11 @@ public class CreateNotificationActivity extends Activity {
 		c.set(Calendar.SECOND, 0);
 		
 		/**
-		 * Sort the repeatList
+		 * Sort the repeatList and add the notification to the database
 		 */
 		Collections.sort(repeatList);
 		thisNotification.setNotificationRepeat(repeatList);
-		
+		thisNotification.addNotification();
 		/**
 		 * If repeatList has values, the notification should repeat.
 		 * Else, it should only notify today.
@@ -210,10 +210,10 @@ public class CreateNotificationActivity extends Activity {
 		}
 		
 		/**
-		 * Add the remaining days until next notification.
+		 * Add the remaining days until next notification
 		 */
 		c.add(Calendar.DAY_OF_WEEK, nextWeekDay);
-
+		
 		
 		Intent mServiceIntent = new Intent(this, NotificationHandler.class);
 		mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
@@ -227,14 +227,14 @@ public class CreateNotificationActivity extends Activity {
 		mServiceIntent.putExtra("calendarDefinition", Calendar.DAY_OF_WEEK);
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
-		Log.d("logging", "HERE"+nextWeekDay+" "+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+		Log.d("logging", "HERE"+thisNotification.getNotificationID());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
-		thisNotification.addNotification();
+		
 		finish();
 	}
 	
