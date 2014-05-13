@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	TextView projectTimeTextViewVar;
 	public static String previousFragment;
 	MenuItem createProject;
-	public static Boolean firstTime = true;
+	
 
 	TextView dateText;
 	ImageButton prevDate;
@@ -107,9 +107,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
-		if(projectList.isEmpty()/* && firstTime==true*/)
+		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{
-			//firstTime = false;
+			LoginActivity.firstTime = false;
 			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
 			dialog.setContentView(R.layout.empty_project_view);
 			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
