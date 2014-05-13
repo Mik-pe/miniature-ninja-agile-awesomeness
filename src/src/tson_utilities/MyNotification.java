@@ -2,6 +2,7 @@ package tson_utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.tson.HomeActivity;
 
 /**
  * 
@@ -15,17 +16,19 @@ public class MyNotification {
 	/***********************
 	  *  	VARIABLES		*/	
 	 /***********************/
+	private long notificationID; // id that correspond to the id row in database, this is set upon database save
 	private String notificationTitle;
 	private String notificationText;
 	private int notificationHour;
 	private int notificationMinute;
 	private List<Integer> notificationRepeat;
-	private int notificationID;
+
+	
 	
 	/***********************
 	  *  	CONSTRUCTOR		*/	
 	 /***********************/
-	public MyNotification(String title, String text, int id, int hour, int min) 
+	public MyNotification(String title, String text, long id, int hour, int min) 
 	{
 		setNotificationID(id);
 		setNotificationText(text);
@@ -37,12 +40,16 @@ public class MyNotification {
 	  *  	OTHER		*/	
 	 /***********************/
 	
+	public void addNotification()
+	{
+		HomeActivity.db.createNotification(this);
+	}
 	
 	/***********************
 	  *  	SETTERS		*/	
 	 /***********************/
 	
-	public void setNotificationID(int notificationID) 
+	public void setNotificationID(long notificationID) 
 	{
 		this.notificationID = notificationID;
 	}
@@ -72,7 +79,8 @@ public class MyNotification {
 	  *  	GETTERS		*/	
 	 /***********************/
 	
-	public int getNotificationID() 
+	
+	public long getNotificationID() 
 	{
 		return notificationID;
 	}

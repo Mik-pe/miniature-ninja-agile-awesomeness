@@ -15,6 +15,7 @@ import java.util.Calendar;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
+import tson_utilities.MyNotification;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//Logcat tag
@@ -31,7 +33,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//Database Version
 
-	private static final int DATABASE_VERSION = 36;
+
+	private static final int DATABASE_VERSION = 33;
+
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
@@ -40,6 +44,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String TABLE_USER = "users";
 	private static final String TABLE_PROJECT = "projects";
 	private static final String TABLE_TIME_BLOCK = "time_blocks";
+	private static final String TABLE_NOTIFICATION = "notifications";
 	
 	// Common column names
 	private static final String KEY_ID = "id";	
@@ -61,15 +66,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_TIME_BLOCK_DAY 			= "day";
 	private static final String KEY_TIME_BLOCK_MINUTES 		= "minutes";
 	private static final String KEY_TIME_BLOCK_CONFIRMED 	= "confirmed";
+		
+	// NOTIFICATIONS TABLE
+	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
+	private static final String KEY_NOTIFICATION_TITLE = "title";
+	private static final String KEY_NOTIFICATION_TEXT = "text";
+	private static final String KEY_NOTIFICATION_HOUR = "hour";
+	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	//flags for the day of the week (ugly! should be normalized)
+	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
 	
-	//NOTIFICATION TABLE
-	private static final String KEY_NOTIFICATION_ID 		= "notification_id";
-	private static final String KEY_NOTIFICATION_TITLE 		= "notification_title";
-	private static final String KEY_NOTIFICATION_TEXT 		= "notification_text";
-	private static final String KEY_NOTIFICATION_WEEKDAY	= "notification_year";
-	private static final String KEY_NOTIFICATION_HOURS 		= "notification_hours";
-	private static final String KEY_NOTIFICATION_MINUTES 	= "notification_minutes";
-	private static final String KEY_NOTIFICATION_REPEATDAY	= "notification_id";
+	
+	
+
 	
 	// Table Create Statements
 	
@@ -86,6 +95,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
 			+ KEY_TIME_BLOCK_MONTH + " INTEGER," + KEY_TIME_BLOCK_DAY + " INTEGER," + KEY_TIME_BLOCK_MINUTES + " INTEGER,"  + KEY_TIME_BLOCK_CONFIRMED + " INTEGER"  +")";
 	
+	private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE "
+			+ TABLE_NOTIFICATION + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOTIFICATION_USER_ID + " INTEGER,"
+			+ KEY_NOTIFICATION_TITLE + " TEXT," + KEY_NOTIFICATION_TEXT + " TEXT," + KEY_NOTIFICATION_HOUR + " INTEGER,"
+			+ KEY_NOTIFICATION_MINUTE + " INTEGER," + KEY_NOTIFICATION_WEEK_DAYS + " INTEGER" + ")";
+	
+	
 	public DatabaseHelper(Context context)
 	{
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -96,6 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		db.execSQL(CREATE_TABLE_USER);
 		db.execSQL(CREATE_TABLE_PROJECT);
 		db.execSQL(CREATE_TABLE_TIME_BLOCK);
+		db.execSQL(CREATE_TABLE_NOTIFICATION);
 		
 		//IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	}
@@ -107,6 +123,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECT);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_TIME_BLOCK);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATION);
 		// IF MORE TABLES: OTHER TABLES WILL ALSO BE EXECUTED		
 	
 		//Create new tables
@@ -486,6 +503,103 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 			return timeblocks;
 	}
+	
+	//========================================================
+	// NOTIFICATOIN ==========================================
+	//========================================================
+	
+	
+	//title
+	//text
+	//timme
+	//minut
+	// days of week (bool)
+	
+	
+	
+	
+	
+	//TODOOOOOOO
+	
+	/*
+	 * 
+	 * 	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
+	private static final String KEY_NOTIFICATION_TITLE = "title";
+	private static final String KEY_NOTIFICATION_TEXT = "text";
+	private static final String KEY_NOTIFICATION_HOUR = "hour";
+	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	//flags for the day of the week (ugly! should be normalized)
+	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
+	 */
+	public long createNotification(MyNotification notification)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		List<Integer> selectedDays = notification.getNotificationRepeat();
+		int temp=0; // will store a array of e.g. [1, 5, 7] as an integer like '157'.
+		for(int i = 0; i< selectedDays.size(); i++)
+		{
+			temp += selectedDays.get(i)*Math.pow(10, selectedDays.size()-i-1);
+		}
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_NOTIFICATION_USER_ID, User.getInstance().getID());
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
+		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
+		values.put(KEY_NOTIFICATION_WEEK_DAYS, temp);
+		//insert row
+		long notification_id = db.insert(TABLE_NOTIFICATION, null, values);
+		notification.setNotificationID(notification_id);
+		return notification_id;
+	}
+	
+	public List<MyNotification> getNotifications()
+	{
+		List<MyNotification> notifications = new ArrayList<MyNotification>();
+		String selectQuery = "SELECT * FROM " + TABLE_NOTIFICATION + " WHERE "
+				 + KEY_NOTIFICATION_USER_ID + " = " + User.getInstance().getID();
+		
+		//Log.e("getNotification", "getNotification:   " + selectQuery);
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		if(c != null)
+			if(c.moveToFirst())
+			{
+				
+				do
+				{
+					
+					String title = c.getString(c.getColumnIndex(KEY_NOTIFICATION_TITLE));
+					String text = c.getString(c.getColumnIndex(KEY_NOTIFICATION_TEXT));
+					int hour = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_HOUR));
+					int minute = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_MINUTE));
+					int iSelectedDays = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_WEEK_DAYS));
+					long id = c.getLong(c.getColumnIndex(KEY_ID));
+					
+					MyNotification m = new MyNotification(title, text, id, hour, minute);
+					List<Integer> lSelectedDays = intToIntArray(iSelectedDays);
+					m.setNotificationRepeat(lSelectedDays);
+					notifications.add(m);
+				}while (c.moveToNext());
+			}
+		return notifications;
+	}
+	
+	public List<Integer> intToIntArray(int number)
+	{
+		String sNums = Integer.toString(number);
+		List<Integer> li = new ArrayList<Integer>();
+		
+		for(int i = 0; i<sNums.length(); i++)
+		{
+			li.add(Character.getNumericValue(sNums.charAt(i)));
+		}
+		return li;
+	}
+	
+	
 	
 	/**
 	 * A log time function, not fully implemented.

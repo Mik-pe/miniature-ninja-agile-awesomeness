@@ -9,7 +9,6 @@ import java.util.Locale;
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
 import tson_utilities.Project;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -30,6 +29,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
 
 public class CreateNotificationActivity extends Activity {
 	
@@ -59,6 +59,7 @@ public class CreateNotificationActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		repeatTextView = (TextView) this.findViewById(R.id.notification_repeat_days);
+<<<<<<< HEAD
 		/**
 		 * If extras isn't null, the activity should start in edit-mode
 		 */
@@ -96,6 +97,16 @@ public class CreateNotificationActivity extends Activity {
 			thisNotification = new MyNotification(title, text, ID, hour, minute);
 			setCurrentTimeOnView();
 		}
+=======
+		
+		backButton = (Button) findViewById(R.id.cancel_project_button);
+		backButton.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+		    	finish(); //finishes the activity and closes it
+			}
+		});
+>>>>>>> c979758f92d6be2d6ecbfda9568a963ce83b8e57
 	}
 
 	@Override
@@ -155,6 +166,7 @@ public class CreateNotificationActivity extends Activity {
 		 * Sort the repeatList
 		 */
 		Collections.sort(repeatList);
+		thisNotification.setNotificationRepeat(repeatList);
 		
 		/**
 		 * If repeatList has values, the notification should repeat.
@@ -215,12 +227,13 @@ public class CreateNotificationActivity extends Activity {
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
 		Log.d("logging", "HERE"+nextWeekDay+" "+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
+		thisNotification.addNotification();
 		finish();
 	}
 	
