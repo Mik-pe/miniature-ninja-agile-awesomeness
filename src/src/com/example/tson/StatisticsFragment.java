@@ -47,6 +47,8 @@ public class StatisticsFragment extends Fragment{
 	public User user = User.getInstance();
 	List<Project> projectListStats = user.getProjects();
 	double[] projectMinutes = new double[projectListStats.size()];
+    TextView externalText;
+    TextView internalText;
 	
 	 /***********************
 	  *  	OTHERS			*/	
@@ -71,6 +73,8 @@ public class StatisticsFragment extends Fragment{
 		  startTime = (EditText) statistics.findViewById(R.id.startTime);
 		  endTime = (EditText) statistics.findViewById(R.id.endTime);
 		  projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
+		  externalText = (TextView) statistics.findViewById(R.id.external_time_procent);
+		  internalText = (TextView) statistics.findViewById(R.id.internal_time_procent);
 		  
 		  //Calculate the whole month on first create
 		  calculateTime(startDate, endDate);
@@ -163,6 +167,8 @@ public class StatisticsFragment extends Fragment{
 		  */
 		 public void calculateTime(Calendar start, Calendar end)
 		 {	
+			double externalMinutes = 0.0;
+			double internalMinutes = 0.0;
 			totalMinutes = 0;
 			for(int i=0;i<projectListStats.size();i++)
 			{
@@ -181,6 +187,12 @@ public class StatisticsFragment extends Fragment{
 					  }
 
 				  }
+				  if(projectListStats.get(i).getIsInternal()==1){
+					  internalMinutes+= projectMinutes[i];					  
+				  }
+				  else{
+					  externalMinutes+=projectMinutes[i];	
+				  }
 			}
 			
 			//Checks which of the dates that has been changes and then sets the new time and date
@@ -196,6 +208,8 @@ public class StatisticsFragment extends Fragment{
 						+ end.get(Calendar.YEAR));
 				endDate = (Calendar) end.clone();
 			}
+			internalText.setText(decimalFormat.format(internalMinutes/totalMinutes*100) + " %");
+			externalText.setText(Integer.toString(totalMinutes/60) + " h : " + totalMinutes%60 + " m");
 			
 			//Updates the view
 			statsAdapter = new statsAdapter();
@@ -246,6 +260,7 @@ public class StatisticsFragment extends Fragment{
 		        TextView hourValue = (TextView) view.findViewById(R.id.hourValue);
 		        TextView minuteValue = (TextView) view.findViewById(R.id.minuteValue);
 		        projectName.setText(user.getProjects().get(position).getName());
+
 		        
 		        //Sets the text for the hour and minutes
 		        hourValue.setText(""+(int) projectMinutes[position]/60 + " h : ");

@@ -15,6 +15,7 @@ import tson_utilities.Project;
 import tson_utilities.User;
 
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
@@ -77,6 +78,7 @@ public class SettingsFragment extends Fragment{
 	Calendar notificationCal;
 	Button manageProjectsButton;
 	Button addNotificationButton;
+	Button logoutButton;
 
 	int nrOfNotifications;
 	List<MyNotification> notificationList;
@@ -89,7 +91,12 @@ public class SettingsFragment extends Fragment{
 
 	User user = User.getInstance();
 	
+	
+	/*
+	 * Googleshit
+	 */
 
+	private GoogleApiClient client;
 	 /***********************
 	  *  	OTHERS			*/	
 	 /************************/
@@ -105,7 +112,11 @@ public class SettingsFragment extends Fragment{
 		getActivity();
 		notificationCal = Calendar.getInstance();
 		
-		
+		client = LoginActivity.getmGoogleApiClient();
+		if (client.isConnected()) {
+	           Log.d("try", "connected1");
+	       }
+
 		
 		//Set account info in Settings
 		ImageView imgProfilePic = (ImageView) settings.findViewById(R.id.imageView1);
@@ -122,6 +133,7 @@ public class SettingsFragment extends Fragment{
 	
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
+		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
 		manageProjectsButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -136,6 +148,16 @@ public class SettingsFragment extends Fragment{
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
 				startActivity(intent);
+			}
+		});
+		
+		logoutButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("try", "logout pressed");
+				signOutFromGplus();
+				
 			}
 		});
 		
@@ -170,6 +192,38 @@ public class SettingsFragment extends Fragment{
            bmImage.setImageBitmap(result);
        }
    }
+   
+   /**
+    * Sign-out from google
+    * */
+   private void signOutFromGplus() {
+	   Log.d("try", "insignout1");
+       if (client.isConnected()) {
+    	   Log.d("try", "insignout2");
+           Plus.AccountApi.clearDefaultAccount(client);
+           client.disconnect();
+           client.connect();
+       }
+   }
+
+   /**
+    * Revoking access from google
+    * */
+ /*  private void revokeGplusAccess() {
+       if (client.isConnected()) {
+           Plus.AccountApi.clearDefaultAccount(client);
+           Plus.AccountApi.revokeAccessAndDisconnect(client)
+                   .setResultCallback(new ResultCallback<Status>() {
+                       @Override
+                       public void onResult(Status arg0) {
+                           Log.e(TAG, "User access revoked!");
+                           client.connect();
+                           updateUI(false);
+                       }
+
+                   });
+       }
+   }*/
    
 	public void showInputDialog(final TextView e)
 	{

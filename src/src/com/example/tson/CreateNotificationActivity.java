@@ -9,7 +9,6 @@ import java.util.Locale;
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
 import tson_utilities.Project;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -62,6 +61,14 @@ public class CreateNotificationActivity extends Activity {
 		
 		setCurrentTimeOnView();
 		repeatTextView = (TextView) this.findViewById(R.id.notification_repeat_days);
+		
+		backButton = (Button) findViewById(R.id.cancel_project_button);
+		backButton.setOnClickListener(new View.OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+		    	finish(); //finishes the activity and closes it
+			}
+		});
 	}
 
 	@Override
