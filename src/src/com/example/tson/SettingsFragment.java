@@ -76,6 +76,7 @@ public class SettingsFragment extends Fragment{
 
 	Calendar notificationCal;
 	Button manageProjectsButton;
+	Button addNotificationButton;
 
 	int nrOfNotifications;
 	List<MyNotification> notificationList;
@@ -117,18 +118,24 @@ public class SettingsFragment extends Fragment{
 		/**
 		* Static defaultnotifications, not saved internally
 		*/
-		notificationList = new ArrayList<MyNotification>();
-		notificationList.add(new MyNotification("TsonSays", "Hej", nrOfNotifications, 1, 1));
-		nrOfNotifications++;
-		notificationList.add(new MyNotification("HEHSEHSDG", "REMSEFINDF", nrOfNotifications, 1, 1));		
+		notificationList = new ArrayList<MyNotification>();	
 	
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
-		
+		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		manageProjectsButton.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(getActivity(), ManageProjectsActivity.class);
 				startActivity(intent);	
+			}
+		});
+		
+		addNotificationButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
+				startActivity(intent);
 			}
 		});
 		
@@ -264,26 +271,6 @@ public class SettingsFragment extends Fragment{
 			showInputDialog( notificationEditText);
 		}
 	});
-	
-	Button addNotification = (Button) view.findViewById(R.id.addNotification);
-	
-	if(position != notificationList.size()-1)
-	{
-		addNotification.setVisibility(Button.GONE);
-	}
-	else
-	{
-		addNotification.setVisibility(Button.VISIBLE);
-		addNotification.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			//TODO Auto-generated method stub
-			Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
-			startActivity(intent);
-		}
-		});	
-	}
-	
 	return view;
     }
 
