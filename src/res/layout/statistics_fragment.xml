@@ -127,17 +127,114 @@
             android:id="@+id/view1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="15dp"
             android:background="@android:color/darker_gray" />
 
 		    <ListView
 		        android:id="@+id/statistics_view"
 		        android:layout_width="match_parent"
-		        android:layout_height="256dp"        
+		        android:layout_height="150dp"        
 		        android:layout_alignParentBottom="true"
         		android:layout_centerHorizontal="true" >
 		    </ListView>   
 		</LinearLayout>
+		
+       <!-- Header with Lines -->        
+      <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" >
+                 
+       <View
+            android:id="@+id/add_line3"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="#DB8C0C"/>
+	
+        <TextView
+            android:id="@+id/add_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Summary"
+            android:textSize="32sp" 
+            />
+        
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#DB8C0C" />        
+        </LinearLayout>
+        
+            <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" 
+		android:paddingTop="15dp"
+         android:paddingLeft="60dp"
+    	 android:paddingRight="60dp" 
+         android:orientation="horizontal"
+       >
+        
+              <TextView
+            android:id="@+id/internal_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Your internal time: "
+            android:textSize="25sp" 
+            />
+          <TextView
+            android:id="@+id/internal_time_procent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_alignParentRight="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="135dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="%"
+            android:textSize="25sp" 
+            />
+	</LinearLayout>
+              
+      <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content" 
+         android:paddingLeft="60dp"
+    	 android:paddingRight="60dp" 
+         android:orientation="horizontal">
+                      
+          <TextView
+            android:id="@+id/external_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            
+            android:fontFamily="sans-serif-thin"
+            android:text="Your total time: "
+            android:textSize="25sp" />
+           
+        <TextView
+            android:id="@+id/external_time_procent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_marginLeft="170dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="%"
+            android:textSize="25sp" />
+        
+      </LinearLayout>
              
 	</LinearLayout>
 </ScrollView>

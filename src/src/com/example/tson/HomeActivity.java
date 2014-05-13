@@ -9,6 +9,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 
 import model.NavDrawerItem;
 import tson.sqlite.helper.DatabaseHelper;
+import tson_utilities.MyNotification;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
@@ -90,6 +91,8 @@ public class HomeActivity extends FragmentActivity
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
 	
+
+	
 	
 
 	 /***********************
@@ -123,6 +126,9 @@ public class HomeActivity extends FragmentActivity
 	    db.logTimeblocks();
 	    projectList = db.getAllProjects(user);
 	    user.getProjects().clear();
+	    
+	    List<MyNotification> notificationList = db.getNotifications();
+	    user.setNotificationList(notificationList);
 		
         for (int i = 0; i < projectList.size(); i++)
         {

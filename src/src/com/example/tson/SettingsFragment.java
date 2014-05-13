@@ -134,8 +134,21 @@ public class SettingsFragment extends Fragment{
 		/**
 		* Static defaultnotifications, not saved internally
 		*/
-		notificationList = new ArrayList<MyNotification>();	
-	
+		MyNotification someNotification = new MyNotification("Tson", "notification", 0, 6, 22);
+		List<Integer> repeatList = new ArrayList<Integer>();
+		repeatList.add(1);
+		repeatList.add(7);
+		someNotification.setNotificationRepeat(repeatList);
+		
+		notificationList = new ArrayList<MyNotification>();
+		/**
+		 * TODO: user.getNotifications()....
+		 */
+		notificationList.add(someNotification);
+		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+
+		
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
@@ -308,30 +321,6 @@ public class SettingsFragment extends Fragment{
 	   	
    }//End Dialog confirm reported time
    
-	public void showInputDialog(final TextView e)
-	{
-		final EditText newNameInput = new EditText(getActivity());
-	if(e.getText().toString() == "")
-		newNameInput.setHint(e.getHint().toString());
-	else
-		newNameInput.setHint(e.getText().toString());
-
-	new AlertDialog.Builder(getActivity())
-	.setTitle("Set new reminder!")
-	.setMessage("Set a remindertext!")
-	.setView(newNameInput)
-	.setPositiveButton("Set name!", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		e.setText( newNameInput.getText().toString());
-
-		}
-		})
-		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-		}
-		})
-		.show();
-	}
 	boolean mIgnoreTimeSet = false;
 	public void showTimeDialog(View v)
    {	
@@ -398,16 +387,26 @@ public class SettingsFragment extends Fragment{
     {
 	if(view == null)
 		view = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
-	
+
+
 	notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
 	notificationEditText.setText(notificationList.get(position).getNotificationTitle());
+	final int posi = position;
 	notificationEditText.setOnClickListener(new View.OnClickListener(){
 		@Override
 		public void onClick(View v) {
-			//TODO Auto-generated method stub
-			showInputDialog( notificationEditText);
+			Intent intent = new Intent(getActivity(), CreateNotificationActivity.class);
+			intent.putExtra("notificationTitle"	, notificationList.get(posi).getNotificationTitle());
+			intent.putExtra("notificationText"	, notificationList.get(posi).getNotificationText());
+			intent.putExtra("notificationHour"	, notificationList.get(posi).getNotificationHour());
+			intent.putExtra("notificationMinute", notificationList.get(posi).getNotificationMinute());
+			intent.putExtra("notificationID"	, notificationList.get(posi).getNotificationID());
+			intent.putIntegerArrayListExtra("notificationRepeat", (ArrayList<Integer>) notificationList.get(posi).getNotificationRepeat());
+			
+			startActivity(intent);
 		}
 	});
+
 	return view;
     }
 

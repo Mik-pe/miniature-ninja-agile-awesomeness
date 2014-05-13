@@ -47,6 +47,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -86,6 +87,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
     private float downX, downY, upX, upY;
 	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
+	RelativeLayout emptylistRelative;
 	
 	/***********************
 	  *  	CONSTRUCTOR		*/	
@@ -112,10 +114,23 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 			dialog.setContentView(R.layout.empty_project_view);
 			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
 			dialog.show();
+			
+			emptylistRelative = (RelativeLayout) dialog.findViewById(R.id.emptylistRelative);
+			
+			emptylistRelative.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				
+			}
+		});
+			
 			firstTimeButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
+					
 					dialog.dismiss();
 					
 				}
