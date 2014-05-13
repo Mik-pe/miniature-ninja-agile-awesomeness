@@ -304,8 +304,7 @@ public class SettingsFragment extends Fragment{
     {
 	if(view == null)
 		view = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
-<<<<<<< HEAD
-	
+
 	notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
 	notificationEditText.setText(notificationList.get(position).getNotificationTitle());
 	final int posi = position;
@@ -323,7 +322,7 @@ public class SettingsFragment extends Fragment{
 			startActivity(intent);
 		}
 	});
-=======
+
 		
 		Log.d("notificationslist: ", notificationList.get(position).getNotificationTitle());
 		
@@ -336,7 +335,6 @@ public class SettingsFragment extends Fragment{
 				showInputDialog( notificationEditText);
 			}
 		});
->>>>>>> c979758f92d6be2d6ecbfda9568a963ce83b8e57
 	return view;
     }
 

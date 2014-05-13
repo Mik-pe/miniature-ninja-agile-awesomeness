@@ -59,7 +59,7 @@ public class CreateNotificationActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		repeatTextView = (TextView) this.findViewById(R.id.notification_repeat_days);
-<<<<<<< HEAD
+
 		/**
 		 * If extras isn't null, the activity should start in edit-mode
 		 */
@@ -97,7 +97,7 @@ public class CreateNotificationActivity extends Activity {
 			thisNotification = new MyNotification(title, text, ID, hour, minute);
 			setCurrentTimeOnView();
 		}
-=======
+
 		
 		backButton = (Button) findViewById(R.id.cancel_project_button);
 		backButton.setOnClickListener(new View.OnClickListener() {			
@@ -106,7 +106,7 @@ public class CreateNotificationActivity extends Activity {
 		    	finish(); //finishes the activity and closes it
 			}
 		});
->>>>>>> c979758f92d6be2d6ecbfda9568a963ce83b8e57
+
 	}
 
 	@Override
