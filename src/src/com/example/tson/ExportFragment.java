@@ -102,16 +102,23 @@ public class ExportFragment extends Fragment{
 					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
 					Log.d("StartDifference", ""+daysSinceStartDate);
 					Log.d("EndDifference", ""+daysSinceEndDate);
-//					SparseBooleanArray checked = projectList.getCheckedItemPositions();
-//					
-//					for (int i = 0; i < projectList.getAdapter().getCount(); i++) {
-//					    if (checked.get(i)) {
-//					        Log.d("hejsan", ""+i);
-//					    }
-//					}
-					exportTime(startDate, endDate);
 					
-					
+					//Checks what CheckBoxes are Checked
+					for(int i = 0; i < projectListStats.size();i++){
+
+						if((CheckBox)projectList.getChildAt(i).findViewById(R.id.checkBox1) != null){
+
+						    CheckBox cBox=(CheckBox)projectList.getChildAt(i).findViewById(R.id.checkBox1);
+
+						    if(cBox.isChecked()){
+						        checkProject[i]=1;
+						    }
+						    else{
+						    	checkProject[i]=0;
+						    }
+						 }
+					} 
+					exportTime(startDate, endDate);										
 				}
 		  });
 		  
@@ -142,7 +149,7 @@ public class ExportFragment extends Fragment{
 					  Calendar timeblockDate = tb.get(j).getDate();
 					  if((start.before(timeblockDate) || isSameDay(start, timeblockDate)) && end.after(timeblockDate))
 					  {
-						  if(user.isDateConfirmed(timeblockDate) == 1 /*&& checkProject[i] == 1*/)
+						  if(user.isDateConfirmed(timeblockDate) == 1 && checkProject[i] == 1)
 						  {
 							  outputString += projectListStats.get(i).getName() + ", ";
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.YEAR)) + ", ";
@@ -277,32 +284,6 @@ public class ExportFragment extends Fragment{
 						view = getActivity().getLayoutInflater().inflate(R.layout.project_list_export, parent, false);
 					projectText = (TextView) view.findViewById(R.id.projectNameTextView);
 					projectText.setText(user.getProjects().get(position).getName());
-					
-//					checked = (CheckBox) view.findViewById(R.id.checkBox1);
-//					final int posi = position;
-//					 checked.setOnClickListener(new View.OnClickListener() {
-//							@Override
-//							public void onClick(View v) {
-//
-//								if(checked.isChecked())
-//								{
-//									checked.setChecked(false);
-//									checkProject[posi] = 0;
-//								}
-//								else 
-//								{
-//									//Log.d("hejsan", "-1");
-//									checked.setChecked(true);
-//									checkProject[posi] = 1;
-//								}	
-//								Log.d("hejsan", "position: " + posi);
-//								for(int i = 0; i<projectListStats.size(); i++)
-//								 {
-//									 Log.d("hejsan", "" +checkProject[i]);
-//								 }
-//							}
-//					  });
-					 
 					 
 										
 			        return view;
