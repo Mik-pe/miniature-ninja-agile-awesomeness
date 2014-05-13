@@ -24,9 +24,11 @@
     <string name="confirm_button">Confirm</string>
     <string name="cancel_button">Cancel</string>
     <string name="title_confirm_time">Confirm reported time?</string>
+    <string name="title_logout">Do you really want to log out?</string>
+    <string name="title_revoke">Revoke app access to google info?</string>
     <string name="confirm_dialog_message">Have you reported all hours today?</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name="statistics_text"> Choose Dynamic Time Span </string>
+    <string name="statistics_text"> Choose Time Span </string>
     <string name="select_start">StartStat</string>
     <string name="select_end">EndStat</string>
     <string name="stat">Statistics</string>
@@ -44,6 +46,7 @@
     <string name="sunday">SUN</string>
     <string name="login_button">Tson</string>
     <string name="meName">Me</string>
+    <string name="export_header">Choose Time and Projects</string>
 
     <!-- Menu items -->
     <string-array name="nav_drawer_items">

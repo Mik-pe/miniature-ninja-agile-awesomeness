@@ -79,7 +79,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-thin"
-            android:text="Notifications"
+            android:text="Notifications 'n' Stuff"
             android:textSize="32sp" />
          
          <View
@@ -114,7 +114,7 @@
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
             android:minWidth="55dp"
-            android:text="Add +" 
+            android:text="Add Notification" 
             android:textSize="32sp" />
          
 <!-- Additonal Section -->
@@ -131,22 +131,6 @@
             android:layout_marginTop="20dp"
             android:background="#DB8C0C"/>
 	
-        <TextView
-            android:id="@+id/Additional"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="Additional"
-            android:textSize="32sp" />
-        
-        <View
-            android:id="@+id/add_line2"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#DB8C0C" />
 </LinearLayout>
 
         <Button
@@ -168,13 +152,25 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop ="10dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
             android:text="Log Out"
+            android:textSize="32sp" />
+        
+      	<Button
+            android:id="@+id/revoke_access_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_weight="0"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="#063A70"
+            android:text="Revoke Access"
             android:textSize="32sp" />
 
 </LinearLayout>

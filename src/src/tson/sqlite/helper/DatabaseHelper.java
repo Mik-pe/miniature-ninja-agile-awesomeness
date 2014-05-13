@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Database Version
 
 
-	private static final int DATABASE_VERSION = 33;
+	private static final int DATABASE_VERSION = 39;
 
 		
 	//Database Name
@@ -505,31 +505,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	//========================================================
-	// NOTIFICATOIN ==========================================
+	// NOTIFICATION ==========================================
 	//========================================================
 	
-	
-	//title
-	//text
-	//timme
-	//minut
-	// days of week (bool)
-	
-	
-	
-	
-	
-	//TODOOOOOOO
-	
-	/*
-	 * 
-	 * 	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
-	private static final String KEY_NOTIFICATION_TITLE = "title";
-	private static final String KEY_NOTIFICATION_TEXT = "text";
-	private static final String KEY_NOTIFICATION_HOUR = "hour";
-	private static final String KEY_NOTIFICATION_MINUTE = "minute";
-	//flags for the day of the week (ugly! should be normalized)
-	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
+	/**
+	 * Store a MyNotification object in the database, where the list of days selected will be stored as a summerized number, e.g. [1,5,7] -> 157
+	 * @param notification - <MyNotification>
+	 * @return notification_id <long>
 	 */
 	public long createNotification(MyNotification notification)
 	{
@@ -538,9 +520,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		List<Integer> selectedDays = notification.getNotificationRepeat();
 		int temp=0; // will store a array of e.g. [1, 5, 7] as an integer like '157'.
 		for(int i = 0; i< selectedDays.size(); i++)
-		{
 			temp += selectedDays.get(i)*Math.pow(10, selectedDays.size()-i-1);
-		}
+		
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NOTIFICATION_USER_ID, User.getInstance().getID());
@@ -554,7 +535,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		notification.setNotificationID(notification_id);
 		return notification_id;
 	}
-	
+	/**
+	 * Get all notification for an instantiated user
+	 * @return List<MyNotification>
+	 */
 	public List<MyNotification> getNotifications()
 	{
 		List<MyNotification> notifications = new ArrayList<MyNotification>();
@@ -567,7 +551,6 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		if(c != null)
 			if(c.moveToFirst())
 			{
-				
 				do
 				{
 					
@@ -586,16 +569,52 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			}
 		return notifications;
 	}
+	/**
+	 * Update an existing notification, requires that the MyNotification object is updated within its class structure before calling this function as it is passed as a reference.
+	 * @param notification <MyNotification>
+	 * @return int, indicates if it was successfully updated. 
+	 */
+	public int updateNotification(MyNotification notification)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		
+		List<Integer> selectedDays = notification.getNotificationRepeat();
+		int temp=0; // will store a array of e.g. [1, 5, 7] as an integer like '157'.
+		for(int i = 0; i< selectedDays.size(); i++)
+			temp += selectedDays.get(i)*Math.pow(10, selectedDays.size()-i-1);
+		
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
+		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
+		values.put(KEY_NOTIFICATION_WEEK_DAYS, temp);
+		
+		// This will be send as a parameter to db.update
+		String[] args = new String[]{String.valueOf(notification.getNotificationID()), String.valueOf(User.getInstance().getID())};
+		//Update row
+		return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?" + " AND " +KEY_NOTIFICATION_USER_ID + " = ?" , args);
+	}
 	
+	//========================================================
+	// OTHER AND "LOOSE" FUNCTIONS ===========================
+	//========================================================	
+	
+	
+	
+	/**
+	 * Converts an integer to to a list of the numbers, this only guarantees correct representation for numbers <= 9. (Works fine with days_of_week which is <=7)
+	 * @param number - int
+	 * @return List<Integer>
+	 */
 	public List<Integer> intToIntArray(int number)
 	{
 		String sNums = Integer.toString(number);
 		List<Integer> li = new ArrayList<Integer>();
 		
 		for(int i = 0; i<sNums.length(); i++)
-		{
 			li.add(Character.getNumericValue(sNums.charAt(i)));
-		}
+		
 		return li;
 	}
 	

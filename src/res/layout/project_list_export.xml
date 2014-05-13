@@ -8,17 +8,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-    		android:layout_marginTop="2dp"
+    		android:layout_marginTop="5dp"
             android:fontFamily="sans-serif-thin"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="25sp" />
+            android:textSize="30sp" />
 
         <CheckBox
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:color="#B72D64"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/projectNameTextView"
              />

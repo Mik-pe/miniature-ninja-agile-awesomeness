@@ -135,13 +135,7 @@ public class HomeActivity extends FragmentActivity
 	        user.addProject(projectList.get(i));
 	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
-
-	        
-       
-		
-	
-
-	
+        
     mTitle = mDrawerTitle = getTitle();
 
 	//load slide menu items
@@ -184,7 +178,7 @@ public class HomeActivity extends FragmentActivity
 			) {
 		public void onDrawerClosed(View view) {
 			getActionBar().setTitle(mTitle);
-			//calling onPrepareOptionsMenu() to show action bar icons
+			//calling onPrepareOptionsMenu() to show action bar icon
 			invalidateOptionsMenu();
 		}
 
@@ -223,7 +217,9 @@ public class HomeActivity extends FragmentActivity
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			//display view for selected nav drawer item
+			
 			displayView(position);
+			
 		}
 	}
 	
@@ -260,10 +256,6 @@ public class HomeActivity extends FragmentActivity
 		//PreviousFragment is nollstalld because otherwise skulle inte navigationen med backbutton work.
 		HomeFragment.previousFragment = "";
 		Fragment fragment = null;
-		
-    	ab = getActionBar();
-		ab.removeAllTabs();
-		ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		
 		switch (position) {
 		case 0:
