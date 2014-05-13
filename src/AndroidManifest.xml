@@ -94,7 +94,9 @@
         </activity>
         <activity
             android:name="com.example.tson.ManageProjectsActivity"
-            android:label="@string/title_activity_manage_projects" >
+            android:label="@string/title_activity_manage_projects"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait" >
         </activity>
 
         <receiver android:name="tson_utilities.NotificationHandler" >
@@ -103,12 +105,16 @@
         <activity
             android:name="com.example.tson.CreateNotificationActivity"
             android:label="@string/title_activity_create_notification"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait" >
         </activity>
 
         <activity
             android:name="com.example.tson.SendEmailActivity"
-            android:label="@string/title_activity_send_email" >
+            android:label="@string/title_activity_send_email"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait" >
         </activity>
 
 
