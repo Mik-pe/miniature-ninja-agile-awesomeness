@@ -593,7 +593,19 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// This will be send as a parameter to db.update
 		String[] args = new String[]{String.valueOf(notification.getNotificationID()), String.valueOf(User.getInstance().getID())};
 		//Update row
-		return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?" + " AND " +KEY_NOTIFICATION_USER_ID + " = ?" , args);
+		return db.update(TABLE_NOTIFICATION, values, KEY_ID + " = ?" + " AND " + KEY_NOTIFICATION_USER_ID + " = ?" , args);
+	}
+	
+	
+	/**
+	 * Deleting a notification
+	 * @param notification <MyNotification>
+	 */
+	public void deleteNotification(MyNotification notification) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	    db.delete(TABLE_NOTIFICATION, KEY_ID + " = ?" + " AND " + KEY_NOTIFICATION_USER_ID + " = ?" ,
+	            new String[] { String.valueOf(notification.getNotificationID()), String.valueOf(User.getInstance().getID()) });
+	    
 	}
 	
 	//========================================================
