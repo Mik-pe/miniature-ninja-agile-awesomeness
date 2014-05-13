@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+
 public class CreateNotificationActivity extends Activity {
 	
 	/***********************
@@ -165,6 +166,9 @@ public class CreateNotificationActivity extends Activity {
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
+		
+		thisNotification.addNotification();
+		
 		
 		finish();
 	}

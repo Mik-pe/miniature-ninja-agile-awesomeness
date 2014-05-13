@@ -2,6 +2,7 @@ package tson_utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.example.tson.HomeActivity;
 
 /**
  * 
@@ -37,6 +38,10 @@ public class MyNotification {
 	  *  	OTHER		*/	
 	 /***********************/
 	
+	public void addNotification()
+	{
+		HomeActivity.db.createNotification(this.notificationTitle, this.notificationText, this.notificationHour, this.notificationMinute, this.notificationRepeat);
+	}
 	
 	/***********************
 	  *  	SETTERS		*/	

@@ -61,16 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_TIME_BLOCK_DAY 			= "day";
 	private static final String KEY_TIME_BLOCK_MINUTES 		= "minutes";
 	private static final String KEY_TIME_BLOCK_CONFIRMED 	= "confirmed";
-	
-	//NOTIFICATION TABLE
-	private static final String KEY_NOTIFICATION_ID 		= "notification_id";
-	private static final String KEY_NOTIFICATION_TITLE 		= "notification_title";
-	private static final String KEY_NOTIFICATION_TEXT 		= "notification_text";
-	private static final String KEY_NOTIFICATION_WEEKDAY	= "notification_year";
-	private static final String KEY_NOTIFICATION_HOURS 		= "notification_hours";
-	private static final String KEY_NOTIFICATION_MINUTES 	= "notification_minutes";
-	private static final String KEY_NOTIFICATION_REPEATDAY	= "notification_id";
-	
+		
 	// NOTIFICATIONS TABLE
 	private static final String KEY_NOTIFICATION_USER_ID = "user_id";
 	private static final String KEY_NOTIFICATION_TITLE = "title";
