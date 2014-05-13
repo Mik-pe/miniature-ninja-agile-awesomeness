@@ -68,13 +68,20 @@ public class ExportFragment extends Fragment{
 		  View export = inflater.inflate(R.layout.export_fragment, container, false);
 		  projectList = (ListView) export.findViewById(R.id.export_list_view);
 		  startDate = Calendar.getInstance();
+		  startDate.set(startDate.get(Calendar.YEAR),startDate.get(Calendar.MONTH),1);
 		  endDate = Calendar.getInstance();
 		  btnStart = (ImageButton) export.findViewById(R.id.imageButtonStartExport);
 		  btnEnd = (ImageButton) export.findViewById(R.id.imageButtonEndExport);
 		  btnGo = (Button) export.findViewById(R.id.export);
 		  startTime = (EditText) export.findViewById(R.id.startTimeExport);
 		  endTime = (EditText) export.findViewById(R.id.endTimeExport);
-
+		  
+		  startTime.setText(startDate.get(Calendar.DAY_OF_MONTH) + " / " + startDate.get(Calendar.MONTH) + " / "
+		  			+ startDate.get(Calendar.YEAR));
+		  endTime.setText(endDate.get(Calendar.DAY_OF_MONTH) + " / " + endDate.get(Calendar.MONTH) + " / "
+		  			+ endDate.get(Calendar.YEAR));
+		  
+		  
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -229,6 +236,7 @@ public class ExportFragment extends Fragment{
 	    	//Visar dialogrutan med datum
 	    	DatePickerDialog dialog = new DatePickerDialog(getActivity(), datePickerListener,theCalendar.get(Calendar.YEAR), theCalendar.get(Calendar.MONTH), theCalendar.get(Calendar.DAY_OF_MONTH));
 	    	dialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+	    	dialog.getDatePicker().setCalendarViewShown(false);
 	    	dialog.show();
 	    }
 	    
@@ -284,7 +292,8 @@ public class ExportFragment extends Fragment{
 						view = getActivity().getLayoutInflater().inflate(R.layout.project_list_export, parent, false);
 					projectText = (TextView) view.findViewById(R.id.projectNameTextView);
 					projectText.setText(user.getProjects().get(position).getName());
-					 
+					
+					
 										
 			        return view;
 				}

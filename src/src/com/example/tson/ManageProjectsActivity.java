@@ -106,7 +106,7 @@ public class ManageProjectsActivity extends Activity {
 		newNameInput.setHint(p.getName());
 		
 		new AlertDialog.Builder(this)
-		.setTitle("Set new name!")
+		.setTitle("Edit project name")
 		.setMessage("Give the project a new name!")
 		.setView(newNameInput)
 		.setPositiveButton("Set name!", new DialogInterface.OnClickListener() {

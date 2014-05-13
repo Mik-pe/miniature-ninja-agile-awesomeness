@@ -1,5 +1,5 @@
 /**
- * @author Pär Eriksson
+ * @author Paer Eriksson
  * A database helper class that takes care of all interaction with the SQLite database
  */
 package tson.sqlite.helper;
@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//Database Version
 
-	private static final int DATABASE_VERSION = 31;
+	private static final int DATABASE_VERSION = 36;
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
@@ -52,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//PROJECTS Table
 	private static final String KEY_PROJECT_NAME = "project_name";
 	private static final String KEY_PROJECT_USER_ID = "user_id";
+	private static final String KEY_PROJECT_IS_INTERNAL_TIME = "is_internal_time";
 
 	//TIME BLOCKS TABLE
 	private static final String KEY_TIME_BLOCK_PROJECT_ID 	= "project_id";
@@ -79,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	// Project table create statement
 	private static final String CREATE_TABLE_PROJECT = "CREATE TABLE "
 			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_USER_ID +" INTEGER,"
-			+KEY_PROJECT_NAME+ " TEXT" + ")";
+			+KEY_PROJECT_NAME+ " TEXT," + KEY_PROJECT_IS_INTERNAL_TIME +" INTEGER" + ")";
 
 	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
@@ -195,11 +196,12 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_PROJECT_NAME, project.getName());
+		values.put(KEY_PROJECT_IS_INTERNAL_TIME, project.getIsInternal());
 		values.put(KEY_PROJECT_USER_ID, user.getID());
 		
 		//insert row
 		long project_id = db.insert(TABLE_PROJECT, null, values);
-		Log.d("User insertion create" ,"createProject-> userID: " + user.getID()+" projectId: " + project_id);
+		Log.d("User insertion create" ,"createProject-> userID: " + user.getID()+" projectId: " + project_id + " isInternal: " + project.getIsInternal());
 		//Set project id (THIS IS IMPORTANT)
 		project.setId(project_id);
 		//assigning tags to project	
@@ -230,6 +232,29 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	}
 	
 	/**
+	 * Updating isInternal for a project.
+	 * @param p - the project object.
+	 * @param newIsinternal - 0 or 1, if the project is to be internal time or not.
+	 * @return - returns an indicator if the row was updated.
+	 */
+	public long updateProjectIsInternal(int newIsInternal, Project p)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values = new ContentValues();
+		values.put(KEY_PROJECT_IS_INTERNAL_TIME, newIsInternal);
+		
+		// This will be send as a parameter to db.update
+		Log.d("Kommer vi hit", "TJENARE! updaterar isinternal");
+		
+		String[] args = new String[]{String.valueOf(p.getId())};
+		//Update row
+		return db.update(TABLE_PROJECT, values, KEY_ID + " = ?",
+				args);
+	}
+	
+	
+	/**
 	 * Get a single project by an ID.
 	 * @param project_id.
 	 * @return A new project with the key name.
@@ -249,6 +274,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		//Set all attributes before returning it
 		// Create a project out of the row name
 		Project p = new Project(c.getString(c.getColumnIndex(KEY_PROJECT_NAME)));
+		p.setInternalTime(c.getInt(c.getColumnIndex(KEY_PROJECT_IS_INTERNAL_TIME)));
 		
 		return p;
 	}
@@ -275,7 +301,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 			{
 				Project p = getProject(c.getInt(c.getColumnIndex(KEY_ID)));
 				p.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-				Log.d("User insertion", "Getting project " + p.getName() + " for mail " + user.getEmail() + " rowcount: " + p.getId());
+				p.setInternalTime(c.getInt(c.getColumnIndex(KEY_PROJECT_IS_INTERNAL_TIME)));
+				Log.d("User insertion", "Getting project " + p.getName() + " for mail " + user.getEmail() + " rowcount: " + p.getId() + " isInternal: " + p.getIsInternal());
 				// Add to the projects list that will be returned
 				projects.add(p);
 			}while (c.moveToNext());

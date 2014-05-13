@@ -60,7 +60,7 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
    // Profile pic image size in pixels
    private static final int PROFILE_PIC_SIZE = 400;
    // Google client to interact with Google API
-   private GoogleApiClient mGoogleApiClient;
+   private static GoogleApiClient mGoogleApiClient;
 
    /**
     * A flag indicating that a PendingIntent is in progress and prevents us
@@ -189,4 +189,9 @@ public class LoginActivity extends Activity implements ConnectionCallbacks, OnCo
            }
        }
    }
+   
+   public static GoogleApiClient getmGoogleApiClient() {
+		return mGoogleApiClient;
+	}
+
 }//End LoginActivity
