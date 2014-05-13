@@ -9,6 +9,7 @@ import java.util.Locale;
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
 import tson_utilities.Project;
+import tson_utilities.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -50,6 +51,7 @@ public class CreateNotificationActivity extends Activity {
 	String text;
 	MyNotification thisNotification;
 	List<Integer> repeatList;
+	boolean isEdit = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +67,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		if(extras != null)
 		{
+			isEdit = true;
 			title = extras.getString("notificationTitle");
 			text = extras.getString("notificationText");
 			hour =  extras.getInt("notificationHour");
 			minute = extras.getInt("notificationMinute");
-			ID = extras.getInt("notificationID");
+			ID = (int) extras.getLong("notificationID");
 			
 			if(extras.getIntegerArrayList("notificationRepeat") != null)
 				repeatList =  extras.getIntegerArrayList("notificationRepeat");
@@ -164,10 +167,15 @@ public class CreateNotificationActivity extends Activity {
 		c.set(Calendar.SECOND, 0);
 		
 		/**
-		 * Sort the repeatList
+		 * Sort the repeatList and add the notification to the database
 		 */
 		Collections.sort(repeatList);
 		thisNotification.setNotificationRepeat(repeatList);
+		Log.d("id in create", "id: "+thisNotification.getNotificationID());
+		if(!isEdit)
+			thisNotification.addNotification();
+		else
+			thisNotification.updateNotification();
 		
 		/**
 		 * If repeatList has values, the notification should repeat.
@@ -210,10 +218,10 @@ public class CreateNotificationActivity extends Activity {
 		}
 		
 		/**
-		 * Add the remaining days until next notification.
+		 * Add the remaining days until next notification
 		 */
 		c.add(Calendar.DAY_OF_WEEK, nextWeekDay);
-
+		
 		
 		Intent mServiceIntent = new Intent(this, NotificationHandler.class);
 		mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
@@ -227,14 +235,14 @@ public class CreateNotificationActivity extends Activity {
 		mServiceIntent.putExtra("calendarDefinition", Calendar.DAY_OF_WEEK);
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
-		Log.d("logging", "HERE"+nextWeekDay+" "+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+		Log.d("logging", "HERE"+thisNotification.getNotificationID());
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
-		thisNotification.addNotification();
+		User.getInstance().updateNotificationList();
 		finish();
 	}
 	

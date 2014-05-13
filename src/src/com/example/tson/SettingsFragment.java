@@ -43,6 +43,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -53,6 +54,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -137,15 +139,12 @@ public class SettingsFragment extends Fragment{
 		repeatList.add(7);
 		someNotification.setNotificationRepeat(repeatList);
 		
-		notificationList = new ArrayList<MyNotification>();
-		/**
-		 * TODO: user.getNotifications()....
-		 */
-		notificationList.add(someNotification);
-		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-
-		
+		notificationList = User.getInstance().getNotificationList();
+//		notificationList.add(someNotification);
+//		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+//		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
+//
+//		
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
@@ -185,6 +184,23 @@ public class SettingsFragment extends Fragment{
 		
 	notiAdapter = new notificationAdapter();
 	notificationListView.setAdapter(notiAdapter);
+	notificationListView.setOnTouchListener(new ListView.OnTouchListener(){
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			int action = event.getAction();
+			switch(action){
+			case MotionEvent.ACTION_DOWN:
+				v.getParent().requestDisallowInterceptTouchEvent(true);
+				break;
+			case MotionEvent.ACTION_UP:
+				v.getParent().requestDisallowInterceptTouchEvent(false);
+				break;
+			}
+			
+			// handle listview touch events.
+			v.onTouchEvent(event);
+			return true;
+		}});
 	return settings;
 	}//End OnCreate
    /**
@@ -313,60 +329,6 @@ public class SettingsFragment extends Fragment{
 	   	
    }//End Dialog confirm reported time
    
-	boolean mIgnoreTimeSet = false;
-	public void showTimeDialog(View v)
-   {	
-	//Calculates what page and position we are at
-	holder = notificationListView.getPositionForView(v);
-   
-
-    /**
-     * Show the TimePickerDialog
-	*/
-    TimePickerDialog picker = new TimePickerDialog(getActivity(), timeSetListener, newHour, newMin, true);
-    picker.setTitle("Enter hours and minutes spent on this project:");
-    picker.setButton(TimePickerDialog.BUTTON_POSITIVE, "Set", picker);
-    picker.setButton(TimePickerDialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener()
-	{
-	    @Override
-	    public void onClick(DialogInterface dialog, int id)
-	    {
-	    	//dialog.dismiss();
-	    	mIgnoreTimeSet = true;
-	    	Log.d("Picker", "Cancelled!");
-	
-	
-	    }
-	});
-   
-    picker.show();
-   }
-
-
-   private TimePickerDialog.OnTimeSetListener timeSetListener=new TimePickerDialog.OnTimeSetListener() {
-
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			
-			//If Cancel button is clicked we do not want to save any data from time picker
-			if (mIgnoreTimeSet)
-			{
-				mIgnoreTimeSet = false;
-				return;
-			}
-			//If Set button is clicked we want to save data from time picker
-			else
-			{
-				mIgnoreTimeSet = false;
-				hour=hourOfDay;
-				min=minute;
-				
-				timeTextView.setText(hour+" h : "+min+" m");
-			}
-
-
-			}//End onTimeSet
-   	};//End timeSetListener
 
    private class notificationAdapter extends ArrayAdapter<MyNotification> {
    

@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Database Version
 
 
-	private static final int DATABASE_VERSION = 33;
+	private static final int DATABASE_VERSION = 39;
 
 		
 	//Database Name
@@ -525,7 +525,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_NOTIFICATION_USER_ID, User.getInstance().getID());
-		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationTitle());
 		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
 		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
 		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
@@ -584,7 +584,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		for(int i = 0; i< selectedDays.size(); i++)
 			temp += selectedDays.get(i)*Math.pow(10, selectedDays.size()-i-1);
 		
-		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationTitle());
 		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
 		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
 		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
@@ -592,8 +592,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		
 		// This will be send as a parameter to db.update
 		String[] args = new String[]{String.valueOf(notification.getNotificationID()), String.valueOf(User.getInstance().getID())};
+		
+		Log.d("string array", "Array1"+args[0]+"Array2:"+args[1]);
 		//Update row
-		return db.update(TABLE_TIME_BLOCK, values, KEY_ID + " = ?" + " AND " +KEY_NOTIFICATION_USER_ID + " = ?" , args);
+		return db.update(TABLE_NOTIFICATION, values, KEY_ID + " = ?" + " AND " +KEY_NOTIFICATION_USER_ID + " = ?" , args);
 	}
 	
 	//========================================================

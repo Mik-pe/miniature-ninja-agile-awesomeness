@@ -2,6 +2,9 @@ package tson_utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.util.Log;
+
 import com.example.tson.HomeActivity;
 
 /**
@@ -43,6 +46,13 @@ public class MyNotification {
 	public void addNotification()
 	{
 		HomeActivity.db.createNotification(this);
+	}
+	
+	public void updateNotification()
+	{
+		int shit = HomeActivity.db.updateNotification(this);
+		Log.d("Loggg", "Shit: "+shit);
+	
 	}
 	
 	/***********************

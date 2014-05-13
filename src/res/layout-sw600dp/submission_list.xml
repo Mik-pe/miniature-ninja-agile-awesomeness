@@ -3,9 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="30dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="30dp"
+    android:paddingLeft="60dp"
+    android:paddingRight="60dp"
+    android:paddingTop="60dp"
     tools:context=".SubmissionListFragment" >
     
     <LinearLayout

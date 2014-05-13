@@ -217,9 +217,18 @@ public class User
 	  * Function creating a new project and adding it to the users project list
 	  * @param name - Name of new project
 	  */
-	 public void createProject(String name){
+	 public void createProject(String name)
+	 {
 		 
 		 Project p = new Project(name);
 		 addProject(p);
+	 }
+	 
+	 /**
+	  * Function to update the notification list from the one in the database
+	  */
+	 public void updateNotificationList()
+	 {
+		 this.setNotificationList(HomeActivity.db.getNotifications());
 	 }
 }
