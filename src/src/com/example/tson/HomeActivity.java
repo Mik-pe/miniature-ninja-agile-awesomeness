@@ -15,6 +15,7 @@ import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -47,6 +48,9 @@ public class HomeActivity extends FragmentActivity
 	 /***********************
 	  *  	VARIABLES		*/	
 	 /***********************/
+	
+	/**SHARED PREFERENCES*/
+	public static final String PREFS_NAME = "MyPrefsFile";
 	
 	int hour,min, newHour, newMin;
 	int holder = 0;
@@ -98,7 +102,7 @@ public class HomeActivity extends FragmentActivity
 	{		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
+		Calendar.getInstance().setFirstDayOfWeek(Calendar.MONDAY);
 		c = Calendar.getInstance();
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 	    db = new DatabaseHelper(getApplicationContext());
@@ -190,6 +194,7 @@ public class HomeActivity extends FragmentActivity
 			//on first time display view for first nav item
 			displayView(0);
 		}
+
 	
 	}//End onCreate-function
 	

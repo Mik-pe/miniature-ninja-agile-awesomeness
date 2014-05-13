@@ -15,11 +15,13 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -38,6 +40,8 @@ public class ExportFragment extends Fragment{
 	Calendar endDate;
 	int i;
 	EditText startTime, endTime;
+	CheckBox checked;
+	
 
 	public static User user = User.getInstance();
 
@@ -45,6 +49,8 @@ public class ExportFragment extends Fragment{
 	ArrayAdapter<Project> projectAdapter;
 	List<Project> projectListStats = user.getProjects();
 	ListView projectList;
+	
+	int[] checkProject = new int[projectListStats.size()];
 	
 	
 	
@@ -59,16 +65,16 @@ public class ExportFragment extends Fragment{
 	         Bundle savedInstanceState) {
 		 
 		  super.onCreate(savedInstanceState);
-		  View statistics = inflater.inflate(R.layout.export_fragment, container, false);
-		  projectList = (ListView) statistics.findViewById(R.id.export_list_view);
+		  View export = inflater.inflate(R.layout.export_fragment, container, false);
+		  projectList = (ListView) export.findViewById(R.id.export_list_view);
 		  startDate = Calendar.getInstance();
 		  endDate = Calendar.getInstance();
-		  btnStart = (ImageButton) statistics.findViewById(R.id.imageButtonStartExport);
-		  btnEnd = (ImageButton) statistics.findViewById(R.id.imageButtonEndExport);
-		  btnGo = (Button) statistics.findViewById(R.id.export);
-		  startTime = (EditText) statistics.findViewById(R.id.startTimeExport);
-		  endTime = (EditText) statistics.findViewById(R.id.format2);
-		  
+		  btnStart = (ImageButton) export.findViewById(R.id.imageButtonStartExport);
+		  btnEnd = (ImageButton) export.findViewById(R.id.imageButtonEndExport);
+		  btnGo = (Button) export.findViewById(R.id.export);
+		  startTime = (EditText) export.findViewById(R.id.startTimeExport);
+		  endTime = (EditText) export.findViewById(R.id.endTimeExport);
+
 		  //onClick on btnStart
 		  btnStart.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -91,34 +97,41 @@ public class ExportFragment extends Fragment{
 		  btnGo.setOnClickListener(new View.OnClickListener() {
 				public void onClick(View v) {
 					
-					Intent intent = new Intent(getActivity(), SendEmailActivity.class);
-					startActivity(intent);
-					
 					
 					long daysSinceStartDate = -(Calendar.getInstance().getTimeInMillis() - startDate.getTimeInMillis())/(1000*60*60*24);
 					long daysSinceEndDate = -(Calendar.getInstance().getTimeInMillis() - endDate.getTimeInMillis())/(1000*60*60*24);
 					Log.d("StartDifference", ""+daysSinceStartDate);
 					Log.d("EndDifference", ""+daysSinceEndDate);
 					
-					
-					exportTime(startDate, endDate);
-					
-					
-					
+					//Checks what CheckBoxes are Checked
+					for(int i = 0; i < projectListStats.size();i++){
+
+						if((CheckBox)projectList.getChildAt(i).findViewById(R.id.checkBox1) != null){
+
+						    CheckBox cBox=(CheckBox)projectList.getChildAt(i).findViewById(R.id.checkBox1);
+
+						    if(cBox.isChecked()){
+						        checkProject[i]=1;
+						    }
+						    else{
+						    	checkProject[i]=0;
+						    }
+						 }
+					} 
+					exportTime(startDate, endDate);										
 				}
 		  });
 		  
 		  projectAdapter = new projectAdapter();
 		  projectList.setAdapter(projectAdapter);
 		  
-		  return statistics;
+		  return export;
 		 }
 	 
 	 	/**
 	 	 * A function that examines the projectlist, picks all timeblocks within start and end-date,
 	 	 * prints it to a csv-file and gives the user the ability to send it via an external email-app
-	 	 * 
-	 	 * @author Albin Tornqvist
+	 	 * @author Albin Törnqvist & Ramin Assadi
 	 	 * @param start
 	 	 * @param end
 	 	 */
@@ -134,10 +147,9 @@ public class ExportFragment extends Fragment{
 				  for(int j=0; j < tb.size(); j++)
 				  {
 					  Calendar timeblockDate = tb.get(j).getDate();
-				
 					  if((start.before(timeblockDate) || isSameDay(start, timeblockDate)) && end.after(timeblockDate))
 					  {
-						  if(user.isDateConfirmed(timeblockDate) == 1)
+						  if(user.isDateConfirmed(timeblockDate) == 1 && checkProject[i] == 1)
 						  {
 							  outputString += projectListStats.get(i).getName() + ", ";
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.YEAR)) + ", ";
@@ -145,7 +157,6 @@ public class ExportFragment extends Fragment{
 							  outputString += Integer.toString(tb.get(j).getDate().get(Calendar.DAY_OF_MONTH)) + ", ";
 							  outputString += Integer.toString(tb.get(j).getTimeInMinutes()/60) + ", ";
 							  outputString += Integer.toString(Math.round(tb.get(j).getTimeInMinutes()%60)) + ", " + "\n";
-  
 						  }
 					  }  
 				  }
@@ -264,7 +275,7 @@ public class ExportFragment extends Fragment{
 		 
 		 private class projectAdapter extends ArrayAdapter<Project>{
 				public projectAdapter() {
-					super(getActivity(), R.layout.statistics_listview_item, projectListStats);
+					super(getActivity(), R.layout.project_list_export, projectListStats);
 				}
 				
 				@Override
@@ -273,7 +284,8 @@ public class ExportFragment extends Fragment{
 						view = getActivity().getLayoutInflater().inflate(R.layout.project_list_export, parent, false);
 					projectText = (TextView) view.findViewById(R.id.projectNameTextView);
 					projectText.setText(user.getProjects().get(position).getName());
-						
+					 
+										
 			        return view;
 				}
 		    }

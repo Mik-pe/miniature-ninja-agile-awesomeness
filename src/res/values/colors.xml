@@ -29,5 +29,7 @@
 
     <color name="counter_text_bg">#063A70</color>
     <color name="counter_text_color">#063A70</color>
+    
+    <color name="transparent">#F2063A70</color>
 
 </resources>

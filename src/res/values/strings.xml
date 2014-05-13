@@ -56,6 +56,16 @@
 
     <!-- If we want icons -->
     <!--
+
+	<array name="nav_drawer_icons">
+		<item>@drawable/ic_home</item>
+        <item>@drawable/ic_people</item>
+        <item>@drawable/ic_photos</item>
+        <item>@drawable/ic_communities</item>
+        <item>@drawable/ic_pages</item>
+        <item>@drawable/ic_whats_hot</item>   
+	</array>
+
 	<array name="nav_drawer_icons">
 		<item>@drawable/ic_home</item>
         <item>@drawable/ic_people</item>
@@ -64,6 +74,7 @@
         <item>@drawable/ic_pages</item>
         <item>@drawable/ic_whats_hot</item>   
 	</array>
+
     -->
 
 
@@ -77,7 +88,13 @@
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
     <string name="title_activity_export_fragment">ExportFragment</string>
     <string name="title_activity_manage_projects">ManageProjectsActivity</string>
+    <string name="title_activity_create_notification">CreateNotificationActivity</string>
+    <string name="add_notification">Add Notification</string>
+    <string name="add_notification_title">Enter a notification title</string>
+    <string name="add_notification_text">Enter a notification text</string>
+    <string name="add_notification_repeat">Repeat</string>
+    <string name="add_notification_time">Time</string>
+
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_send_email">SendEmailActivity</string>
-
 </resources>
