@@ -15,6 +15,7 @@ import java.util.Calendar;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
+import tson_utilities.MyNotification;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,6 +25,7 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 public class DatabaseHelper extends SQLiteOpenHelper{
 
 	//Logcat tag
@@ -31,7 +33,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//Database Version
 
-	private static final int DATABASE_VERSION = 31;
+	private static final int DATABASE_VERSION = 33;
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
@@ -500,26 +502,72 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//flags for the day of the week (ugly! should be normalized)
 	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
 	 */
-	public long createNotification(String title, String text, int hour, int minute, List<Integer> selectedDays)
+	public long createNotification(MyNotification notification)
 	{
-		
 		SQLiteDatabase db = this.getWritableDatabase();
-		//String temp = Arrays.toString(int[])
-		int temp=0;
+		
+		List<Integer> selectedDays = notification.getNotificationRepeat();
+		int temp=0; // will store a array of e.g. [1, 5, 7] as an integer like '157'.
 		for(int i = 0; i< selectedDays.size(); i++)
 		{
-			temp += selectedDays.get(i)*10^(selectedDays.size()-i-1);
+			temp += selectedDays.get(i)*Math.pow(10, selectedDays.size()-i-1);
 		}
 		
-		Log.d("CreateNotification", " "+temp);
-		
-		
 		ContentValues values = new ContentValues();
-
-				
+		values.put(KEY_NOTIFICATION_USER_ID, User.getInstance().getID());
+		values.put(KEY_NOTIFICATION_TITLE, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
+		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
+		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
+		values.put(KEY_NOTIFICATION_WEEK_DAYS, temp);
 		//insert row
-
-		return 0;
+		long notification_id = db.insert(TABLE_NOTIFICATION, null, values);
+		notification.setNotificationID(notification_id);
+		return notification_id;
+	}
+	
+	public List<MyNotification> getNotifications()
+	{
+		List<MyNotification> notifications = new ArrayList<MyNotification>();
+		String selectQuery = "SELECT * FROM " + TABLE_NOTIFICATION + " WHERE "
+				 + KEY_NOTIFICATION_USER_ID + " = " + User.getInstance().getID();
+		
+		//Log.e("getNotification", "getNotification:   " + selectQuery);
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery(selectQuery, null);
+		if(c != null)
+			if(c.moveToFirst())
+			{
+				
+				do
+				{
+					
+					String title = c.getString(c.getColumnIndex(KEY_NOTIFICATION_TITLE));
+					String text = c.getString(c.getColumnIndex(KEY_NOTIFICATION_TEXT));
+					int hour = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_HOUR));
+					int minute = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_MINUTE));
+					int iSelectedDays = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_WEEK_DAYS));
+					long id = c.getLong(c.getColumnIndex(KEY_ID));
+					
+					MyNotification m = new MyNotification(title, text, id, hour, minute);
+					List<Integer> lSelectedDays = intToIntArray(iSelectedDays);
+					m.setNotificationRepeat(lSelectedDays);
+					notifications.add(m);
+				}while (c.moveToNext());
+			}
+		return notifications;
+	}
+	
+	public List<Integer> intToIntArray(int number)
+	{
+		String sNums = Integer.toString(number);
+		List<Integer> li = new ArrayList<Integer>();
+		
+		for(int i = 0; i<sNums.length(); i++)
+		{
+			li.add(Character.getNumericValue(sNums.charAt(i)));
+		}
+		return li;
 	}
 	
 	

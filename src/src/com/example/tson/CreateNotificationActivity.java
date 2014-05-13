@@ -113,6 +113,7 @@ public class CreateNotificationActivity extends Activity {
 		 * Sort the repeatList
 		 */
 		Collections.sort(repeatList);
+		thisNotification.setNotificationRepeat(repeatList);
 		
 		if(!repeatList.isEmpty())
 		{
@@ -161,15 +162,13 @@ public class CreateNotificationActivity extends Activity {
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
 		Log.d("logging", "HERE"+nextWeekDay+" "+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
 		thisNotification.addNotification();
-		
-		
 		finish();
 	}
 	
