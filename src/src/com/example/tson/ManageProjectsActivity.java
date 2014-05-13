@@ -68,8 +68,7 @@ public class ManageProjectsActivity extends Activity {
 		backButton.setOnClickListener(new View.OnClickListener() {			
 			@Override
 			public void onClick(View v) {
-				
-		    	finish();
+		    	finish(); //finishes the activity and closes it
 			}
 		});
 	}
@@ -107,9 +106,9 @@ public class ManageProjectsActivity extends Activity {
 		
 		new AlertDialog.Builder(this)
 		.setTitle("Edit project name")
-		.setMessage("Give the project a new name!")
+		.setMessage("Give the project a new name.")
 		.setView(newNameInput)
-		.setPositiveButton("Set name!", new DialogInterface.OnClickListener() {
+		.setPositiveButton("Set name", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String newName = newNameInput.getText().toString();
 				db.updateProjectName(newName, p);
@@ -162,14 +161,6 @@ public class ManageProjectsActivity extends Activity {
 				}
 			});
     		
-    		ImageButton archiveButton = (ImageButton) view.findViewById(R.id.archive_button);
-    		archiveButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(getApplicationContext(), "This will archive the project in the future!", Toast.LENGTH_LONG).show();					
-				}
-			});
     		
     		return view;
     	}
