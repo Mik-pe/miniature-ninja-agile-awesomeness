@@ -33,11 +33,9 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//Database Version
 
-<<<<<<< HEAD
+
 	private static final int DATABASE_VERSION = 33;
-=======
-	private static final int DATABASE_VERSION = 36;
->>>>>>> c83c53d5935a70af8759e3dee4872b2c5f37372d
+
 		
 	//Database Name
 	private static final String DATABASE_NAME = "timeManager.db";
