@@ -38,74 +38,13 @@ public class SubmissionFragment extends Fragment {
     	super.onCreate(savedInstanceState);
         View submission = inflater.inflate(R.layout.submission_fragment, container, false);
         
-        
-        TabAdapter = new TabAdapter(getFragmentManager());
-        
-        Tab = (ViewPager)submission.findViewById(R.id.pager);
-        Tab.setOnPageChangeListener(
-                new ViewPager.SimpleOnPageChangeListener() {
-                    @Override
-                    public void onPageSelected(int position) {
-                       
-                    	//actionBar = getActivity().getActionBar();
-                    	actionBar.setSelectedNavigationItem(position);                    }
-                });
-        Tab.setAdapter(TabAdapter);
-        
-        actionBar = getActivity().getActionBar();
-        //Enable Tabs on Action Bar
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        ActionBar.TabListener tabListener = new ActionBar.TabListener(){
-
-			@Override
-			public void onTabReselected(android.app.ActionBar.Tab tab,
-					FragmentTransaction ft) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			 public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-	          
-	            Tab.setCurrentItem(tab.getPosition());
-	        }
-
-			@Override
-			public void onTabUnselected(android.app.ActionBar.Tab tab,
-					FragmentTransaction ft) {
-				// TODO Auto-generated method stub
-				
-			}};
-			//Add New Tab
+        // Locate the viewpager in activity_main.xml
+        ViewPager viewPager = (ViewPager) submission.findViewById(R.id.pager);
+ 
+        // Set the ViewPagerAdapter into ViewPager
+        viewPager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager()));
 			
-			
-		/*	Display display = getWindowManager().getDefaultDisplay();
-	        int width = display.getWidth();
-
-	        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-	       TabHost mTabHost = getTabHost();
-
-	       mTabHost.addTab(mTabHost.newTabSpec("tab_test1")
-	               .setIndicator((""),getResources().getDrawable(R.drawable.mzl_05))
-	         .setContent(new Intent(this, NearBy.class)));
-	       mTabHost.addTab(mTabHost.newTabSpec("tab_test2")
-	               .setIndicator((""),getResources().getDrawable(R.drawable.mzl_08))
-	         .setContent(new Intent(this, SearchBy.class)));
-	               mTabHost.setCurrentTab(0);
-	               mTabHost.getTabWidget().getChildAt(0).setLayoutParams(new
-	                 LinearLayout.LayoutParams((width/2)-2,50));
-	          mTabHost.getTabWidget().getChildAt(1).setLayoutParams(new
-	                     LinearLayout.LayoutParams((width/2)-2,50));*/
-			if(actionBar.getTabCount() <2)
-			{
-				actionBar.addTab(actionBar.newTab().setText("List").setTabListener(tabListener));
-				actionBar.addTab(actionBar.newTab().setText("Calendar").setTabListener(tabListener));
-			}
-			
-			final View myview = actionBar.getTabAt(0).getCustomView();
-			
-			return submission;
+        return submission;
     }   
     
     

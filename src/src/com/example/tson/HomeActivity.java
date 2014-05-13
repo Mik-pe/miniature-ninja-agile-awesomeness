@@ -135,13 +135,7 @@ public class HomeActivity extends FragmentActivity
 	        user.addProject(projectList.get(i));
 	        user.getProjects().get(i).setSubmissionList(db.getTimeBlocksByProject(user.getProjects().get(i)));	       	       
         }
-
-	        
-       
-		
-	
-
-	
+        
     mTitle = mDrawerTitle = getTitle();
 
 	//load slide menu items
@@ -184,13 +178,16 @@ public class HomeActivity extends FragmentActivity
 			) {
 		public void onDrawerClosed(View view) {
 			getActionBar().setTitle(mTitle);
-			//calling onPrepareOptionsMenu() to show action bar icons
+			//calling onPrepareOptionsMenu() to show action bar icon
 			invalidateOptionsMenu();
 		}
 
 		public void onDrawerOpened(View drawerView) {
 			getActionBar().setTitle(mDrawerTitle);
 			//calling onPrepareOptionsMenu() to hide action bar icons
+			ab = getActionBar();
+			ab.removeAllTabs();
+			ab.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 			invalidateOptionsMenu();
 			}
 		};
@@ -223,7 +220,9 @@ public class HomeActivity extends FragmentActivity
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			//display view for selected nav drawer item
+			
 			displayView(position);
+			
 		}
 	}
 	
