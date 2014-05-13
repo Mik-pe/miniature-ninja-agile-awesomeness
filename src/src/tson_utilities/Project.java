@@ -26,6 +26,8 @@ public class Project {
 	private String name;
 	private List<TimeBlock> submissionList = new ArrayList<TimeBlock>();
 	private long id;
+	//Int, instead of boolean because of database. Flag for internal time can be 0 or 1
+	private int isInternalTime = 0;
 	
 	 /***********************
 	  *  	CONSTRUCTORS 	*/	
@@ -80,6 +82,15 @@ public class Project {
 		}
 		
 	}
+	
+	/**
+	 * Setter for setting the flag isInternal
+	 * @param isInternal
+	 */
+	public void setInternalTime(int isInternal){
+		isInternalTime = isInternal;
+	}
+	
 	/**
 	 * Set an id correspondent to its id in the database
 	 * @param id_
@@ -115,6 +126,15 @@ public class Project {
 			}
 
 		return null;
+	}
+	
+	/**
+	 * Getter
+	 * @return  An int indicating if the time is internal time. 1 == the project is internal time
+	 */
+	public int getIsInternal()
+	{
+		return isInternalTime;
 	}
 	
 	/**
