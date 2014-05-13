@@ -113,9 +113,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		Collections.sort(repeatList);
 		
+		/**
+		 * If repeatList has values, the notification should repeat.
+		 */
 		if(!repeatList.isEmpty())
 		{
-			if(repeatList.contains(c.get(Calendar.DAY_OF_WEEK)+1)){
+			if(repeatList.contains((c.get(Calendar.DAY_OF_WEEK)+1)%7)){
 				nextWeekDay = c.get(Calendar.DAY_OF_WEEK);
 			}
 			else{

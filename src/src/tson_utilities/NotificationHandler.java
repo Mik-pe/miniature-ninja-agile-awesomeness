@@ -84,7 +84,7 @@ public class NotificationHandler extends BroadcastReceiver
 			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
 			mServiceIntent.putExtra("calendarValue",calendarValue);
 			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
-			
+		
 			nextWeekDay = repeatList.get(0);
 			for(int i=0;i<repeatList.size();i++)
 			{
