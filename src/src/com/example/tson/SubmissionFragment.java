@@ -22,8 +22,9 @@ import android.widget.TabHost;
  * @author 
  *
  */
+
 public class SubmissionFragment extends Fragment {
-	ViewPager Tab;
+	ViewPager viewPager;
     TabAdapter TabAdapter;
 	ActionBar actionBar;
 	/**
@@ -39,10 +40,12 @@ public class SubmissionFragment extends Fragment {
         View submission = inflater.inflate(R.layout.submission_fragment, container, false);
         
         // Locate the viewpager in activity_main.xml
-        ViewPager viewPager = (ViewPager) submission.findViewById(R.id.pager);
+        viewPager = (ViewPager) submission.findViewById(R.id.pager);
  
         // Set the ViewPagerAdapter into ViewPager
-        viewPager.setAdapter(new ViewPagerAdapter(getActivity().getSupportFragmentManager()));
+        viewPager.setAdapter(new ViewPagerAdapter(getChildFragmentManager()));
+        
+        setRetainInstance(true);
 			
         return submission;
     }   
