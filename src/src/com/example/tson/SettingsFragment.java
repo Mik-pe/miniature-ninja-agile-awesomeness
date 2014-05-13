@@ -129,23 +129,10 @@ public class SettingsFragment extends Fragment{
 		meEmail = (TextView) settings.findViewById(R.id.meEmail);	
 		meEmail.setText(user.getEmail());
 		notificationListView = (ListView) settings.findViewById(R.id.notificationListView);
-		
-		/**
-		* Static defaultnotifications, not saved internally
-		*/
-		MyNotification someNotification = new MyNotification("Tson", "notification", 0, 6, 22);
-		List<Integer> repeatList = new ArrayList<Integer>();
-		repeatList.add(1);
-		repeatList.add(7);
-		someNotification.setNotificationRepeat(repeatList);
-		
+
 		notificationList = User.getInstance().getNotificationList();
 		notificationListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(65)*notificationList.size()));
-//		notificationList.add(someNotification);
-//		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-//		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-//
-//		
+	
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
@@ -181,7 +168,6 @@ public class SettingsFragment extends Fragment{
 				showRevokeDialog(v);
 			}
 		});
-		
 		
 	notiAdapter = new notificationAdapter();
 	notificationListView.setAdapter(notiAdapter);

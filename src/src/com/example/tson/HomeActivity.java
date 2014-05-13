@@ -25,6 +25,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.BackStackEntry;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -292,8 +293,9 @@ public class HomeActivity extends FragmentActivity
 			//error in creating fragment
 			Log.e("MainActivity", "Error in creating fragment");
 		}
-	}		
+	}
 	
+
 
 	@Override
 	public void setTitle(CharSequence title) {
