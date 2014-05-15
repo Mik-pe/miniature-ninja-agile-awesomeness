@@ -90,8 +90,8 @@
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="title_activity_statistics_fragment">StatisticsFragment</string>
     <string name="title_activity_export_fragment">ExportFragment</string>
-    <string name="title_activity_manage_projects">ManageProjectsActivity</string>
-    <string name="title_activity_create_notification">CreateNotificationActivity</string>
+    <string name="title_activity_manage_projects">Manage Your Projects</string>
+    <string name="title_activity_create_notification">Create Notifications</string>
     <string name="add_notification">Add Notification</string>
     <string name="add_notification_title">Enter a notification title</string>
     <string name="add_notification_text">Enter a notification text</string>
