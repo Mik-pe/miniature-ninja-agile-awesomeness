@@ -72,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_NOTIFICATION_TEXT = "text";
 	private static final String KEY_NOTIFICATION_HOUR = "hour";
 	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	
 	//flags for the day of the week (ugly! should be normalized)
 	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
 	

@@ -56,6 +56,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 
 
 import android.widget.ImageView;
@@ -340,7 +341,8 @@ public class SettingsFragment extends Fragment{
 			startActivity(intent);
 		}
 	});
-
+	Switch notificationSwitch = (Switch) view.findViewById(R.id.notificationSwitch);
+//	notificationSwitch.setOnCheckedChangeListener()
 	return view;
     }
 

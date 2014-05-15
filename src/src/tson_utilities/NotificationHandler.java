@@ -3,6 +3,7 @@ package tson_utilities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import com.example.tson.HomeActivity;
 import com.example.tson.R;
@@ -32,7 +33,6 @@ public class NotificationHandler extends BroadcastReceiver
 	String notificationTitle;
 	String notificationText;
 	int notificationID;
-	long timeUntilNextDate;
 	int calendarDefinition;
 	int calendarValue;
 	int nextWeekDay;
@@ -52,7 +52,6 @@ public class NotificationHandler extends BroadcastReceiver
 		notificationTitle = arg1.getStringExtra("title");
 		notificationText = arg1.getStringExtra("text");
 		notificationID = (int) arg1.getLongExtra("nrOfNots", 0);
-		timeUntilNextDate = arg1.getLongExtra("timeUntilNextDate", 0);
 		calendarDefinition = arg1.getIntExtra("calendarDefinition", 0);
 		
 		//TODO
@@ -80,7 +79,6 @@ public class NotificationHandler extends BroadcastReceiver
 				mServiceIntent.putExtra("text", "Default Reminder");
 			
 			mServiceIntent.putExtra("nrOfNots", notificationID);
-			mServiceIntent.putExtra("timeUntilNextDate", (timeUntilNextDate));
 			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
 			mServiceIntent.putExtra("calendarValue",calendarValue);
 			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
@@ -114,6 +112,7 @@ public class NotificationHandler extends BroadcastReceiver
 			}
 			Log.d("logging", "HERE"+nextWeekDay);
 			notificationCalendar.add(calendarDefinition, nextWeekDay);
+			Log.d("nextDay", "is: "+notificationCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
 			/**
 			 * getBroadcast will queue the pendingIntent for this handler
 			 * AlarmManager will be set inside the function for recursive calls.
