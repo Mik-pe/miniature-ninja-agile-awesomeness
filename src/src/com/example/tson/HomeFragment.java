@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
 	public User user = User.getInstance();
-	List<Project> projectList = user.getProjects();
+	List<Project> projectList = user.getActiveProjects();
 	RelativeLayout emptylistRelative;
 	ImageButton firstTimeAddBtn;
 	

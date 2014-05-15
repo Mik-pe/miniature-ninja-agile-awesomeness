@@ -127,7 +127,9 @@ public class HomeActivity extends FragmentActivity
 	    db.getAllProjects(user);
 	    db.getAllTimeBlocks();
 	    db.logTimeblocks();
+	    Log.d("CHECKAR UPDATERING", " WOHO");
 	    projectList = db.getAllProjects(user);
+	    
 	    user.getProjects().clear();
 	    
 	    List<MyNotification> notificationList = db.getNotifications();

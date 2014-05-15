@@ -64,6 +64,33 @@ public class User
 		 return projectList;
 	 }
 	 /**
+	  * Return list of projects that are active/isHidden=0 (used in HomeActivity)
+	  * @return List<Project>
+	  */
+	 public List<Project> getActiveProjects()
+	 {
+		 List<Project> activeProjects = new ArrayList<Project>();
+		 for(int i=0; i<projectList.size();i++){
+			 if(projectList.get(i).getIsHidden()==0)
+				 activeProjects.add(projectList.get(i));
+		 }
+		 
+		 return activeProjects;
+	 }
+	 
+	 public List<Project> getHiddenProjects()
+	 {
+		 List<Project> hidden = new ArrayList<Project>();
+		 for(int i=0; i<projectList.size();i++){
+			 if(projectList.get(i).getIsHidden()==1)
+				 hidden.add(projectList.get(i));
+		 }
+		 
+		 return hidden;		 
+	 }
+	 
+	 
+	 /**
 	  * get list of notifications
 	  * @return List<MyNotification>
 	  */
@@ -210,6 +237,11 @@ public class User
 			 projectList.add(p);
 		 }
 	 }
+	 
+	 public void updateProjectlistFromDB(){
+		 this.projectList = HomeActivity.db.getAllProjects(this);
+	 }
+	 
 	 
 	 
 	 
