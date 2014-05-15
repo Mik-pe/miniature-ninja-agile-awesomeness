@@ -106,10 +106,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 
 			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
 			dialog.setContentView(R.layout.empty_project_view);
-			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
 			dialog.show();
 			
-			firstTimeAddBtn = (ImageButton) dialog.findViewById(R.id.firstTimeAddBtn);
 			emptylistRelative = (RelativeLayout) dialog.findViewById(R.id.emptylistRelative);
 			
 			emptylistRelative.setOnClickListener(new View.OnClickListener() {
@@ -121,26 +119,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 			}
 		});
 			
-			firstTimeButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					
-					dialog.dismiss();
-					
-				}
-			});
 			
-			firstTimeAddBtn.setOnClickListener(new View.OnClickListener() {
-				
-			@Override
-			public void onClick(View v) {
-				
-					Intent intent = new Intent(getActivity(), CreateProjectActivity.class);
-					startActivity(intent);
 			
-			}
-		});
 		    
 		}
 		
