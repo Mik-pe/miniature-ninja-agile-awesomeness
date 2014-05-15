@@ -28,6 +28,7 @@ public class User
 	 private String picURL = "";
 	 private long id;
 	 private List<Project> projectList = new ArrayList<Project>();
+	 private List<MyNotification> notificationList; //Notifications
 	 DatabaseHelper db;
 	 //public HomeActivity homeActivity = new HomeActivity();
 	 
@@ -62,6 +63,16 @@ public class User
 	 {	
 		 return projectList;
 	 }
+	 /**
+	  * get list of notifications
+	  * @return List<MyNotification>
+	  */
+	 public List<MyNotification> getNotificationList()
+	 {
+		 return this.notificationList;
+	 }
+	 
+	 
 	 /**
 	  * Return user's ID
 	  * @return
@@ -126,6 +137,11 @@ public class User
 	 public void setId(long id_)
 	 {
 		 this.id = id_;
+	 }
+	 
+	 public void setNotificationList(List<MyNotification> notificationList_)
+	 {
+		 this.notificationList = notificationList_;
 	 }
 	 
 	 /**
@@ -195,13 +211,24 @@ public class User
 		 }
 	 }
 	 
+	 
+	 
 	 /**
 	  * Function creating a new project and adding it to the users project list
 	  * @param name - Name of new project
 	  */
-	 public void createProject(String name){
+	 public void createProject(String name)
+	 {
 		 
 		 Project p = new Project(name);
 		 addProject(p);
+	 }
+	 
+	 /**
+	  * Function to update the notification list from the one in the database
+	  */
+	 public void updateNotificationList()
+	 {
+		 this.setNotificationList(HomeActivity.db.getNotifications());
 	 }
 }

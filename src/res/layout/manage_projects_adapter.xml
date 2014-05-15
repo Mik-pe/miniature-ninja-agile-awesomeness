@@ -28,23 +28,9 @@
         android:maxWidth="20dp"
         android:paddingTop="5dp"
         android:background="#00FFFFFF"
-        android:layout_marginRight="70dp"
+        android:layout_marginRight="10dp"
         android:scaleType="fitCenter"/>
 
-    <ImageButton
-        android:id="@+id/archive_button"
-        android:clickable="true"
-       	android:src="@drawable/ic_archive2" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="@+id/manage_project_list"
-        android:layout_alignParentBottom="@+id/manage_project_list"
-        android:background="#00FFFFFF"
-        android:maxHeight="20dp"
-        android:maxWidth="20dp"
-        android:paddingTop="5dp"
-        android:scaleType="fitCenter" />
 
 </RelativeLayout>
 
