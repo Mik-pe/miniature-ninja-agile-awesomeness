@@ -99,8 +99,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
-		MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.song);
-	    mediaPlayer.start();
+		//play a song on home screen
+		//MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.song);
+	    //mediaPlayer.start();
 		
 		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{

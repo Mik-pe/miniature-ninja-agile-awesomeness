@@ -21,10 +21,11 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="30sp"/>
 	
-	    <CheckBox
-	        android:id="@+id/notificationCheckBox"
+	    <Switch
+	        android:id="@+id/notificationSwitch"
 	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"/>
+	        android:layout_height="fill_parent"
+	        android:layout_marginTop="10dp" />
 		</LinearLayout>
 		
    <TextView
