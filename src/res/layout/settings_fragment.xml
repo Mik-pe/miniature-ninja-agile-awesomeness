@@ -36,12 +36,12 @@
        	    android:layout_height="wrap_content"
        	    android:layout_below="@+id/meName"
        	    android:layout_gravity="center"
-       	    android:layout_marginBottom="20dp"
+       	    android:layout_marginBottom="10dp"
        	    android:layout_marginLeft="0dp"
-       	    android:layout_marginRight="70dp"
+       	    android:layout_marginRight="120dp"
        	    android:layout_marginTop="0dp"
        	    android:fontFamily="sans-serif-thin"
-       	    android:text="John@gmail.com"
+       	    android:text="John@gail.com"
        	    android:textSize="17sp" />
 
         <ImageView
