@@ -1,0 +1,163 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tson.CreateProjectActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:orientation="vertical" >
+        
+         <View
+             android:id="@+id/add_line3"
+             android:layout_width="fill_parent"
+             android:layout_height="2dp"
+             android:layout_marginTop="50dp"
+             android:background="#DB8C0C" />
+	
+        <TextView
+            android:id="@+id/add_noti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="@string/add_notification"
+            android:textSize="32sp" />
+        
+        <View
+            android:id="@+id/add_line2"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="20dp"
+            android:background="#DB8C0C" />
+
+        <EditText
+            android:id="@+id/notification_title_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="20dp"
+            android:background="#00FFFFFF"
+            android:ems="15"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/add_notification_title"
+            android:textColorLink="@color/counter_text_bg"
+            android:textSize="30sp" >
+
+        </EditText>
+		
+        <EditText
+            android:id="@+id/notification_text_editText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="20dp"
+            android:background="#00FFFFFF"
+            android:ems="15"
+            android:fontFamily="sans-serif-thin"
+            android:hint="@string/add_notification_text"
+            android:textColorLink="@color/counter_text_bg"
+            android:textSize="30sp" >
+
+        </EditText>
+		
+		<LinearLayout 
+		    android:id="@+id/notification_time_layout"
+		    android:layout_width="match_parent"
+      		android:layout_height="wrap_content"
+      		android:orientation="vertical"
+      		android:onClick="setNotificationTime" >
+            
+	        <TextView
+	            android:id="@+id/notification_time"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginTop="20dp"
+	            android:fontFamily="sans-serif-thin"
+	            android:text="@string/add_notification_time"
+	            android:textSize="30sp" />
+
+	        <TextView
+	            android:id="@+id/notification_time_set"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginBottom="10dp"
+	            android:fontFamily="sans-serif-thin"
+	            android:text="16 h: 52m"
+	            android:textSize="18sp" />
+
+        </LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/notification_repeat_layout"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="10dp"
+		    android:onClick="repeatNotification"
+		    android:orientation="vertical" >
+            
+	        <TextView
+	            android:id="@+id/notification_repeat"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginTop="20dp"
+	            android:fontFamily="sans-serif-thin"
+	            android:text="@string/add_notification_repeat"
+	            android:textSize="30sp" />
+
+	        <TextView
+	            android:id="@+id/notification_repeat_days"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginBottom="10dp"
+	            android:fontFamily="sans-serif-thin"
+	            android:text="Never"
+	            android:textSize="18sp" />
+
+        </LinearLayout>
+		
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:onClick="createNotification"
+            android:text="@string/create_text"
+            android:textColor="#063A70"
+            android:textSize="30sp" />
+                    
+        <Button
+            android:id="@+id/cancel_project_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:onClick="cancelNotification"
+            android:text="@string/cancel_project_button"
+            android:textColor="#063A70"
+            android:textSize="30sp" />
+        
+    </LinearLayout>
+
+</ScrollView>
