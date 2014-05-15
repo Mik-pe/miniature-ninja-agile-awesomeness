@@ -88,14 +88,13 @@
             android:id="@+id/view2"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
+            android:layout_marginBottom="20dp"
             android:background="#DB8C0C" />
 
         <ListView
             android:id="@+id/projectListView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:paddingTop="40dp"
-	 		
             android:paddingLeft="10dp"
             android:paddingRight="10dp" >
 
