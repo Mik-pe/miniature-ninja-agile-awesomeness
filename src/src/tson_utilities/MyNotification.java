@@ -1,6 +1,5 @@
 package tson_utilities;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.util.Log;
@@ -24,6 +23,7 @@ public class MyNotification {
 	private String notificationText;
 	private int notificationHour;
 	private int notificationMinute;
+	private boolean isOn;
 	private List<Integer> notificationRepeat;
 
 	
@@ -38,6 +38,7 @@ public class MyNotification {
 		setNotificationTitle(title);
 		setNotificationHour(hour);
 		setNotificationMinute(min);
+		isOn = true;
 	}
 	/***********************
 	  *  	OTHER		*/	
@@ -85,6 +86,19 @@ public class MyNotification {
 	public void setNotificationHour(int notificationHour) {
 		this.notificationHour = notificationHour;
 	}
+	
+	public void setNotificationActive(boolean onOff)
+	{
+		isOn = onOff;
+	}
+	
+	public void setNotificationActive(int onOff)
+	{
+		if(onOff != 0)
+			isOn = true;
+		else
+			isOn = false;
+	}
 	/***********************
 	  *  	GETTERS		*/	
 	 /***********************/
@@ -116,6 +130,17 @@ public class MyNotification {
 
 	public int getNotificationHour() {
 		return notificationHour;
+	}
+	
+	public boolean isOn() {
+		return isOn;
+	}
+	
+	public int isOninteger() {
+		if(isOn)
+			return 1;
+		else
+			return 0;
 	}
 
 }

@@ -10,6 +10,7 @@ import tson_utilities.User;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -25,8 +26,10 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.LinearLayout.LayoutParams;
 
 public class ExportFragment extends Fragment{
 	
@@ -75,6 +78,9 @@ public class ExportFragment extends Fragment{
 		  btnGo = (Button) export.findViewById(R.id.export);
 		  startTime = (EditText) export.findViewById(R.id.startTimeExport);
 		  endTime = (EditText) export.findViewById(R.id.endTimeExport);
+		  
+		  projectList.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectListStats.size()));
+			
 		  
 		  startTime.setText(startDate.get(Calendar.DAY_OF_MONTH) + " / " + startDate.get(Calendar.MONTH) + " / "
 		  			+ startDate.get(Calendar.YEAR));
@@ -210,7 +216,16 @@ public class ExportFragment extends Fragment{
 	 		
 	 	}
 	 	
-	 
+	 	 /**
+		 * Calculates the dp value to pixels
+		 * @author Ramin Assadi
+		 * @param dp The value of dp
+		 * @return Returns the converted pixel value
+		 */
+		public static int dpToPx(int dp)
+		{
+			return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+		}
 	 
 	 	/**
 		 * Calculates if two dates are equal
