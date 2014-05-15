@@ -12,8 +12,6 @@ import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 
 import java.util.Calendar;
-import tson_utilities.Project;
-import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import tson_utilities.MyNotification;
 
@@ -21,7 +19,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -33,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	
 	//Database Version
 
-	private static final int DATABASE_VERSION = 39;
+	private static final int DATABASE_VERSION = 41;
 
 		
 	//Database Name
@@ -72,6 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_NOTIFICATION_TEXT = "text";
 	private static final String KEY_NOTIFICATION_HOUR = "hour";
 	private static final String KEY_NOTIFICATION_MINUTE = "minute";
+	private static final String KEY_NOTIFICATION_SWITCH = "switch";
 	//flags for the day of the week (ugly! should be normalized)
 	private static final String KEY_NOTIFICATION_WEEK_DAYS = "weekdays";
 	
@@ -97,7 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String CREATE_TABLE_NOTIFICATION = "CREATE TABLE "
 			+ TABLE_NOTIFICATION + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NOTIFICATION_USER_ID + " INTEGER,"
 			+ KEY_NOTIFICATION_TITLE + " TEXT," + KEY_NOTIFICATION_TEXT + " TEXT," + KEY_NOTIFICATION_HOUR + " INTEGER,"
-			+ KEY_NOTIFICATION_MINUTE + " INTEGER," + KEY_NOTIFICATION_WEEK_DAYS + " INTEGER" + ")";
+			+ KEY_NOTIFICATION_MINUTE + " INTEGER," + KEY_NOTIFICATION_SWITCH + " INTEGER," + KEY_NOTIFICATION_WEEK_DAYS + " INTEGER" + ")";
 	
 	
 	public DatabaseHelper(Context context)
@@ -528,6 +526,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
 		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
 		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
+		values.put(KEY_NOTIFICATION_SWITCH, notification.isOninteger());
 		values.put(KEY_NOTIFICATION_WEEK_DAYS, temp);
 		//insert row
 		long notification_id = db.insert(TABLE_NOTIFICATION, null, values);
@@ -557,10 +556,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					String text = c.getString(c.getColumnIndex(KEY_NOTIFICATION_TEXT));
 					int hour = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_HOUR));
 					int minute = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_MINUTE));
+					int isOn = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_SWITCH));
 					int iSelectedDays = c.getInt(c.getColumnIndex(KEY_NOTIFICATION_WEEK_DAYS));
 					long id = c.getLong(c.getColumnIndex(KEY_ID));
 					
 					MyNotification m = new MyNotification(title, text, id, hour, minute);
+					m.setNotificationActive(isOn);
+					
 					List<Integer> lSelectedDays = intToIntArray(iSelectedDays);
 					m.setNotificationRepeat(lSelectedDays);
 					notifications.add(m);
@@ -587,6 +589,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		values.put(KEY_NOTIFICATION_TEXT, notification.getNotificationText());
 		values.put(KEY_NOTIFICATION_HOUR, notification.getNotificationHour());
 		values.put(KEY_NOTIFICATION_MINUTE, notification.getNotificationMinute());
+		values.put(KEY_NOTIFICATION_SWITCH, notification.isOninteger());
 		values.put(KEY_NOTIFICATION_WEEK_DAYS, temp);
 		
 		// This will be send as a parameter to db.update

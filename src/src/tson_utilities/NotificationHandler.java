@@ -3,13 +3,12 @@ package tson_utilities;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-import com.example.tson.HomeActivity;
+import com.example.tson.LoginActivity;
 import com.example.tson.R;
-import com.example.tson.R.drawable;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -32,7 +31,6 @@ public class NotificationHandler extends BroadcastReceiver
 	String notificationTitle;
 	String notificationText;
 	int notificationID;
-	long timeUntilNextDate;
 	int calendarDefinition;
 	int calendarValue;
 	int nextWeekDay;
@@ -52,7 +50,6 @@ public class NotificationHandler extends BroadcastReceiver
 		notificationTitle = arg1.getStringExtra("title");
 		notificationText = arg1.getStringExtra("text");
 		notificationID = (int) arg1.getLongExtra("nrOfNots", 0);
-		timeUntilNextDate = arg1.getLongExtra("timeUntilNextDate", 0);
 		calendarDefinition = arg1.getIntExtra("calendarDefinition", 0);
 		
 		//TODO
@@ -80,7 +77,6 @@ public class NotificationHandler extends BroadcastReceiver
 				mServiceIntent.putExtra("text", "Default Reminder");
 			
 			mServiceIntent.putExtra("nrOfNots", notificationID);
-			mServiceIntent.putExtra("timeUntilNextDate", (timeUntilNextDate));
 			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
 			mServiceIntent.putExtra("calendarValue",calendarValue);
 			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
@@ -94,7 +90,6 @@ public class NotificationHandler extends BroadcastReceiver
 					nextWeekDay = repeatList.get(i);
 					i = repeatList.size();
 				}
-				Log.d("logging", "HERE"+nextWeekDay+notificationCalendar.get(Calendar.DAY_OF_WEEK));
 			}
 			if(nextWeekDay != 7)
 				nextWeekDay++;
@@ -112,8 +107,8 @@ public class NotificationHandler extends BroadcastReceiver
 					nextWeekDay = 7;
 				}
 			}
-			Log.d("logging", "HERE"+nextWeekDay);
 			notificationCalendar.add(calendarDefinition, nextWeekDay);
+			Log.d("nextDay", "is: "+notificationCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
 			/**
 			 * getBroadcast will queue the pendingIntent for this handler
 			 * AlarmManager will be set inside the function for recursive calls.
@@ -131,7 +126,7 @@ public class NotificationHandler extends BroadcastReceiver
 	 * @param context - the activity context the notification was sent from
 	 */
 	protected void showNotification(Context context) {
-		Intent intent = new Intent(context, HomeActivity.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		
 		
 		
