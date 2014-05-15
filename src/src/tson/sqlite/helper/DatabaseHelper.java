@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	//Database Version
 
 
-	private static final int DATABASE_VERSION = 39;
+	private static final int DATABASE_VERSION = 40;
 
 		
 	//Database Name
@@ -58,6 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	private static final String KEY_PROJECT_NAME = "project_name";
 	private static final String KEY_PROJECT_USER_ID = "user_id";
 	private static final String KEY_PROJECT_IS_INTERNAL_TIME = "is_internal_time";
+	private static final String KEY_PROJECT_IS_HIDDEN = "is_hidden"; // 1 for hidden, 0 else
 
 	//TIME BLOCKS TABLE
 	private static final String KEY_TIME_BLOCK_PROJECT_ID 	= "project_id";
@@ -89,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	// Project table create statement
 	private static final String CREATE_TABLE_PROJECT = "CREATE TABLE "
 			+ TABLE_PROJECT + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PROJECT_USER_ID +" INTEGER,"
-			+KEY_PROJECT_NAME+ " TEXT," + KEY_PROJECT_IS_INTERNAL_TIME +" INTEGER" + ")";
+			+KEY_PROJECT_NAME+ " TEXT," + KEY_PROJECT_IS_INTERNAL_TIME +" INTEGER," + KEY_PROJECT_IS_HIDDEN + " INTEGER" + ")";
 
 	private static final String CREATE_TABLE_TIME_BLOCK = "CREATE TABLE "
 			+ TABLE_TIME_BLOCK + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_TIME_BLOCK_PROJECT_ID + " INTEGER," + KEY_TIME_BLOCK_YEAR + " INTEGER,"
@@ -209,11 +210,13 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		
+		int is_hidden = 0; // project not hidden when created therefore is_hidden = 0
 		
 		
 		ContentValues values = new ContentValues();
 		values.put(KEY_PROJECT_NAME, project.getName());
 		values.put(KEY_PROJECT_IS_INTERNAL_TIME, project.getIsInternal());
+		values.put(KEY_PROJECT_IS_HIDDEN, is_hidden);
 		values.put(KEY_PROJECT_USER_ID, user.getID());
 		
 		//insert row
@@ -270,6 +273,25 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 				args);
 	}
 	
+	/**
+	 * 
+	 * @param is_hidden - a number {0,1} that indicates whether the project is hidden
+	 * @param p - an instance of the Project
+	 * @return - returns an number of how many rows that were updated..
+	 */
+	public int updateProjectIsHidden(int is_hidden, Project p)
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		ContentValues values = new ContentValues();
+		values.put(KEY_PROJECT_IS_HIDDEN, is_hidden);
+		
+		Log.d("updateProjectIsHidden", "uppdaterar is_hidden!");
+		
+		String[] args = new String[]{String.valueOf(p.getId())};
+		
+		return db.update(TABLE_PROJECT, values, KEY_ID + " = ?", args);
+	}
+	
 	
 	/**
 	 * Get a single project by an ID.
@@ -292,6 +314,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 		// Create a project out of the row name
 		Project p = new Project(c.getString(c.getColumnIndex(KEY_PROJECT_NAME)));
 		p.setInternalTime(c.getInt(c.getColumnIndex(KEY_PROJECT_IS_INTERNAL_TIME)));
+		p.setIsHidden(c.getInt(c.getColumnIndex(KEY_PROJECT_IS_HIDDEN)));
 		
 		return p;
 	}
@@ -305,7 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	{
 		List<Project> projects = new ArrayList<Project>();
 		String selectQuery = "SELECT * FROM " + TABLE_PROJECT + " WHERE "
-				 + KEY_PROJECT_USER_ID + " = " + user.getID();
+				 + KEY_PROJECT_USER_ID + " = " + user.getID() + " ORDER BY " + KEY_PROJECT_IS_HIDDEN + " ASC";
 		
 		Log.e("User insertion", "getAllProjects:   " + selectQuery);
 		SQLiteDatabase db = this.getReadableDatabase();

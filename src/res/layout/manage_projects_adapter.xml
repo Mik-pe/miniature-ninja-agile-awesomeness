@@ -5,32 +5,58 @@
     android:orientation="horizontal" >
 
     <TextView
+	    android:id="@+id/category"
+	    android:visibility="visible"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="10dp"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:text="Active projects"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
         android:id="@+id/project_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/category"
         android:fontFamily="sans-serif-thin"
         android:text="Large Text"
-        android:textSize="30sp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="30sp" />
+
+
 
     <ImageButton
         android:id="@+id/edit_button"
-        android:clickable="true"
-        android:src="@drawable/ic_pen2" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@+id/project_name"
         android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/archive_button"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:maxHeight="20dp"
         android:maxWidth="20dp"
         android:paddingTop="5dp"
-        android:background="#00FFFFFF"
-        android:layout_marginRight="10dp"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_pen2" />
 
+    <ImageButton
+        android:id="@+id/archive_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edit_button"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:maxHeight="20dp"
+        android:maxWidth="20dp"
+        android:paddingTop="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_archive2" />
 
 </RelativeLayout>
 
