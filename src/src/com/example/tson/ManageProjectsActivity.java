@@ -3,6 +3,8 @@ package com.example.tson;
 import java.util.List;
 
 
+
+
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
@@ -12,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,9 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 /**
  * ManageProjectActivity Class - Activity accessed from settings. 
@@ -64,6 +69,8 @@ public class ManageProjectsActivity extends Activity {
 		manageProjectsListActive = (ListView) findViewById(R.id.manage_project_list);
 		projectAdapter = new ManageProjectListAdapter();
         
+		manageProjectsListActive.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectList.size()));
+		
 		manageProjectsListActive.setAdapter(projectAdapter);
 		
 		
@@ -94,6 +101,17 @@ public class ManageProjectsActivity extends Activity {
 			}
 		});
         return true;
+	}
+	
+	/**
+	 * Calculates the dp value to pixels
+	 * @author Ramin Assadi
+	 * @param dp The value of dp
+	 * @return Returns the converted pixel value
+	 */
+	public static int dpToPx(int dp)
+	{
+		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
 	}
 	
 	/**
