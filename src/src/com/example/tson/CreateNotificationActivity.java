@@ -67,12 +67,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		if(extras != null)
 		{
-			isEdit = true;
-			title = extras.getString("notificationTitle");
-			text = extras.getString("notificationText");
-			hour =  extras.getInt("notificationHour");
-			minute = extras.getInt("notificationMinute");
-			ID = (int) extras.getLong("notificationID");
+			isEdit	= true;
+			title 	= extras.getString("notificationTitle");
+			text 	= extras.getString("notificationText");
+			hour 	=  extras.getInt("notificationHour");
+			minute 	= extras.getInt("notificationMinute");
+			ID 		= (int) extras.getLong("notificationID");
 			
 			if(extras.getIntegerArrayList("notificationRepeat") != null)
 				repeatList =  extras.getIntegerArrayList("notificationRepeat");
@@ -239,7 +239,7 @@ public class CreateNotificationActivity extends Activity {
 		mServiceIntent.putExtra("calendarDefinition", Calendar.DAY_OF_WEEK);
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
-		Log.d("logging", "HERE"+thisNotification.getNotificationID());
+
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
@@ -247,6 +247,10 @@ public class CreateNotificationActivity extends Activity {
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
 		User.getInstance().updateNotificationList();
+		Intent intent = new Intent(this, HomeActivity.class);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //set flag on intent to clear history stack of all activities
+    	
+    	startActivity(intent);
 		finish();
 	}
 	

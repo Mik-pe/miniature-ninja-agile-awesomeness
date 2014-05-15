@@ -3,7 +3,6 @@ package com.example.tson;
 
 
 import java.io.InputStream;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,13 +29,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
-
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -49,8 +48,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -60,12 +59,12 @@ import android.widget.RelativeLayout;
 
 
 import android.widget.ImageView;
-
 import android.widget.ExpandableListView;
 
 
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.LinearLayout.LayoutParams;
 
 public class SettingsFragment extends Fragment{
 	
@@ -130,21 +129,10 @@ public class SettingsFragment extends Fragment{
 		meEmail = (TextView) settings.findViewById(R.id.meEmail);	
 		meEmail.setText(user.getEmail());
 		notificationListView = (ListView) settings.findViewById(R.id.notificationListView);
-		/**
-		* Static defaultnotifications, not saved internally
-		*/
-		MyNotification someNotification = new MyNotification("Tson", "notification", 0, 6, 22);
-		List<Integer> repeatList = new ArrayList<Integer>();
-		repeatList.add(1);
-		repeatList.add(7);
-		someNotification.setNotificationRepeat(repeatList);
-		
+
 		notificationList = User.getInstance().getNotificationList();
-//		notificationList.add(someNotification);
-//		notificationList.add(new MyNotification("Tson2", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-//		notificationList.add(new MyNotification("Tson3", "notification", 0, notificationCal.get(Calendar.HOUR_OF_DAY), notificationCal.get(Calendar.MINUTE)));
-//
-//		
+		notificationListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(65)*notificationList.size()));
+	
 		manageProjectsButton = (Button) settings.findViewById(R.id.manage_projects_button);
 		addNotificationButton = (Button) settings.findViewById(R.id.addNotification);
 		logoutButton = (Button) settings.findViewById(R.id.log_out_button);
@@ -181,26 +169,8 @@ public class SettingsFragment extends Fragment{
 			}
 		});
 		
-		
 	notiAdapter = new notificationAdapter();
 	notificationListView.setAdapter(notiAdapter);
-	notificationListView.setOnTouchListener(new ListView.OnTouchListener(){
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			int action = event.getAction();
-			switch(action){
-			case MotionEvent.ACTION_DOWN:
-				v.getParent().requestDisallowInterceptTouchEvent(true);
-				break;
-			case MotionEvent.ACTION_UP:
-				v.getParent().requestDisallowInterceptTouchEvent(false);
-				break;
-			}
-			
-			// handle listview touch events.
-			v.onTouchEvent(event);
-			return true;
-		}});
 	return settings;
 	}//End OnCreate
    /**
@@ -230,6 +200,17 @@ public class SettingsFragment extends Fragment{
            bmImage.setImageBitmap(result);
        }
    }
+   
+   /**
+	 * Calculates the dp value to pixels
+	 * @author Ramin Assadi
+	 * @param dp The value of dp
+	 * @return Returns the converted pixel value
+	 */
+	public static int dpToPx(int dp)
+	{
+		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+	}
    
    /**
     * Sign-out from google
@@ -341,7 +322,6 @@ public class SettingsFragment extends Fragment{
     {
 	if(view == null)
 		view = getActivity().getLayoutInflater().inflate(R.layout.settings_notification_item, parent, false);
-
 
 	notificationEditText = (TextView) view.findViewById(R.id.notificationTitle);
 	notificationEditText.setText(notificationList.get(position).getNotificationTitle());

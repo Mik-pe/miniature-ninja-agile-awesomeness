@@ -61,7 +61,7 @@ public class NotificationHandler extends BroadcastReceiver
 		
 
 			
-		Log.d("logging", "HERE");
+
 		/**
 		 * if repeatList is empty, the notification should not be repeated
 		 */
