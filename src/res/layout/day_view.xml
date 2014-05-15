@@ -3,7 +3,7 @@
     android:id="@+id/rl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="@dimen/min_cell_height"
+    android:minHeight="60dp"
     android:minWidth="@dimen/min_cell_width" >
 
     <RelativeLayout

@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="30dp"
+    android:paddingBottom="0dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="30dp"
+    android:paddingTop="0dp"
     tools:context=".SubmissionListFragment" >
     
     <LinearLayout

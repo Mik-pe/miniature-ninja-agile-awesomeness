@@ -19,41 +19,41 @@
         android:layout_height="wrap_content" >
       
 		 <TextView
-            android:id="@+id/meName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-         
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="Sofie Lindblom"
-            android:textSize="30sp" />
+		     android:id="@+id/meName"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:layout_gravity="center"
+		     android:layout_marginLeft="0dp"
+		     android:layout_marginRight="50dp"
+		     android:layout_marginTop="20dp"
+		     android:fontFamily="sans-serif-thin"
+		     android:text="Sofie Lindblom"
+		     android:textSize="25sp" />
 		 
        	<TextView
-            android:id="@+id/meEmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_below="@+id/meName"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="John@gmail.com"
-            android:textSize="20sp" />
+       	    android:id="@+id/meEmail"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_below="@+id/meName"
+       	    android:layout_gravity="center"
+       	    android:layout_marginBottom="20dp"
+       	    android:layout_marginLeft="0dp"
+       	    android:layout_marginRight="70dp"
+       	    android:layout_marginTop="0dp"
+       	    android:fontFamily="sans-serif-thin"
+       	    android:text="John@gmail.com"
+       	    android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-         	android:background="#B72D64"
-			android:padding="4dp"
-            android:layout_marginRight="70dp"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginRight="0dp"
+            android:background="#B72D64"
+            android:padding="4dp" />
+
     </RelativeLayout>
 
 
@@ -65,22 +65,22 @@
       android:orientation="vertical">
 
          <View
-            android:id="@+id/add_line3"
-            android:layout_width="fill_parent"
-            android:layout_height="2dp" 
-            android:layout_marginTop="20dp"
-            android:background="#DB8C0C"/>
+             android:id="@+id/add_line3"
+             android:layout_width="fill_parent"
+             android:layout_height="2dp"
+             android:layout_marginTop="10dp"
+             android:background="#DB8C0C" />
          
          <TextView
-            android:id="@+id/notifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="Notifications 'n' Stuff"
-            android:textSize="32sp" />
+             android:id="@+id/notifications"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_marginBottom="10dp"
+             android:layout_marginTop="10dp"
+             android:fontFamily="sans-serif-thin"
+             android:text="Notifications &apos;n&apos; Stuff"
+             android:textSize="27sp" />
          
          <View
             android:id="@+id/add_line2"
@@ -91,38 +91,37 @@
     </LinearLayout>
     
 	 <LinearLayout
-         android:orientation="vertical"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"        
-         android:paddingLeft="60dp"
-    	android:paddingRight="60dp" 
-    	android:paddingTop="20dp"
-    	 >
+	     android:layout_width="match_parent"
+	     android:layout_height="wrap_content"
+	     android:orientation="vertical"
+	     android:paddingLeft="0dp"
+	     android:paddingRight="0dp"
+	     android:paddingTop="0dp" >
 
-	
 	    <ListView
 	        android:id="@+id/notificationListView"
 	        android:layout_width="match_parent"
 	        android:layout_height="55dp"
-	        android:layout_marginTop="10dp"
-	        android:layout_marginBottom="50dp"
-	        android:layout_marginLeft="70dp"
-	        android:layout_marginRight="70dp" >
+	        android:layout_marginBottom="0dp"
+	        android:layout_marginLeft="0dp"
+	        android:layout_marginRight="0dp"
+	        android:layout_marginTop="0dp" >
+
 	    </ListView>
 
         </LinearLayout>
+
         <Button
             android:id="@+id/addNotification"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="0dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
-            android:textColor="#063A70"
             android:minWidth="55dp"
-            android:text="Add Notification" 
-            android:textSize="32sp" />
+            android:text="Add Notification"
+            android:textColor="#063A70"
+            android:textSize="22sp" />
          
 <!-- Additonal Section -->
          
@@ -144,41 +143,41 @@
             android:id="@+id/manage_projects_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-             android:layout_marginTop ="25dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="25dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
-            android:textColor="#063A70"
             android:minWidth="55dp"
             android:text="Manage Projects"
-            android:textSize="32sp" />
+            android:textColor="#063A70"
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/log_out_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop ="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="10dp"
             android:layout_weight="0"
             android:fontFamily="sans-serif-thin"
-            android:textColor="#063A70"
             android:text="Log Out"
-            android:textSize="32sp" />
+            android:textColor="#063A70"
+            android:textSize="22sp" />
         
       	<Button
-            android:id="@+id/revoke_access_button"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginRight="70dp"
-            android:layout_weight="0"
-            android:fontFamily="sans-serif-thin"
-            android:textColor="#063A70"
-            android:text="Revoke Access"
-            android:textSize="32sp" />
+      	    android:id="@+id/revoke_access_button"
+      	    android:layout_width="fill_parent"
+      	    android:layout_height="wrap_content"
+      	    android:layout_marginLeft="0dp"
+      	    android:layout_marginRight="0dp"
+      	    android:layout_weight="0"
+      	    android:fontFamily="sans-serif-thin"
+      	    android:text="Revoke Access"
+      	    android:textColor="#063A70"
+      	    android:textSize="22sp" />
 
 </LinearLayout>
 </ScrollView>
