@@ -25,6 +25,7 @@ import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.LinearLayout.LayoutParams;
 
 
 public class HomeFragment extends Fragment implements View.OnTouchListener
@@ -107,12 +109,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
+		
 		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{
-
-			
-			
-			//firstTime = false;
 
 			LoginActivity.firstTime = false;
 
@@ -204,6 +203,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 				showReportDialog(v);
 			}
 		});
+        
             
         //Sets touch listener to be the homeFragment, which implements the touchlistener for swiping
         rootView.setOnTouchListener(this);
@@ -233,6 +233,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		});
 	}
 	
+	/**
+	 * Calculates the dp value to pixels
+	 * @author Ramin Assadi
+	 * @param dp The value of dp
+	 * @return Returns the converted pixel value
+	 */
+	public static int dpToPx(int dp)
+	{
+		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+	}
 	
 	/**
 	 * This defines the status indicator in the home view. For example one date is confirmed
@@ -298,6 +308,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         	nextDate.setAlpha((float)1.0);
         }
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
+        projectListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(65)*projectList.size()));
+		
         projectListView.setOnTouchListener(new ListView.OnTouchListener(){
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
