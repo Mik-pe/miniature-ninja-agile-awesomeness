@@ -215,7 +215,10 @@ public class StatisticsFragment extends Fragment{
 						+ end.get(Calendar.YEAR));
 				endDate = (Calendar) end.clone();
 			}
-			internalText.setText(decimalFormat.format(internalMinutes/totalMinutes*100) + " %");
+			if(internalMinutes <= 0)
+				internalText.setText(""+0 + " %");
+			else
+				internalText.setText(decimalFormat.format(internalMinutes/totalMinutes*100) + " %");
 			externalText.setText(Integer.toString(totalMinutes/60) + " h : " + totalMinutes%60 + " m");
 			
 			//Updates the view
