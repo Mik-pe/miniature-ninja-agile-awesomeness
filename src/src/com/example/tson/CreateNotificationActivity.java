@@ -161,9 +161,15 @@ public class CreateNotificationActivity extends Activity {
 		notificationTitle = (TextView) findViewById(R.id.notification_title_editText);
 		notificationText = (TextView) findViewById(R.id.notification_text_editText);
 		int nextWeekDay = 1;
+		if(!notificationTitle.getText().toString().isEmpty())
+			thisNotification.setNotificationTitle(notificationTitle.getText().toString());
+		else
+			thisNotification.setNotificationTitle("Tson Says");
+		if(!notificationText.getText().toString().isEmpty())
+			thisNotification.setNotificationText(notificationText.getText().toString());
+		else
+			thisNotification.setNotificationText("Do stuff!");
 		
-		thisNotification.setNotificationTitle(notificationTitle.getText().toString());
-		thisNotification.setNotificationText(notificationText.getText().toString());
 		c = Calendar.getInstance();
 		c.set(Calendar.HOUR_OF_DAY, thisNotification.getNotificationHour());
 		c.set(Calendar.MINUTE, thisNotification.getNotificationMinute());
@@ -223,7 +229,11 @@ public class CreateNotificationActivity extends Activity {
 		Log.d("nextDay", "is: "+c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
 		
 		Intent mServiceIntent = new Intent(this, NotificationHandler.class);
-		mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
+		if(thisNotification.getNotificationTitle() != "")
+			mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
+		else
+			mServiceIntent.putExtra("title", "Tson says:");
+		
 		if(thisNotification.getNotificationText() != "")
 			mServiceIntent.putExtra("text", thisNotification.getNotificationText());
 		else

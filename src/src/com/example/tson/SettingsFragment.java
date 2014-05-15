@@ -406,7 +406,7 @@ public class SettingsFragment extends Fragment{
 		else
 			mServiceIntent.putExtra("text", "Default Reminder");
 		
-		mServiceIntent.putExtra("nrOfNots", (long) myNotification.getNotificationID());
+		mServiceIntent.putExtra("nrOfNots", myNotification.getNotificationID());
 		mServiceIntent.putExtra("calendarDefinition", Calendar.DAY_OF_WEEK);
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);

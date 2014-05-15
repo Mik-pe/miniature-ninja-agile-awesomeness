@@ -563,8 +563,10 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 					MyNotification m = new MyNotification(title, text, id, hour, minute);
 					m.setNotificationActive(isOn);
 					
-					List<Integer> lSelectedDays = intToIntArray(iSelectedDays);
-					m.setNotificationRepeat(lSelectedDays);
+					if(iSelectedDays != 0){
+						List<Integer> lSelectedDays = intToIntArray(iSelectedDays);
+						m.setNotificationRepeat(lSelectedDays);
+					}
 					notifications.add(m);
 				}while (c.moveToNext());
 			}

@@ -70,13 +70,16 @@ public class NotificationHandler extends BroadcastReceiver
 			/**
 			 * Values of the class are put in to keep them until the next call.
 			 */
-			mServiceIntent.putExtra("title", notificationTitle);
+			if(notificationTitle != "")
+				mServiceIntent.putExtra("title", notificationTitle);
+			else
+				mServiceIntent.putExtra("title", "Tson says:");
 			if(notificationText != "")
 				mServiceIntent.putExtra("text", notificationText);
 			else
 				mServiceIntent.putExtra("text", "Default Reminder");
 			
-			mServiceIntent.putExtra("nrOfNots", notificationID);
+			mServiceIntent.putExtra("nrOfNots",(long) notificationID);
 			mServiceIntent.putExtra("calendarDefinition", calendarDefinition);
 			mServiceIntent.putExtra("calendarValue",calendarValue);
 			mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
