@@ -224,6 +224,7 @@ public class CalendarAdapter extends BaseAdapter{
         	days = new String[lastDay+firstDay-(FIRST_DAY_OF_WEEK+1)];
         }
         
+        Log.d("firstDay", ""+firstDay);
         int j=FIRST_DAY_OF_WEEK;
         
         // populate empty days before first real day
@@ -246,7 +247,7 @@ public class CalendarAdapter extends BaseAdapter{
         // populate days
         int dayNumber = 1;
         
-        if(j>0 && dayList.size() > 0 && j != 1){
+        if(j>0 && dayList.size() > 0 && j != 7){
         	dayList.remove(j-1);
         }
         
