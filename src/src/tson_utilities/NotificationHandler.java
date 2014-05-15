@@ -5,12 +5,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import com.example.tson.HomeActivity;
+import com.example.tson.LoginActivity;
 import com.example.tson.R;
-import com.example.tson.R.drawable;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -92,7 +90,6 @@ public class NotificationHandler extends BroadcastReceiver
 					nextWeekDay = repeatList.get(i);
 					i = repeatList.size();
 				}
-				Log.d("logging", "HERE"+nextWeekDay+notificationCalendar.get(Calendar.DAY_OF_WEEK));
 			}
 			if(nextWeekDay != 7)
 				nextWeekDay++;
@@ -110,7 +107,6 @@ public class NotificationHandler extends BroadcastReceiver
 					nextWeekDay = 7;
 				}
 			}
-			Log.d("logging", "HERE"+nextWeekDay);
 			notificationCalendar.add(calendarDefinition, nextWeekDay);
 			Log.d("nextDay", "is: "+notificationCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
 			/**
@@ -130,7 +126,7 @@ public class NotificationHandler extends BroadcastReceiver
 	 * @param context - the activity context the notification was sent from
 	 */
 	protected void showNotification(Context context) {
-		Intent intent = new Intent(context, HomeActivity.class);
+		Intent intent = new Intent(context, LoginActivity.class);
 		
 		
 		

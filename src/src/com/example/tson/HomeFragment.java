@@ -1,30 +1,23 @@
 
 package com.example.tson;
 
-import java.util.ArrayList;
-
 import com.example.tson.HomeActivity;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import qustomstyle.QustomDialogBuilder;
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -34,15 +27,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
