@@ -309,26 +309,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         	nextDate.setAlpha((float)1.0);
         }
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
-        projectListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(65)*projectList.size()));
+        projectListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectList.size()));
 		
-        projectListView.setOnTouchListener(new ListView.OnTouchListener(){
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				int action = event.getAction();
-				switch(action){
-				case MotionEvent.ACTION_DOWN:
-					v.getParent().requestDisallowInterceptTouchEvent(true);
-					break;
-				case MotionEvent.ACTION_UP:
-					v.getParent().requestDisallowInterceptTouchEvent(false);
-					break;
-				}
-				
-				// handle listview touch events.
-				v.onTouchEvent(event);
-				return true;
-			}
-        });
         
         projectAdapter = new ProjectListAdapter();
         
