@@ -18,11 +18,14 @@
     tools:context=".LoginActivity" >
 
 
+
+
+
     <View
         android:id="@+id/view1"
         android:layout_width="fill_parent"
         android:layout_height="2dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
         android:background="#DB8C0C" />
 
     <TextView
@@ -30,11 +33,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="sans-serif-thin"
         android:text="Welcome to Tson!"
-        android:textSize="35sp" />
+        android:textSize="50sp" />
 
     <View
         android:id="@+id/view2"
@@ -44,14 +47,14 @@
     
     <TextView
         android:id="@+id/TextView02"
-        android:layout_width="fill_parent"
+        android:layout_width="500dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="100dp"
         android:fontFamily="sans-serif-thin"
         android:text="To start using the most intuitive time reporting app around, please sign in with your google account!"
-        android:textSize="22sp" />
+        android:textSize="24sp" />
     
     
     <ImageButton
