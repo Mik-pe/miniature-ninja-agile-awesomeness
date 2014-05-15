@@ -9,15 +9,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-	    android:paddingRight="@dimen/activity_horizontal_margin" >
+        android:orientation="vertical" >
         
          <View
             android:id="@+id/add_line3"
             android:layout_width="fill_parent"
             android:layout_height="2dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:background="#DB8C0C"/>
 	
         <TextView
@@ -25,11 +23,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/add_text"
-            android:textSize="22sp" 
+            android:textSize="32sp" 
             />
         
         <View
@@ -44,11 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="40dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
             android:layout_marginTop="60dp"
             android:background="#00FFFFFF"
-            android:textSize="22sp"
+            android:textSize="30sp"
             android:ems="15"
             android:fontFamily="sans-serif-thin"
             android:hint="@string/add_hint_text"
@@ -61,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="70dp"
             android:text="This project is internal time." 
             android:fontFamily="sans-serif-thin"/>
         
@@ -69,26 +67,26 @@
             android:id="@+id/add_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
             android:text="@string/create_text"
-            android:textSize="22sp"
+            android:textSize="32sp"
             android:onClick = "createProject" />
         
          <Button
             android:id="@+id/cancel_project_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="40dp"
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
             android:text="@string/cancel_project_button"
-            android:textSize="22sp"
+            android:textSize="32sp"
             android:onClick = "cancelProject" />
         
     </LinearLayout>

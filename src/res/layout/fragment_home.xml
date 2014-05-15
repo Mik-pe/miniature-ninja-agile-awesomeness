@@ -18,14 +18,13 @@
        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center">
 
             <ImageButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-              
+                android:layout_height="50dp"
                 android:background="@null"
                 android:src="@drawable/back" />
 
@@ -39,13 +38,13 @@
                 android:fontFamily="sans-serif"
                 android:text="@string/today"
                 android:textColor="#063A70"
-                android:textSize="32sp"
+                android:textSize="27sp"
                 />
      
             <ImageButton
                 android:id="@+id/imageButton3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="1dp"
                 android:layout_marginRight="1dp"
                 android:background="@null"
@@ -82,7 +81,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/project"
-            android:textSize="32sp" />
+            android:textSize="22sp" />
         
         <View
             android:id="@+id/view2"
@@ -94,7 +93,7 @@
             android:id="@+id/projectListView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:paddingTop="40dp"
+            android:paddingTop="30dp"
 	 		android:paddingBottom="50dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp" >
@@ -115,7 +114,7 @@
             android:fontFamily="sans-serif-thin"
             android:textColor="#063A70"
             android:text="@string/report_time"
-            android:textSize="32sp" />
+            android:textSize="22sp" />
 
 </LinearLayout>
 

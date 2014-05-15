@@ -28,12 +28,12 @@
             android:fontFamily="sans-serif-thin"
             android:text="Large Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
 
         <ImageButton
             android:id="@+id/editDayButton"
             android:clickable="true"
-            android:layout_width="30dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/belowWeek"
@@ -53,7 +53,7 @@
             
             android:fontFamily="sans-serif"
             android:textColor="#063A70"
-            android:textSize="27sp"
+            android:textSize="32sp"
             
             android:background="#FFFFFF"
             android:gravity="center"
@@ -71,6 +71,6 @@
             android:fontFamily="sans-serif-thin"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
