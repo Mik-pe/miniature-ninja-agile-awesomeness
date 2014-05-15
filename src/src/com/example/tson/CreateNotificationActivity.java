@@ -92,6 +92,10 @@ public class CreateNotificationActivity extends Activity {
 				for(int i=0;i<repeatList.size();i++)
 				{
 					Weekdays.set(Calendar.DAY_OF_WEEK, (repeatList.get(i)+1)%7);
+					if(i==(repeatList.size()-1)){
+					days += Weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH);
+					}
+					else
 					days += Weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+", ";
 				}
 				repeatTextView.setText(days);

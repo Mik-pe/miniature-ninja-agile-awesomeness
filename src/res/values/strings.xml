@@ -82,9 +82,9 @@
 
 
     <!-- Icons, Font awesome etc... -->
-    <string name="confirmed_icon">&#xf00c; confirmed</string>
-    <string name="not_reported_icon">&#xf057; time is not reported</string>
-    <string name="not_confirmed_icon">&#xf071; time is reported but not confirmed</string>
+    <string name="confirmed_icon">&#xf00c; Confirmed</string>
+    <string name="not_reported_icon">&#xf057; Time is not reported</string>
+    <string name="not_confirmed_icon">&#xf071; Time is reported but not confirmed</string>
 
     <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>
@@ -100,4 +100,5 @@
 
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_send_email">SendEmailActivity</string>
+    
 </resources>
