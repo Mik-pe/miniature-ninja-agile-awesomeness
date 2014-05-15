@@ -130,6 +130,7 @@ public class CreateNotificationActivity extends Activity {
 		minute = c.get(Calendar.MINUTE);
 		
 		picker = new TimePickerDialog(this, timePickerListener, hour, minute, true);
+		picker.setTitle("Set time of notification (hh:mm)");
 		// set current time into textview
 		timeTextView.setText(hour+ ":" +minute);
 		thisNotification.setNotificationHour(hour);
@@ -141,6 +142,7 @@ public class CreateNotificationActivity extends Activity {
 		timeTextView = (TextView) this.findViewById(R.id.notification_time_set);
 		
 		picker = new TimePickerDialog(this, timePickerListener, hour, minute, true);
+		picker.setTitle("Set time of notification (hh:mm)");
 		timeTextView.setText(hour+ ":" +minute);
 	}
 	
@@ -270,7 +272,7 @@ public class CreateNotificationActivity extends Activity {
 			minute = selectedMinute;
 			
 			// set current time into textview
-			timeTextView.setText(hour+" h:"+minute+" m");
+			timeTextView.setText(hour+" :"+minute+" ");
 			
 			thisNotification.setNotificationHour(hour);
 			thisNotification.setNotificationMinute(minute);
