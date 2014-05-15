@@ -109,6 +109,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		
 		if(projectList.isEmpty()/* && firstTime==true*/)
 		{
+			
+			
 			//firstTime = false;
 			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
 			dialog.setContentView(R.layout.empty_project_view);
@@ -211,6 +213,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{	
+		
 		inflater.inflate(R.menu.create_project, menu);
 		
         createProject = (MenuItem) menu.findItem(R.id.createProjectItem);
