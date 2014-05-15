@@ -134,6 +134,7 @@ public class ManageProjectsActivity extends Activity {
 				String newName = newNameInput.getText().toString();
 				db.updateProjectName(newName, p);
 				p.setName(newName);
+				hiddenPosition = -1; // reset category check
 				projectAdapter.notifyDataSetChanged();
 			}
 		})
