@@ -1,30 +1,24 @@
 
 package com.example.tson;
 
-import java.util.ArrayList;
-
 import com.example.tson.HomeActivity;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import qustomstyle.QustomDialogBuilder;
 import tson.sqlite.helper.DatabaseHelper;
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.text.Html;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.app.TimePickerDialog.OnTimeSetListener;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -33,15 +27,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView.FindListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,6 +39,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.LinearLayout.LayoutParams;
 
 
 public class HomeFragment extends Fragment implements View.OnTouchListener
@@ -88,6 +78,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	public User user = User.getInstance();
 	List<Project> projectList = user.getProjects();
 	RelativeLayout emptylistRelative;
+	ImageButton firstTimeAddBtn;
 	
 	/***********************
 	  *  	CONSTRUCTOR		*/	
@@ -107,18 +98,14 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
+		
 		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{
-
-			
-			
-			//firstTime = false;
 
 			LoginActivity.firstTime = false;
 
 			final Dialog dialog= new Dialog(getActivity(), R.style.Theme_TranparentDialog);
 			dialog.setContentView(R.layout.empty_project_view);
-			Button firstTimeButton = (Button) dialog.findViewById(R.id.firstTimeBtn);
 			dialog.show();
 			
 			emptylistRelative = (RelativeLayout) dialog.findViewById(R.id.emptylistRelative);
@@ -132,15 +119,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 			}
 		});
 			
-			firstTimeButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					
-					dialog.dismiss();
-					
-				}
-			});
+			
+			
 		    
 		}
 		
@@ -204,6 +184,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 				showReportDialog(v);
 			}
 		});
+        
             
         //Sets touch listener to be the homeFragment, which implements the touchlistener for swiping
         rootView.setOnTouchListener(this);
@@ -233,6 +214,16 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		});
 	}
 	
+	/**
+	 * Calculates the dp value to pixels
+	 * @author Ramin Assadi
+	 * @param dp The value of dp
+	 * @return Returns the converted pixel value
+	 */
+	public static int dpToPx(int dp)
+	{
+		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+	}
 	
 	/**
 	 * This defines the status indicator in the home view. For example one date is confirmed
@@ -298,24 +289,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
         	nextDate.setAlpha((float)1.0);
         }
         projectListView = (ListView) rootView.findViewById(R.id.projectListView);
-        projectListView.setOnTouchListener(new ListView.OnTouchListener(){
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				int action = event.getAction();
-				switch(action){
-				case MotionEvent.ACTION_DOWN:
-					v.getParent().requestDisallowInterceptTouchEvent(true);
-					break;
-				case MotionEvent.ACTION_UP:
-					v.getParent().requestDisallowInterceptTouchEvent(false);
-					break;
-				}
-				
-				// handle listview touch events.
-				v.onTouchEvent(event);
-				return true;
-			}
-        });
+        projectListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectList.size()));
+		
         
         projectAdapter = new ProjectListAdapter();
         

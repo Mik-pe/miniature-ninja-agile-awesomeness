@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/statistics_text"
-            android:textSize="22sp" />
+            android:textSize="27sp" />
         
         <View
             android:id="@+id/add_line2"

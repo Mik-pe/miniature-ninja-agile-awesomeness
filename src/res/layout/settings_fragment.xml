@@ -80,7 +80,7 @@
              android:layout_marginTop="10dp"
              android:fontFamily="sans-serif-thin"
              android:text="Notifications &apos;n&apos; Stuff"
-             android:textSize="22sp" />
+             android:textSize="27sp" />
          
          <View
             android:id="@+id/add_line2"
