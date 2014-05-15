@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -98,6 +99,8 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
+		MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.song);
+	    mediaPlayer.start();
 		
 		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{
