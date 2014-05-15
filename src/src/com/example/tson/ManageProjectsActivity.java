@@ -3,6 +3,8 @@ package com.example.tson;
 import java.util.List;
 
 
+
+
 import tson_utilities.Project;
 import tson_utilities.TimeBlock;
 import tson_utilities.User;
@@ -12,6 +14,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,9 +25,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.LinearLayout.LayoutParams;
 
 /**
  * ManageProjectActivity Class - Activity accessed from settings. 
@@ -42,9 +47,11 @@ public class ManageProjectsActivity extends Activity {
 	MenuItem createProject;
 	
 	List<Project> projectList = User.getInstance().getProjects();
-	ListView manageProjectsList;
+	ListView manageProjectsListActive;
+	ListView manageProjectsListHidden;
 	ManageProjectListAdapter projectAdapter;
 	DatabaseHelper db = HomeActivity.db;
+	int hiddenPosition = -1;
 	
 	
 	/**
@@ -59,10 +66,13 @@ public class ManageProjectsActivity extends Activity {
 		setContentView(R.layout.activity_manage_projects);
 		setTitle("Manage Projects");
 		
-		manageProjectsList = (ListView) findViewById(R.id.manage_project_list);
+		manageProjectsListActive = (ListView) findViewById(R.id.manage_project_list);
 		projectAdapter = new ManageProjectListAdapter();
         
-		manageProjectsList.setAdapter(projectAdapter);
+		manageProjectsListActive.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectList.size()));
+		
+		manageProjectsListActive.setAdapter(projectAdapter);
+		
 		
 		Button backButton = (Button) findViewById(R.id.backButton);
 		backButton.setOnClickListener(new View.OnClickListener() {			
@@ -91,6 +101,17 @@ public class ManageProjectsActivity extends Activity {
 			}
 		});
         return true;
+	}
+	
+	/**
+	 * Calculates the dp value to pixels
+	 * @author Ramin Assadi
+	 * @param dp The value of dp
+	 * @return Returns the converted pixel value
+	 */
+	public static int dpToPx(int dp)
+	{
+		return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
 	}
 	
 	/**
@@ -124,6 +145,59 @@ public class ManageProjectsActivity extends Activity {
 		
 	}
 	
+	public void showHideProjectDialog(final Project p)
+	{
+		final TextView projectText = new TextView(this);
+		projectText.setText(p.getName());
+		
+		int hidden = p.getIsHidden(); // 0 for visable, 1 for hidden
+		
+		String message;
+		String buttonTitle;
+		
+		if(hidden==0){
+			message = "Hiding a project will not delete it, but will hide it from the Report screen. Are you sure you want to hide this project?";
+			buttonTitle = "Hide project";
+		}
+		else{
+			message = "Do you wish to make the project reportable again?";
+			buttonTitle = "Show project";
+		}
+		new AlertDialog.Builder(this)
+		.setTitle(buttonTitle)
+		.setMessage(message)
+	//	.setView(newNameInput)
+		.setPositiveButton(buttonTitle, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// HIDE PROJECT IN DATABASE AND CLASS STRUCTURE
+				if(p.getIsHidden() == 0){
+					//Hide project
+					p.setIsHidden(1);
+					db.updateProjectIsHidden(1, p);
+				}
+				else{
+					//Unhide project
+					p.setIsHidden(0);
+					db.updateProjectIsHidden(0, p);
+				}
+				User.getInstance().updateProjectlistFromDB();
+				projectList = User.getInstance().getProjects();
+				hiddenPosition = -1; // reset category check
+				projectAdapter.notifyDataSetChanged();
+			}
+		})
+		.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		})
+		.show();
+		
+	}
+	
+	
+	
+	
+	
 	/**
      * The ManageProjectListAdapter class takes the projectList Array and converts the items into 
      * View objects to be loaded into the ListView container.
@@ -135,6 +209,9 @@ public class ManageProjectsActivity extends Activity {
    		 *for each element in projectList
    		 */
   
+		
+		
+		
     	public ManageProjectListAdapter()
     	{
     		super(getApplicationContext(), R.layout.manage_projects_adapter, projectList);
@@ -143,21 +220,54 @@ public class ManageProjectsActivity extends Activity {
     	@Override
     	public View getView(int position, View view, ViewGroup parent)
     	{
-
+    		
+    		Log.d("manageProject", "new round");
+    		
     		if(view == null)
     			view = getLayoutInflater().inflate(R.layout.manage_projects_adapter, parent, false);
     		
+    		
+    		TextView category = (TextView) view.findViewById(R.id.category);
     		final Project currentProject = projectList.get(position);
+    		if(position==0 && currentProject.getIsHidden() == 0){
+    			category.setText("Active projects");
+    			category.setVisibility(TextView.VISIBLE);
+    		}
+    		else{
+    			category.setVisibility(TextView.GONE);
+    		}
+    		
+    		
+    		
+    		if(currentProject.getIsHidden()==1 && hiddenPosition == -1){
+    			hiddenPosition = position;
+    			category.setText("Hidden projects");
+    			category.setVisibility(TextView.VISIBLE);
+    		}
     		
     		TextView projectName = (TextView) view.findViewById(R.id.project_name);
+    		
     		projectName.setText(currentProject.getName());
     		
+    		//Edit project button
     		ImageButton editButton = (ImageButton) view.findViewById(R.id.edit_button);
     		editButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
 					showInputDialog(currentProject);					
+				}
+			});
+    		
+    		//Hide/Archive the project
+    		ImageButton hideButton = (ImageButton) view.findViewById(R.id.archive_button);
+    		hideButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// Show popup and ask user if it should hide the project from homescreen
+					showHideProjectDialog(currentProject);
+					
 				}
 			});
     		

@@ -16,9 +16,9 @@ import tson_utilities.User;
 import adapter.NavDrawerListAdapter;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
-
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -111,6 +111,8 @@ public class HomeActivity extends FragmentActivity
 		c.setFirstDayOfWeek(Calendar.MONDAY);
 	    db = new DatabaseHelper(getApplicationContext());
 	    
+	    
+	    
 	    if(user == null){
 	    	
 			 //Fetch Google+ data for input
@@ -125,7 +127,9 @@ public class HomeActivity extends FragmentActivity
 	    db.getAllProjects(user);
 	    db.getAllTimeBlocks();
 	    db.logTimeblocks();
+	    Log.d("CHECKAR UPDATERING", " WOHO");
 	    projectList = db.getAllProjects(user);
+	    
 	    user.getProjects().clear();
 	    
 	    List<MyNotification> notificationList = db.getNotifications();

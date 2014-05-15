@@ -28,6 +28,7 @@ public class Project {
 	private long id;
 	//Int, instead of boolean because of database. Flag for internal time can be 0 or 1
 	private int isInternalTime = 0;
+	private int isHidden = 0;  //1 for hidden, 0 for not hidden
 	
 	 /***********************
 	  *  	CONSTRUCTORS 	*/	
@@ -87,8 +88,17 @@ public class Project {
 	 * Setter for setting the flag isInternal
 	 * @param isInternal
 	 */
-	public void setInternalTime(int isInternal){
+	public void setInternalTime(int isInternal)
+	{
 		isInternalTime = isInternal;
+	}
+	/**
+	 * Setter for setting a flag for isHidden
+	 * @param isHidden_
+	 */
+	public void setIsHidden(int isHidden_)
+	{
+		this.isHidden = isHidden_;
 	}
 	
 	/**
@@ -135,6 +145,11 @@ public class Project {
 	public int getIsInternal()
 	{
 		return isInternalTime;
+	}
+	
+	public int getIsHidden()
+	{
+		return this.isHidden;
 	}
 	
 	/**

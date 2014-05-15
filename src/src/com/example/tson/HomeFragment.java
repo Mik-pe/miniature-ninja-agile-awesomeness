@@ -21,6 +21,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,7 +77,7 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 	private static final int MIN_DISTANCE = 100;
     private float downX, downY, upX, upY;
 	public User user = User.getInstance();
-	List<Project> projectList = user.getProjects();
+	List<Project> projectList = user.getActiveProjects();
 	RelativeLayout emptylistRelative;
 	ImageButton firstTimeAddBtn;
 	
@@ -98,6 +99,9 @@ public class HomeFragment extends Fragment implements View.OnTouchListener
 		super.onCreate(savedInstanceState);
 		rootView = inflater.inflate(R.layout.fragment_home, container, false);
 		
+		//play a song on home screen
+		//MediaPlayer mediaPlayer = MediaPlayer.create(getActivity(), R.raw.song);
+	    //mediaPlayer.start();
 		
 		if(projectList.isEmpty() && LoginActivity.firstTime)
 		{
