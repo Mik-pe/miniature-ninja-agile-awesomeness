@@ -17,7 +17,7 @@
              android:id="@+id/add_line3"
              android:layout_width="fill_parent"
              android:layout_height="2dp"
-             android:layout_marginTop="20dp"
+             android:layout_marginTop="50dp"
              android:background="#DB8C0C" />
 	
         <TextView
@@ -25,11 +25,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif-thin"
             android:text="@string/add_notification"
-            android:textSize="27sp" />
+            android:textSize="32sp" />
         
         <View
             android:id="@+id/add_line2"
@@ -52,7 +52,7 @@
             android:fontFamily="sans-serif-thin"
             android:hint="@string/add_notification_title"
             android:textColorLink="@color/counter_text_bg"
-            android:textSize="22sp" >
+            android:textSize="30sp" >
 
         </EditText>
 		
@@ -70,7 +70,7 @@
             android:fontFamily="sans-serif-thin"
             android:hint="@string/add_notification_text"
             android:textColorLink="@color/counter_text_bg"
-            android:textSize="22sp" >
+            android:textSize="30sp" >
 
         </EditText>
 		
@@ -89,7 +89,7 @@
 	            android:layout_marginTop="20dp"
 	            android:fontFamily="sans-serif-thin"
 	            android:text="@string/add_notification_time"
-	            android:textSize="22sp" />
+	            android:textSize="30sp" />
 
 	        <TextView
 	            android:id="@+id/notification_time_set"
@@ -99,7 +99,7 @@
 	            android:layout_marginBottom="10dp"
 	            android:fontFamily="sans-serif-thin"
 	            android:text="16 h: 52m"
-	            android:textSize="10sp" />
+	            android:textSize="18sp" />
 
         </LinearLayout>
 		
@@ -119,7 +119,7 @@
 	            android:layout_marginTop="20dp"
 	            android:fontFamily="sans-serif-thin"
 	            android:text="@string/add_notification_repeat"
-	            android:textSize="22sp" />
+	            android:textSize="30sp" />
 
 	        <TextView
 	            android:id="@+id/notification_repeat_days"
@@ -129,7 +129,7 @@
 	            android:layout_marginBottom="10dp"
 	            android:fontFamily="sans-serif-thin"
 	            android:text="Never"
-	            android:textSize="10sp" />
+	            android:textSize="18sp" />
 
         </LinearLayout>
 		
@@ -143,7 +143,7 @@
             android:onClick="createNotification"
             android:text="@string/create_text"
             android:textColor="#063A70"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
                     
         <Button
             android:id="@+id/cancel_project_button"
@@ -156,7 +156,7 @@
             android:onClick="cancelNotification"
             android:text="@string/cancel_project_button"
             android:textColor="#063A70"
-            android:textSize="22sp" />
+            android:textSize="30sp" />
         
     </LinearLayout>
 

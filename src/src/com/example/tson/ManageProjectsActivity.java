@@ -163,6 +163,7 @@ public class ManageProjectsActivity extends Activity {
 					db.updateProjectIsHidden(0, p);
 				}
 				User.getInstance().updateProjectlistFromDB();
+				projectList = User.getInstance().getProjects();
 				hiddenPosition = -1; // reset category check
 				projectAdapter.notifyDataSetChanged();
 			}
@@ -190,6 +191,9 @@ public class ManageProjectsActivity extends Activity {
    		 *for each element in projectList
    		 */
   
+		
+		
+		
     	public ManageProjectListAdapter()
     	{
     		super(getApplicationContext(), R.layout.manage_projects_adapter, projectList);
@@ -199,7 +203,8 @@ public class ManageProjectsActivity extends Activity {
     	public View getView(int position, View view, ViewGroup parent)
     	{
     		
-
+    		Log.d("manageProject", "new round");
+    		
     		if(view == null)
     			view = getLayoutInflater().inflate(R.layout.manage_projects_adapter, parent, false);
     		

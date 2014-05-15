@@ -6,7 +6,7 @@
 
     <TextView
 	    android:id="@+id/category"
-	    android:visibility="visible"
+	    android:visibility="gone"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:paddingBottom="10dp"
@@ -19,22 +19,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/category"
+
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
         android:fontFamily="sans-serif-thin"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="30sp" />
-
-
+        android:textSize="22sp" />
 
     <ImageButton
         android:id="@+id/edit_button"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
+
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/project_name"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/archive_button"
+        android:layout_marginRight="10dp"
         android:background="#00FFFFFF"
         android:clickable="true"
         android:maxHeight="20dp"
@@ -42,6 +43,7 @@
         android:paddingTop="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_pen2" />
+
 
     <ImageButton
         android:id="@+id/archive_button"
@@ -57,6 +59,7 @@
         android:paddingTop="5dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_archive2" />
+
 
 </RelativeLayout>
 

@@ -23,61 +23,54 @@
         android:gravity="center_horizontal" />
 
     <!-- Project name -->
-
     <TextView
         android:id="@+id/textProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textView2"
         android:layout_alignTop="@+id/textView2"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="7dp"
-        android:fontFamily="sans-serif-thin"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp" 
         android:text="@string/project_name"
+        android:fontFamily="sans-serif-thin"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="22sp" />
+        android:textSize="30sp" />
 
     <!-- Hours in % -->
-
     <TextView
         android:id="@+id/percantValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/textProject"
         android:layout_alignBottom="@+id/textProject"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginRight="5dp" 
         android:textAppearance="?android:attr/textAppearanceSmall" />
 	
      <!-- Minutes -->
-
     <TextView
         android:id="@+id/minuteValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_alignBaseline="@+id/textProject"
         android:layout_alignBottom="@+id/textProject"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="60dp"
-        android:layout_marginTop="7dp"
         android:layout_toLeftOf="@+id/percantValue"
+        android:layout_marginRight="60dp" 
         android:fontFamily="sans-serif-thin"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="22sp" />
+        android:textSize="30sp"/>
 
      <!-- Hours -->
-
     <TextView
         android:id="@+id/hourValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/textProject"
         android:layout_alignBottom="@+id/textProject"
-        android:layout_marginTop="7dp"
-        android:layout_toLeftOf="@+id/minuteValue"
+        android:layout_toLeftOf="@+id/minuteValue"      
         android:fontFamily="sans-serif-thin"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="22sp" />
+        android:textSize="30sp" />
 
 </RelativeLayout>

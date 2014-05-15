@@ -8,6 +8,7 @@ import tson_utilities.TimeBlock;
 import tson_utilities.User;
 import android.app.DatePickerDialog;
 import android.content.res.Resources;
+import android.graphics.Path.FillType;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,8 +34,9 @@ public class StatisticsFragment extends Fragment{
 	 /***********************
 	  *  	VARIABLES		*/	
 	 /***********************/
-	
+	RelativeLayout.LayoutParams rl;
 	ImageButton btnStart, btnEnd;
+	TextView progBar;
 	Calendar startDate;
 	Calendar endDate;
 	int dialogChooser;
@@ -75,6 +79,9 @@ public class StatisticsFragment extends Fragment{
 		  projectListView = (ListView) statistics.findViewById(R.id.statistics_view);
 		  externalText = (TextView) statistics.findViewById(R.id.external_time_procent);
 		  internalText = (TextView) statistics.findViewById(R.id.internal_time_procent);
+		  
+		  //Adding height to the ListView depending on how many project we have
+		  projectListView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, dpToPx(55)*projectListStats.size()));
 		  
 		  //Calculate the whole month on first create
 		  calculateTime(startDate, endDate);
@@ -208,7 +215,10 @@ public class StatisticsFragment extends Fragment{
 						+ end.get(Calendar.YEAR));
 				endDate = (Calendar) end.clone();
 			}
-			internalText.setText(decimalFormat.format(internalMinutes/totalMinutes*100) + " %");
+			if(internalMinutes <= 0)
+				internalText.setText(""+0 + " %");
+			else
+				internalText.setText(decimalFormat.format(internalMinutes/totalMinutes*100) + " %");
 			externalText.setText(Integer.toString(totalMinutes/60) + " h : " + totalMinutes%60 + " m");
 			
 			//Updates the view
@@ -253,9 +263,9 @@ public class StatisticsFragment extends Fragment{
 			public View getView(int position, View view, ViewGroup parent){
 				if(view == null)
 					view = getActivity().getLayoutInflater().inflate(R.layout.statistics_listview_item, parent, false);
-			
-		        TextView progBar = (TextView) view.findViewById(R.id.statistics_progress_bar);
-		        TextView projectName = (TextView) view.findViewById(R.id.textProject);
+				
+		        progBar = (TextView) view.findViewById(R.id.statistics_progress_bar);
+				TextView projectName = (TextView) view.findViewById(R.id.textProject);
 		        TextView percentValue = (TextView) view.findViewById(R.id.percantValue);
 		        TextView hourValue = (TextView) view.findViewById(R.id.hourValue);
 		        TextView minuteValue = (TextView) view.findViewById(R.id.minuteValue);
@@ -286,7 +296,7 @@ public class StatisticsFragment extends Fragment{
 		        percentValue.setText(decimalFormat.format(percent*100) + " %"); 
 		        
 		        //Updates the progBar with the new width
-		        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(updateWidth, dpToPx(45));
+		        rl = new RelativeLayout.LayoutParams(updateWidth, dpToPx(45));
 		        rl.setMargins(0,0,0,dpToPx(5));
 		        progBar.setLayoutParams(rl);
 		        

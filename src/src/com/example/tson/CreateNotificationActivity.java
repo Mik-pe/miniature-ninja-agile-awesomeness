@@ -8,15 +8,13 @@ import java.util.Locale;
 
 import tson_utilities.MyNotification;
 import tson_utilities.NotificationHandler;
-import tson_utilities.Project;
+import tson_utilities.User;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -24,9 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -50,6 +46,7 @@ public class CreateNotificationActivity extends Activity {
 	String text;
 	MyNotification thisNotification;
 	List<Integer> repeatList;
+	boolean isEdit = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +62,12 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		if(extras != null)
 		{
-			title = extras.getString("notificationTitle");
-			text = extras.getString("notificationText");
-			hour =  extras.getInt("notificationHour");
-			minute = extras.getInt("notificationMinute");
-			ID = extras.getInt("notificationID");
+			isEdit	= true;
+			title 	= extras.getString("notificationTitle");
+			text 	= extras.getString("notificationText");
+			hour 	=  extras.getInt("notificationHour");
+			minute 	= extras.getInt("notificationMinute");
+			ID 		= (int) extras.getLong("notificationID");
 			
 			if(extras.getIntegerArrayList("notificationRepeat") != null)
 				repeatList =  extras.getIntegerArrayList("notificationRepeat");
@@ -89,9 +87,17 @@ public class CreateNotificationActivity extends Activity {
 				for(int i=0;i<repeatList.size();i++)
 				{
 					Weekdays.set(Calendar.DAY_OF_WEEK, (repeatList.get(i)+1)%7);
+					if(i==(repeatList.size()-1)){
+					days += Weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH);
+					}
+					else
 					days += Weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+", ";
 				}
 				repeatTextView.setText(days);
+			}
+			else
+			{
+				repeatTextView.setText("Never");
 			}
 		}
 		else{
@@ -164,10 +170,15 @@ public class CreateNotificationActivity extends Activity {
 		c.set(Calendar.SECOND, 0);
 		
 		/**
-		 * Sort the repeatList
+		 * Sort the repeatList and add the notification to the database
 		 */
 		Collections.sort(repeatList);
 		thisNotification.setNotificationRepeat(repeatList);
+		
+		if(!isEdit)
+			thisNotification.addNotification();
+		else
+			thisNotification.updateNotification();
 		
 		/**
 		 * If repeatList has values, the notification should repeat.
@@ -175,24 +186,20 @@ public class CreateNotificationActivity extends Activity {
 		 */
 		if(!repeatList.isEmpty())
 		{
-			if(repeatList.contains((c.get(Calendar.DAY_OF_WEEK)+1)%7)){
-				nextWeekDay = c.get(Calendar.DAY_OF_WEEK);
-			}
-			else{
-				nextWeekDay = repeatList.get(0);
-				for(int i=0;i<repeatList.size();i++)
+			
+			nextWeekDay = repeatList.get(0);
+			for(int i=0;i<repeatList.size();i++)
+			{
+				if(c.get(Calendar.DAY_OF_WEEK)<=(repeatList.get(i)+1))
 				{
-					if(c.get(Calendar.DAY_OF_WEEK)<=(repeatList.get(i)+1))
-					{
-						nextWeekDay = repeatList.get(i);
-						i = repeatList.size();
-					}
+					nextWeekDay = repeatList.get(i);
+					i = repeatList.size();
 				}
-				if(nextWeekDay != 7)
-					nextWeekDay++;
-				else
-					nextWeekDay = 1;
 			}
+			if(nextWeekDay != 7)
+				nextWeekDay++;
+			else
+				nextWeekDay = 1;
 		}
 		else{
 			nextWeekDay = c.get(Calendar.DAY_OF_WEEK);
@@ -210,10 +217,10 @@ public class CreateNotificationActivity extends Activity {
 		}
 		
 		/**
-		 * Add the remaining days until next notification.
+		 * Add the remaining days until next notification
 		 */
 		c.add(Calendar.DAY_OF_WEEK, nextWeekDay);
-
+		Log.d("nextDay", "is: "+c.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH));
 		
 		Intent mServiceIntent = new Intent(this, NotificationHandler.class);
 		mServiceIntent.putExtra("title", thisNotification.getNotificationTitle());
@@ -223,18 +230,21 @@ public class CreateNotificationActivity extends Activity {
 			mServiceIntent.putExtra("text", "Default Reminder");
 		
 		mServiceIntent.putExtra("nrOfNots", thisNotification.getNotificationID());
-		mServiceIntent.putExtra("timeUntilNextDate", (c.getTimeInMillis()-Calendar.getInstance().getTimeInMillis()));
 		mServiceIntent.putExtra("calendarDefinition", Calendar.DAY_OF_WEEK);
 		mServiceIntent.putExtra("calendarValue", 5);
 		mServiceIntent.putIntegerArrayListExtra("repeatList", (ArrayList<Integer>) repeatList);
-		Log.d("logging", "HERE"+nextWeekDay+" "+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) thisNotification.getNotificationID(), mServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		//ADD SOME ID OR SOMETHING!!!
 		
 		AlarmManager alarmManager = (AlarmManager)this.getSystemService(this.ALARM_SERVICE);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
 		
-		thisNotification.addNotification();
+		User.getInstance().updateNotificationList();
+		Intent intent = new Intent(this, HomeActivity.class);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); //set flag on intent to clear history stack of all activities
+    	
+    	startActivity(intent);
 		finish();
 	}
 	
@@ -295,7 +305,7 @@ public class CreateNotificationActivity extends Activity {
 					
 					CheckBox cb = (CheckBox) dialog.findViewById(i);
 					if(cb.isChecked()){
-						Days += weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+", ";
+						Days += weekdays.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.ENGLISH)+" ";
 						if(!repeatList.contains(i))
 							repeatList.add(i);
 					}
