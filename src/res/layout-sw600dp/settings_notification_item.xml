@@ -12,21 +12,19 @@
 	
 	    <TextView
 	        android:id="@+id/notificationTitle"
+	        android:layout_marginTop="10dp"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginTop="10dp"
 	        android:layout_weight="0.90"
 	        android:fontFamily="sans-serif-thin"
-	        android:text="Large Text"
-	        android:textAppearance="?android:attr/textAppearanceLarge"
-	        android:textSize="22sp" />
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp"/>
 	
 	    <CheckBox
 	        android:id="@+id/notificationCheckBox"
 	        android:layout_width="wrap_content"
-	        android:layout_height="fill_parent"
-	        android:layout_marginTop="10dp" />
-
+	        android:layout_height="fill_parent"/>
 		</LinearLayout>
 		
    <TextView
